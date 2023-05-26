@@ -1,0 +1,189 @@
+create table customer
+(
+	customer_id varchar(5) not null,
+	last_name varchar(20) not null,
+	first_name varchar(20) not null,
+	contact_number_1 varchar(15) not null,
+	contact_number_2 varchar(15) not null,
+	document_type enum('PASSPORT', 'NATIONAL IDENTITY CARD', 'DRIVING LICENCE') not null,
+	document_number varchar(15) not null,
+	constraint customer_pk
+		primary key (customer_id)
+);
+
+create table batch
+(
+	batch_id varchar(5) not null,
+	shipment_date date not null,
+	delivery_date date not null,
+	available_status int default 1 not null,
+	total_weight int not null,
+	current_weight int default 0 not null,
+	delivery_address varchar(20) not null,
+	number_of_orders int default 0 not null,
+	constraint batch_pk
+		primary key (batch_id)
+);
+
+create table tax
+(
+	tax_id varchar(5) not null,
+	tax_name varchar(20) not null,
+	tax_percentage double not null,
+	constraint tax_pk
+		primary key (tax_id)
+);
+
+create table Item_category
+(
+	Item_category_id varchar(6) not null,
+	category_name varchar(20) not null,
+	constraint Item_category_pk
+		primary key (Item_category_id)
+);
+
+create table employee
+(
+	employee_id varchar(5) not null,
+	username varchar(20) not null,
+	password varchar(20) not null,
+	email varchar(30) not null,
+	document_type enum('PASSPORT', 'NATIONAL IDENTITY CARD', 'DRIVING LICENCE') not null,
+	document_number varchar(15) not null,
+	constraint employee_pk
+		primary key (employee_id)
+);
+
+create table deliver_details
+(
+	deliver_id varchar(5) not null,
+	address varchar(50) not null,
+	contact_1 varchar(15) not null,
+	contact_2 varchar(15) not null,
+	is_delivered int default 0 not null,
+	confirmed_by varchar(5) null,
+	constraint deliver_details_pk
+		primary key (deliver_id),
+	constraint deliver_details_employee_employee_id_fk
+		foreign key (confirmed_by) references employee (employee_id)
+);
+
+create table payment
+(
+	payment_id varchar(5) not null,
+	payment_type enum('CASH', 'CARD') not null,
+	status enum('PENDING', 'COMPLETED') not null,
+	constraint payment_pk
+		primary key (payment_id)
+);
+
+create table item_category_tax_details
+(
+	item_category_id varchar(6) not null,
+	tax_id varchar(5) not null,
+	constraint item_category_tax_details_item_category_Item_category_id_fk
+		foreign key (item_category_id) references item_category (Item_category_id),
+	constraint item_category_tax_details_tax_tax_id_fk
+		foreign key (tax_id) references tax (tax_id)
+);
+
+create table orders
+(
+	order_id varchar(5) not null,
+	customer_id varchar(5) not null,
+	payment_id varchar(5) not null,
+	batch_id varchar(5) not null,
+	order_date timestamp not null,
+	is_checked int default 0 not null,
+	check_by varchar(5) not null,
+	check_time timestamp not null,
+	is_deliver int default 0 not null,
+	deliver_date date not null,
+	constraint orders_pk
+		primary key (order_id),
+	constraint orders_batch_batch_id_fk
+		foreign key (batch_id) references batch (batch_id),
+	constraint orders_customer_customer_id_fk
+		foreign key (customer_id) references customer (customer_id),
+	constraint orders_employee_employee_id_fk
+		foreign key (check_by) references employee (employee_id),
+	constraint orders_payment_payment_id_fk
+		foreign key (payment_id) references payment (payment_id)
+);
+
+create table order_item_category
+(
+	order_item_category varchar(7) not null,
+	order_id varchar(5) not null,
+	item_category_id varchar(6) not null,
+	item_name varchar(20) not null,
+	note varchar(50) null,
+	constraint order_item_category_pk
+		primary key (order_item_category),
+	constraint order_item_category_item_category_Item_category_id_fk
+		foreign key (item_category_id) references item_category (Item_category_id),
+	constraint order_item_category_orders_order_id_fk
+		foreign key (order_id) references orders (order_id)
+);
+
+create table admin
+(
+	admin_id varchar(5) not null,
+	username varchar(20) not null,
+	password varchar(20) not null,
+	email varchar(30) not null,
+	constraint admin_pk
+		primary key (admin_id)
+);
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+
+Food and groceries: This category includes items such as fresh produce, meat, dairy products, cereals, and other food items that are meant for human consumption.
+
+Clothing and footwear: This category includes all types of clothing and footwear, such as shirts, pants, dresses, shoes, and socks.
+
+Electronics: This category includes items such as computers, smartphones, tablets, cameras, and other electronic devices.
+
+Home goods: This category includes items such as furniture, bedding, kitchenware, appliances, and other household items.
+
+Health and personal care: This category includes items such as medicine, vitamins, skincare products, and personal grooming items.
+
+Books and educational materials: This category includes items such as textbooks, workbooks, dictionaries, and other educational materials.
+
+Sporting goods: This category includes items such as sports equipment, athletic apparel, and other items related to sports and fitness.
+
+Toys and games: This category includes items such as board games, puzzles, action figures, and other toys.
+Automotive: This category includes items such as cars, trucks, motorcycles, and other motor vehicles, as well as auto parts and accessories.
+
+Building materials: This category includes items such as lumber, roofing, siding, insulation, and other materials used in construction.
+
+Office supplies: This category includes items such as paper, pens, pencils, staples, and other office supplies.
+
+Jewelry and accessories: This category includes items such as watches, necklaces, bracelets, earrings, and other types of jewelry and accessories.
+
+Art and collectibles: This category includes items such as paintings, sculptures, antiques, and other collectibles.
+
+Music and entertainment: This category includes items such as CDs, DVDs, and other media formats for music and movies.
+
+Pet supplies: This category includes items such as food, toys, and other supplies for pets.
+
+//////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

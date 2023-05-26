@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootChange" prefHeight="1010.0" prefWidth="1620.0" styleClass="root" stylesheets="@../../style/dashboard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.cargoproconnect.controller.add.AddNewOrderFormController">
+   <children>
+      <ScrollPane fx:id="scrollable" prefHeight="1010.0" prefWidth="1620.0" styleClass="root" stylesheets="@../../style/dashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <Pane prefHeight="2179.0" prefWidth="1620.0" styleClass="root" stylesheets="@../../style/dashboard.css">
+               <children>
+                  <Pane layoutX="25.0" layoutY="25.0" prefHeight="2123.0" prefWidth="1570.0" styleClass="pane" stylesheets="@../../style/dashboard.css">
+                     <children>
+                        <Pane layoutX="26.0" layoutY="1548.0" prefHeight="408.0" prefWidth="1518.0" styleClass="inside-pane" stylesheets="@../../style/dashboard.css">
+                           <children>
+                              <JFXTextField fx:id="txtCustomerAddress" labelFloat="true" layoutX="35.0" layoutY="222.0" prefHeight="35.0" prefWidth="1448.0" promptText="Address">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXTextField fx:id="txtCustomerContact1" labelFloat="true" layoutX="35.0" layoutY="312.0" prefHeight="35.0" prefWidth="561.0" promptText="Contact Number">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXTextField fx:id="txtCustomerContact2" labelFloat="true" layoutX="684.0" layoutY="312.0" prefHeight="35.0" prefWidth="561.0" promptText="Contact Number">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                              <Label layoutX="35.0" layoutY="130.0" opacity="0.5" prefHeight="55.0" prefWidth="144.0" text="Deliver id :">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblDeliverId" alignment="CENTER" layoutX="179.0" layoutY="130.0" opacity="0.5" prefHeight="55.0" prefWidth="180.0">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="1417.0" layoutX="101.0" layoutY="73.0" opacity="0.2" startX="-100.0" />
+                              <Label layoutX="580.0" layoutY="14.0" opacity="0.5" prefHeight="51.0" prefWidth="424.0" text="Customer Deliver Details">
+                                 <font>
+                                    <Font name="System Bold Italic" size="35.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="txtSearchAddress" labelFloat="true" layoutX="416.0" layoutY="140.0" prefHeight="35.0" prefWidth="260.0" promptText="Search Address">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                           </children>
+                        </Pane>
+                        <Label contentDisplay="CENTER" layoutX="110.0" layoutY="25.0" prefHeight="58.0" prefWidth="304.0" text="Add New Order">
+                           <font>
+                              <Font name="System Bold" size="40.0" />
+                           </font>
+                        </Label>
+                        <Line endX="1570.0" layoutY="100.0" opacity="0.2" />
+                        <Pane layoutX="24.0" layoutY="125.0" prefHeight="1052.0" prefWidth="1521.0" styleClass="inside-pane" stylesheets="@../../style/dashboard.css">
+                           <children>
+                              <JFXTextField fx:id="txtItemName" labelFloat="true" layoutX="30.0" layoutY="353.0" prefHeight="35.0" prefWidth="298.0" promptText="Item Name">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXTextField fx:id="txtNote" labelFloat="true" layoutX="374.0" layoutY="353.0" prefHeight="35.0" prefWidth="472.0" promptText="Note">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXTextField fx:id="txtSearchCategory" labelFloat="true" layoutX="374.0" layoutY="238.0" prefHeight="35.0" prefWidth="318.0" promptText="Search Category">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXTextField fx:id="txtWeight" labelFloat="true" layoutX="895.0" layoutY="353.0" prefHeight="35.0" prefWidth="106.0" promptText="Weight  ( Kg )">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXButton fx:id="btnAddToCart" layoutX="1358.0" layoutY="348.0" onAction="#btnAddToCartOnAction" prefHeight="45.0" prefWidth="128.0" styleClass="btnUpdate" stylesheets="@../../style/buttons.css" text="Add To Cart" />
+                              <JFXTextField fx:id="txtQty" labelFloat="true" layoutX="1050.0" layoutY="353.0" prefHeight="35.0" prefWidth="91.0" promptText="Qty">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                              <Label layoutX="30.0" layoutY="227.0" opacity="0.5" prefHeight="55.0" prefWidth="158.0" text="Category id :">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblCategoryId" alignment="CENTER" layoutX="188.0" layoutY="228.0" opacity="0.5" prefHeight="55.0" prefWidth="153.0">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="txtPrice" labelFloat="true" layoutX="1178.0" layoutY="353.0" prefHeight="35.0" prefWidth="131.0" promptText="Price">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                              <Label layoutX="668.0" layoutY="7.0" opacity="0.5" prefHeight="46.0" prefWidth="232.0" text="Order Details">
+                                 <font>
+                                    <Font name="System Bold Italic" size="35.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="1419.0" endY="-3.0517578125E-5" layoutX="101.0" layoutY="65.0" opacity="0.2" startX="-100.0" />
+                              <Label layoutX="630.0" layoutY="858.0" opacity="0.5" prefHeight="48.0" prefWidth="175.0" stylesheets="@../../style/dashboard.css" text="Tax amount :">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblTotalAmount" layoutX="805.0" layoutY="859.0" opacity="0.5" prefHeight="48.0" prefWidth="205.0" stylesheets="@../../style/dashboard.css">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="1133.0" layoutY="859.0" opacity="0.5" prefHeight="48.0" prefWidth="187.0" stylesheets="@../../style/dashboard.css" text="Total Weight :">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblTotalWeight" layoutX="1320.0" layoutY="858.0" opacity="0.5" prefHeight="48.0" prefWidth="171.0" stylesheets="@../../style/dashboard.css">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="30.0" layoutY="957.0" opacity="0.5" prefHeight="50.0" prefWidth="128.0" text="Batch id :">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblBatchId" layoutX="155.0" layoutY="957.0" opacity="0.5" prefHeight="50.0" prefWidth="172.0">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <JFXButton fx:id="btnAddBatch" layoutX="966.0" layoutY="962.0" onAction="#btnAddBatchOnAction" prefHeight="45.0" prefWidth="130.0" styleClass="btnUpdate" stylesheets="@../../style/buttons.css" text="Check Batch" />
+                              <Label layoutX="30.0" layoutY="94.0" opacity="0.5" prefHeight="55.0" prefWidth="121.0" text="Order id :">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblOrderId" layoutX="151.0" layoutY="94.0" opacity="0.5" prefHeight="55.0" prefWidth="180.0">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="tableOrder" layoutX="30.0" layoutY="437.0" prefHeight="411.0" prefWidth="1462.0" stylesheets="@../../style/table.css">
+                                 <columns>
+                                    <TableColumn fx:id="colItem" prefWidth="160.00003051757812" text="Item" />
+                                    <TableColumn fx:id="colCategory" prefWidth="237.0" text="Category" />
+                                    <TableColumn fx:id="colNote" prefWidth="191.0" text="Note" />
+                                    <TableColumn fx:id="colTaxes" prefWidth="96.0" text="Taxes" />
+                                    <TableColumn fx:id="colUnitWeight" prefWidth="166.0" text="Unit Weight" />
+                                    <TableColumn fx:id="colQty" prefWidth="113.0" text="Qty" />
+                                    <TableColumn fx:id="colTotal" prefWidth="198.0" text="Total" />
+                                    <TableColumn fx:id="colTaxValue" prefWidth="166.0" text="Total Tax" />
+                                    <TableColumn fx:id="colAction" prefWidth="132.0" text="Action" />
+                                 </columns>
+                              </TableView>
+                              <DatePicker fx:id="datePicker" layoutX="398.0" layoutY="967.0" prefHeight="40.0" prefWidth="232.0" promptText="    " />
+                              <DatePicker fx:id="datePicker2" layoutX="691.0" layoutY="967.0" prefHeight="40.0" prefWidth="232.0" />
+                           </children>
+                        </Pane>
+                        <Line endX="1570.0" layoutX="-1.0" layoutY="2065.0" opacity="0.2" />
+                        <JFXButton fx:id="btnPlaceOrder" layoutX="1407.0" layoutY="1990.0" onAction="#btnPlaceOrderOnAction" prefHeight="45.0" prefWidth="138.0" styleClass="btnAdd" stylesheets="@../../style/buttons.css" text="Place Order" />
+                        <JFXButton fx:id="btnDiscard" layoutX="1291.0" layoutY="1990.0" onAction="#btnDiscardOnAction" prefHeight="45.0" prefWidth="100.0" styleClass="btnDiscard" stylesheets="@../../style/buttons.css" text="Discard" />
+                        <Pane layoutX="26.0" layoutY="1207.0" prefHeight="311.0" prefWidth="1518.0" styleClass="inside-pane" stylesheets="@../../style/dashboard.css">
+                           <children>
+                              <Label layoutX="27.0" layoutY="115.0" opacity="0.5" prefHeight="55.0" prefWidth="165.0" text="Customer id :">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="27.0" layoutY="222.0" opacity="0.5" prefHeight="55.0" prefWidth="164.0" text="First Name :">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="449.0" layoutY="222.0" opacity="0.5" prefHeight="55.0" prefWidth="164.0" text="Last Name :">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="txtSearchCustomer" labelFloat="true" layoutX="416.0" layoutY="125.0" prefHeight="35.0" prefWidth="260.0" promptText="Search Customer">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </JFXTextField>
+                              <Label fx:id="lblCustomerId" layoutX="192.0" layoutY="115.0" opacity="0.5" prefHeight="55.0" prefWidth="180.0">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblCustomerFName" layoutX="191.0" layoutY="222.0" opacity="0.5" prefHeight="55.0" prefWidth="180.0">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblCustomerLName" layoutX="613.0" layoutY="222.0" opacity="0.5" prefHeight="55.0" prefWidth="180.0">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <JFXButton fx:id="btnAddNewCustomer" layoutX="703.0" layoutY="120.0" onAction="#btnAddNewCustomerOnAction" prefHeight="45.0" prefWidth="147.0" styleClass="btnUpdate" stylesheets="@../../style/buttons.css" text="New Customer" />
+                              <Label layoutX="629.0" layoutY="14.0" opacity="0.5" prefHeight="51.0" prefWidth="311.0" text="Customer Details">
+                                 <font>
+                                    <Font name="System Bold Italic" size="35.0" />
+                                 </font>
+                              </Label>
+                              <Line endX="1417.0" layoutX="101.0" layoutY="72.0" opacity="0.2" startX="-100.0" />
+                              <Label layoutX="934.0" layoutY="222.0" opacity="0.5" prefHeight="55.0" prefWidth="93.0" text="Email :">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblEmail" layoutX="1029.0" layoutY="222.0" opacity="0.5" prefHeight="55.0" prefWidth="476.0">
+                                 <font>
+                                    <Font name="System Bold" size="25.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <JFXButton fx:id="btnBack" alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="20.0" onAction="#btnBackOnAction" prefHeight="70.0" prefWidth="70.0" styleClass="btnBack" stylesheets="@../../style/buttons.css" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="46.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../img/back.png" />
+                                 </image>
+                                 <effect>
+                                    <Lighting diffuseConstant="2.0" specularConstant="2.0" specularExponent="2.79" surfaceScale="0.0">
+                                       <bumpInput>
+                                          <Shadow />
+                                       </bumpInput>
+                                       <light>
+                                          <Light.Distant azimuth="0.0" color="#3f72af" elevation="0.0" />
+                                       </light>
+                                    </Lighting>
+                                 </effect>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </content></ScrollPane>
+   </children>
+</AnchorPane>

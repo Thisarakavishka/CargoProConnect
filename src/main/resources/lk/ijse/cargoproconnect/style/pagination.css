@@ -1,0 +1,19 @@
+#pagination{
+    -fx-font-size: 20px;
+    -fx-page-information-visible:false;
+}
+
+#pagination .pagination-control .toggle-button:selected{
+    -fx-background-color: #112D4E;
+}
+
+#pagination .pagination-control .toggle-button:hover, #pagination .pagination-control .button:hover{
+    -fx-background-color: #3F72AF;
+    -fx-text-fill: #ffffff;
+}
+.pagination .pagination-control .left-arrow, .right-arrow{
+    -fx-background-color: #000000;
+}
+.pagination .pagination-control .left-arrow .pagination-control .button:hover{
+    -fx-text-fill: white;
+}

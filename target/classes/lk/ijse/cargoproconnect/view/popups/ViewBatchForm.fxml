@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="popupRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1125.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.cargoproconnect.controller.popup.ViewBatchFormController">
+   <children>
+      <TableView fx:id="tableBatch" layoutX="14.0" prefHeight="670.0" prefWidth="1126.0" stylesheets="@../../style/table.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="117.0" text="Batch id" />
+          <TableColumn fx:id="colShipmentType" prefWidth="142.0" text="Shipment Type" />
+            <TableColumn fx:id="colAvailableWeight" prefWidth="168.0" text="Available Weight" />
+            <TableColumn fx:id="colSDate" prefWidth="140.0" text="Shipment Date" />
+            <TableColumn fx:id="colDDate" prefWidth="164.0" text="Deliver Date" />
+            <TableColumn fx:id="colTo" prefWidth="129.0" text="To" />
+            <TableColumn fx:id="colStatus" prefWidth="132.0" text="Status" />
+            <TableColumn fx:id="colSelect" prefWidth="130.0" text="Select" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

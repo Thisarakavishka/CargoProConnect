@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="rootChange" prefHeight="1010.0" prefWidth="1620.0" styleClass="root" stylesheets="@../style/dashboard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.cargoproconnect.controller.EmployeeFormController">
+   <children>
+      <Pane layoutX="25.0" layoutY="25.0" prefHeight="957.0" prefWidth="1570.0" styleClass="pane" stylesheets="@../style/dashboard.css" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <Pagination fx:id="pagination" layoutX="28.0" layoutY="230.0" prefHeight="717.0" prefWidth="1516.0" stylesheets="@../style/pagination.css" />
+            <Label contentDisplay="CENTER" layoutX="35.0" layoutY="25.0" prefHeight="60.0" prefWidth="405.0" stylesheets="@../style/dashboard.css" text="Employee List">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="txtSearch" focusColor="#3f72af" labelFloat="true" layoutX="28.0" layoutY="137.0" prefHeight="45.0" prefWidth="330.0" promptText="search">
+               <font>
+                  <Font size="15.0" />
+               </font></JFXTextField>
+            <TableView fx:id="tableEmployee" layoutX="28.0" layoutY="230.0" prefHeight="650.0" prefWidth="1516.0" stylesheets="@../style/table.css">
+               <columns>
+                  <TableColumn fx:id="colId" prefWidth="138.99996948242188" text="Employee id" />
+                  <TableColumn fx:id="colUserName" prefWidth="188.00003051757812" text="UserName" />
+                  <TableColumn fx:id="colPassword" prefWidth="141.0" text="Password" />
+                  <TableColumn fx:id="colEmail" prefWidth="234.0" text="Email" />
+                  <TableColumn fx:id="colDType" prefWidth="277.0" text="Document Type" />
+                  <TableColumn fx:id="colDNumber" prefWidth="290.0" text="Document Number" />
+                  <TableColumn fx:id="colAction" minWidth="0.0" prefWidth="160.0" text="Action" />
+                  <TableColumn fx:id="colEdit" minWidth="0.0" prefWidth="83.0" />
+               </columns>
+            </TableView>
+            <HBox fx:id="btnAddHbox" alignment="CENTER_RIGHT" layoutX="1106.0" layoutY="130.0" prefHeight="60.0" prefWidth="421.0">
+               <children>
+                  <JFXButton fx:id="btnExport" onAction="#btnExportOnAction" prefHeight="45.0" prefWidth="150.0" styleClass="btnExport" stylesheets="@../style/buttons.css" text="Export">
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true" rotate="90.0">
+                           <image>
+                              <Image url="@../img/logout.png" />
+                           </image>
+                           <effect>
+                              <Lighting diffuseConstant="0.0" specularConstant="2.0" specularExponent="0.0">
+                                 <bumpInput>
+                                    <Shadow />
+                                 </bumpInput>
+                                 <light>
+                                    <Light.Distant color="#083972" />
+                                 </light>
+                              </Lighting>
+                           </effect>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btnAddEmployee" onAction="#btnAddEmployeeOnAction" prefHeight="45.0" prefWidth="150.0" styleClass="btnAdd" stylesheets="@../style/buttons.css" text="Add Employee" />
+               </children>
+            </HBox>
+            <HBox fx:id="btnDeleteHBox" alignment="CENTER_RIGHT" layoutX="625.0" layoutY="130.0" prefHeight="60.0" prefWidth="421.0">
+               <children>
+                  <Label fx:id="lblDelete" alignment="CENTER" prefHeight="42.0" prefWidth="185.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="btnMailSelected" contentDisplay="CENTER" onAction="#btnMailSelectedOnAction" prefHeight="46.0" prefWidth="38.0" styleClass="btnExport" stylesheets="@../style/buttons.css" text=" ">
+                     <graphic>
+                        <ImageView fitHeight="37.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/mail.png" />
+                           </image>
+                           <effect>
+                              <Lighting diffuseConstant="2.0" specularConstant="1.97" specularExponent="0.0" surfaceScale="0.0">
+                                 <bumpInput>
+                                    <Shadow />
+                                 </bumpInput>
+                                 <light>
+                                    <Light.Distant color="#083972" />
+                                 </light>
+                              </Lighting>
+                           </effect>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btnDeleteSelected" onAction="#btnDeleteSelectedOnAction" prefHeight="45.0" prefWidth="150.0" styleClass="btnDeleteSelected" stylesheets="@../style/buttons.css" text="Delete Selected" />
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+      <Line endX="1570.0" layoutX="25.0" layoutY="120.0" opacity="0.2" />
+   </children>
+</AnchorPane>

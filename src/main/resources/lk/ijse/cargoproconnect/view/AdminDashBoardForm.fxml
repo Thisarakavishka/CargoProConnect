@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" prefHeight="1060.0" prefWidth="1920.0" styleClass="root" stylesheets="@../style/dashboard.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.cargoproconnect.controller.AdminDashBoardFormController">
+   <children>
+      <HBox alignment="CENTER_RIGHT" layoutX="300.0" prefHeight="50.0" prefWidth="1620.0" styleClass="top-header" stylesheets="@../style/dashboard.css" AnchorPane.bottomAnchor="1010.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblDate" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="191.0" textAlignment="CENTER" wrapText="true">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <AnchorPane prefHeight="40.0" prefWidth="294.0">
+               <children>
+                  <ImageView fitHeight="35.0" fitWidth="40.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/employee%20dark.png" />
+                     </image>
+                     <effect>
+                        <Lighting diffuseConstant="0.88" specularConstant="2.0" specularExponent="0.0">
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant color="#1c14619e" />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </ImageView>
+                  <Label fx:id="lblUser" contentDisplay="CENTER" layoutX="40.0" prefHeight="40.0" prefWidth="234.0" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <JFXButton fx:id="btnMail" ellipsisString="" onAction="#btnMailOnAction" prefHeight="39.0" prefWidth="46.0" styleClass="top-button" stylesheets="@../style/dashboard.css">
+               <graphic>
+                  <ImageView fitHeight="41.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/mail.png" />
+                     </image>
+                     <effect>
+                        <Lighting specularConstant="2.0" specularExponent="6.51">
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant color="#1c1461" />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </JFXButton>
+         </children>
+      </HBox>
+      <AnchorPane fx:id="rootChange" layoutX="300.0" layoutY="50.0" prefHeight="1010.0" prefWidth="1620.0" styleClass="root" stylesheets="@../style/dashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+      <Pane layoutX="50.0" prefHeight="1010.0" prefWidth="300.0" styleClass="button-bar" stylesheets="@../style/dashboard.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1620.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <JFXButton fx:id="btnDashBoard" layoutX="15.0" layoutY="247.0" onAction="#btnDashBoardOnAction" prefHeight="50.0" prefWidth="270.0" styleClass="JFXButton" stylesheets="@../style/dashboard.css" text="DashBorad">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/dashboard.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnOrder" layoutX="15.0" layoutY="307.0" onAction="#btnOrderOnAction" prefHeight="50.0" prefWidth="270.0" styleClass="JFXButton" stylesheets="@../style/dashboard.css" text="Order           ">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/cart.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnCustomer" layoutX="15.0" layoutY="367.0" onAction="#btnCustomerOnAction" prefHeight="50.0" prefWidth="270.0" styleClass="JFXButton" stylesheets="@../style/dashboard.css" text="Customer   ">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/customer.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnEmployee" layoutX="15.0" layoutY="427.0" onAction="#btnEmployeeOnAction" prefHeight="50.0" prefWidth="270.0" styleClass="JFXButton" stylesheets="@../style/dashboard.css" text="Employee    ">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/employee.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnBatch" layoutX="15.0" layoutY="487.0" onAction="#btnBatchOnAction" prefHeight="50.0" prefWidth="270.0" styleClass="JFXButton" stylesheets="@../style/dashboard.css" text="Batch          ">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/item.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnTax" layoutX="15.0" layoutY="547.0" onAction="#btnTaxOnAction" prefHeight="50.0" prefWidth="270.0" styleClass="JFXButton" stylesheets="@../style/dashboard.css" text="Tax              ">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/tax.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnCategory" layoutX="15.0" layoutY="607.0" onAction="#btnCategoryOnAction" prefHeight="50.0" prefWidth="270.0" styleClass="JFXButton" stylesheets="@../style/dashboard.css" text="Category    ">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/category.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnReport" layoutX="15.0" layoutY="667.0" onAction="#btnReportOnAction" prefHeight="50.0" prefWidth="270.0" styleClass="JFXButton" stylesheets="@../style/dashboard.css" text="Report        ">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/report.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnLogout" layoutX="15.0" layoutY="937.0" onAction="#btnLogoutOnAction" prefHeight="50.0" prefWidth="270.0" styleClass="JFXButton" stylesheets="@../style/dashboard.css" text="Logout    ">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/logout.png" />
+                     </image>
+                     <effect>
+                        <ColorAdjust brightness="1.0" />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <Label layoutX="29.0" layoutY="31.0" prefHeight="110.0" prefWidth="243.0" styleClass="logo" stylesheets="@../style/dashboard.css" text="Cargo">
+               <font>
+                  <Font name="System Bold Italic" size="81.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label fx:id="lblUser1" contentDisplay="CENTER" layoutX="50.0" layoutY="10.0" prefHeight="40.0" prefWidth="234.0" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="15.0" />
+         </padding>
+      </Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,86 @@
+.btnAdd {
+    -fx-background-color: #3F72AF;
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.btnAdd:hover {
+    -fx-background-color: #112D4E;
+    -fx-font-size:17px;
+}
+
+.btnUpdate {
+    -fx-background-color: #00E676;
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.btnUpdate:hover {
+    -fx-background-color: #03c466;
+    -fx-font-size:17px;
+}
+
+.btnDiscard {
+    -fx-background-color: #DBE2EF;
+    -fx-background-radius: 10px;
+    -fx-text-fill: #3F72AF;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.btnDiscard:hover {
+    -fx-font-size:17px;
+    -fx-background-color: #d0d7e5;
+}
+
+.btnDeleteSelected{
+    -fx-background-color: #ff0000;
+    -fx-background-radius: 10px;
+    -fx-text-fill: #DBE2EF;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.btnDeleteSelected:hover{
+    -fx-font-size:17px;
+    -fx-background-color: #c20303;
+}
+
+.btnExport {
+    -fx-background-color: #DBE2EF;
+    -fx-background-radius: 10px;
+    -fx-text-fill: #3F72AF;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.btnExport:hover {
+    -fx-font-size:17px;
+    -fx-background-color: #d0d7e5;
+}
+
+.btnAddTax {
+    -fx-background-color: #00E676;
+    -fx-background-radius: 10px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+}
+
+.btnAddTax:hover {
+    -fx-font-size:17px;
+    -fx-background-color: #03c466;
+}
+
+.label-button{
+    -fx-background-radius: 10px;
+}
+
+.btnBack{
+    -fx-background-color: #DBE2EF;
+    -fx-background-radius: 60px;
+}
