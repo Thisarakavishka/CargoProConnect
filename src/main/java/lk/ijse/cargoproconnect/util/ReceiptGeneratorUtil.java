@@ -1,6 +1,6 @@
 package lk.ijse.cargoproconnect.util;
 
-import lk.ijse.cargoproconnect.dto.Delivery;
+import lk.ijse.cargoproconnect.dto.DeliveryDTO;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -10,7 +10,7 @@ import java.util.Date;
 public class ReceiptGeneratorUtil {
     private static final DecimalFormat decimalFormatter = new DecimalFormat("0.00");
 
-    public static String generate(String customerId, String batchId, int weight, double totalAmount, Delivery delivery, String paymentMethod) {
+    public static String generate(String customerId, String batchId, int weight, double totalAmount, DeliveryDTO delivery, String paymentMethod) {
         StringBuilder sb = new StringBuilder();
 
         Date date = new Date();

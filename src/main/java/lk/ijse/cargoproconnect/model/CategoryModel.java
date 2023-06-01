@@ -1,8 +1,8 @@
 package lk.ijse.cargoproconnect.model;
 
 import javafx.collections.ObservableList;
-import lk.ijse.cargoproconnect.dto.Category;
-import lk.ijse.cargoproconnect.dto.Tax;
+import lk.ijse.cargoproconnect.dto.CategoryDTO;
+import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 
@@ -13,12 +13,12 @@ import java.util.List;
 
 public class CategoryModel {
 
-    public static List<Category> getCategories() throws SQLException {
+    public static List<CategoryDTO> getCategories() throws SQLException {
         String sql = "SELECT * FROM item_category";
-        List<Category> categories = new ArrayList<>();
+        List<CategoryDTO> categories = new ArrayList<>();
         ResultSet resultSet = CrudUtil.execute(sql);
         while (resultSet.next()) {
-            categories.add(new Category(
+            categories.add(new CategoryDTO(
                     resultSet.getString(1),
                     resultSet.getString(2)
             ));
@@ -74,7 +74,7 @@ public class CategoryModel {
         return "IC" + String.format("%04d", Integer.parseInt(currentMaxId.substring(2)) + 1);
     }
 
-    public static boolean addNewCategory(Category category) throws SQLException {
+    public static boolean addNewCategory(CategoryDTO category) throws SQLException {
         String sql = "INSERT INTO item_category(item_category_id, category_name) VALUES (?, ?)";
         return CrudUtil.execute(sql, category.getId(), category.getName());
     }
@@ -103,13 +103,13 @@ public class CategoryModel {
         return ids;
     }
 
-    public static List<Tax> getTaxes(List<String> ids) throws SQLException {
+    public static List<TaxDTO> getTaxes(List<String> ids) throws SQLException {
         String sql = "SELECT * FROM tax WHERE  tax_id = ?";
-        List<Tax> taxes = new ArrayList<>();
+        List<TaxDTO> taxes = new ArrayList<>();
         for (String id : ids) {
             ResultSet resultSet = CrudUtil.execute(sql, id);
             while (resultSet.next()) {
-                taxes.add(new Tax(
+                taxes.add(new TaxDTO(
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getDouble(3),
@@ -121,16 +121,16 @@ public class CategoryModel {
         return taxes;
     }
 
-    public static boolean updateCategoryName(Category category) throws SQLException {
+    public static boolean updateCategoryName(CategoryDTO category) throws SQLException {
         String sql = "UPDATE item_category SET category_name = ? WHERE Item_category_id = ?";
         return CrudUtil.execute(sql, category.getName(), category.getId());
     }
 
-    public static boolean addTax(String id, List<Tax> addedTaxes) throws SQLException {
+    public static boolean addTax(String id, List<TaxDTO> addedTaxes) throws SQLException {
         if (addedTaxes.isEmpty()) {
             return true;
         }
-        for (Tax tax : addedTaxes) {
+        for (TaxDTO tax : addedTaxes) {
             boolean isSave = isSave(id , tax.getId());
             if(!isSave){
                 return false;
@@ -139,12 +139,12 @@ public class CategoryModel {
         return true;
     }
 
-    public static boolean removeTax(String id, List<Tax> removedTaxes) throws SQLException {
+    public static boolean removeTax(String id, List<TaxDTO> removedTaxes) throws SQLException {
         if (removedTaxes ==null || id == null || id.isEmpty()) {
             return true;
         }
         String sql = "DELETE FROM item_category_tax_details WHERE item_category_id = ? AND tax_id = ?";
-        for (Tax tax : removedTaxes) {
+        for (TaxDTO tax : removedTaxes) {
             boolean isRemoved = CrudUtil.execute(sql, id, tax.getId());
             if(!isRemoved){
                 return false;

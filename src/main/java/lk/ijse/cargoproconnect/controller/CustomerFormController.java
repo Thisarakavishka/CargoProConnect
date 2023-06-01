@@ -25,9 +25,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.controller.popup.MailFormController;
 import lk.ijse.cargoproconnect.controller.update.UpdateCustomerFormController;
-import lk.ijse.cargoproconnect.dto.Customer;
+import lk.ijse.cargoproconnect.dto.CustomerDTO;
 import lk.ijse.cargoproconnect.dto.tm.CustomerTM;
-import lk.ijse.cargoproconnect.dto.tm.OrderTM;
 import lk.ijse.cargoproconnect.model.CustomerModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -278,9 +277,9 @@ public class CustomerFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<Customer> customers = CustomerModel.getCustomers();
+            List<CustomerDTO> customers = CustomerModel.getCustomers();
 
-            for (Customer customer : customers) {
+            for (CustomerDTO customer : customers) {
 
                 JFXCheckBox checkBox = new JFXCheckBox();
                 setCheckBoxOnAction(checkBox, customer);
@@ -340,7 +339,7 @@ public class CustomerFormController implements Initializable {
         return tableCustomer;
     }
 
-    private void setMailBtnOnAction(JFXButton btnMail, Customer customer) {
+    private void setMailBtnOnAction(JFXButton btnMail, CustomerDTO customer) {
         btnMail.setOnAction(event -> {
             try {
                 MailFormController.setMail(customer.getEmail());
@@ -358,7 +357,7 @@ public class CustomerFormController implements Initializable {
         });
     }
 
-    private void setDeleteBtnOnAction(JFXButton btnDelete, Customer customer) {
+    private void setDeleteBtnOnAction(JFXButton btnDelete, CustomerDTO customer) {
         btnDelete.setOnAction(event -> {
             ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
             ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -381,7 +380,7 @@ public class CustomerFormController implements Initializable {
         });
     }
 
-    private void setEditBtnOnAction(JFXButton btnEdit, Customer customer) {
+    private void setEditBtnOnAction(JFXButton btnEdit, CustomerDTO customer) {
         btnEdit.setOnAction(event -> {
             try {
                 rootChange.getChildren().clear();
@@ -393,7 +392,7 @@ public class CustomerFormController implements Initializable {
         });
     }
 
-    private void setCheckBoxOnAction(JFXCheckBox checkBox, Customer customer) {
+    private void setCheckBoxOnAction(JFXCheckBox checkBox, CustomerDTO customer) {
         checkBox.setOnAction(event -> {
             if (!checkBox.isSelected()) {
                 setSelectedCount();

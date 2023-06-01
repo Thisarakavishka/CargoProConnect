@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Tax;
+import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.model.TaxModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -47,9 +47,9 @@ public class UpdateTaxFormController implements Initializable {
     @FXML
     private JFXButton btnDiscard;
 
-    static Tax tax;
+    static TaxDTO tax;
 
-    public static void setTaxDetails(Tax tax) {
+    public static void setTaxDetails(TaxDTO tax) {
         UpdateTaxFormController.tax = tax;
     }
 
@@ -67,7 +67,7 @@ public class UpdateTaxFormController implements Initializable {
     void btnUpdateOnAction(ActionEvent event) {
         if (txtName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtPercentage.getFocusColor().equals(Color.web(Colors.GREEN)) && txtDescription.getFocusColor().equals(Color.web(Colors.GREEN))) {
             try {
-                boolean isUpdated = TaxModel.updateTax(new Tax(taxId.getText(), txtName.getText(), Double.parseDouble(txtPercentage.getText()), txtDescription.getText()));
+                boolean isUpdated = TaxModel.updateTax(new TaxDTO(taxId.getText(), txtName.getText(), Double.parseDouble(txtPercentage.getText()), txtDescription.getText()));
                 if (isUpdated) {
                     NotificationUtil.showNotification("Success", "Successfully " + txtName.getText() + " Tax updated ", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();

@@ -9,7 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Batch;
+import lk.ijse.cargoproconnect.dto.BatchDTO;
 import lk.ijse.cargoproconnect.util.Colors;
 
 import java.net.URL;
@@ -50,9 +50,9 @@ public class ViewBatchDetailsFormController implements Initializable {
     @FXML
     private ProgressIndicator progressInDicator;
 
-    private static Batch batch;
+    private static BatchDTO batch;
 
-    public static void setBatchDetail(Batch batch) {
+    public static void setBatchDetail(BatchDTO batch) {
         ViewBatchDetailsFormController.batch = batch;
     }
 

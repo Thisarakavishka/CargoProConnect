@@ -1,6 +1,6 @@
 package lk.ijse.cargoproconnect.model;
 
-import lk.ijse.cargoproconnect.dto.Employee;
+import lk.ijse.cargoproconnect.dto.EmployeeDTO;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -24,12 +24,12 @@ public class EmployeeModel {
         return "E" + String.format("%04d", Integer.parseInt(currentMaxId.substring(1)) + 1);
     }
 
-    public static List<Employee> getEmployees(int i) throws SQLException {
+    public static List<EmployeeDTO> getEmployees(int i) throws SQLException {
         String sql = "SELECT * FROM employee WHERE status = ?";
-        List<Employee> employees = new ArrayList<>();
+        List<EmployeeDTO> employees = new ArrayList<>();
         ResultSet resultSet = CrudUtil.execute(sql, i);
         while (resultSet.next()) {
-            employees.add(new Employee(
+            employees.add(new EmployeeDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -47,12 +47,12 @@ public class EmployeeModel {
         return CrudUtil.execute(sql, id);
     }
 
-    public static boolean addNewEmployee(Employee employee) throws SQLException {
+    public static boolean addNewEmployee(EmployeeDTO employee) throws SQLException {
         String sql = "INSERT INTO employee(employee_id, username, password, email, document_type, document_number)VALUES (?,?,?,?,?,?)";
         return CrudUtil.execute(sql, employee.getId(), employee.getUsername(), employee.getPassword(), employee.getEmail(), employee.getDocumentType(), employee.getDocumentNumber());
     }
 
-    public static boolean updateEmployee(Employee employee) throws SQLException {
+    public static boolean updateEmployee(EmployeeDTO employee) throws SQLException {
         String sql = "UPDATE employee SET username = ?, password = ?, email = ?, document_type = ?, document_number = ? ,status = ? WHERE employee_id = ?";
         return CrudUtil.execute(sql, employee.getUsername(), employee.getPassword(), employee.getEmail(), employee.getDocumentType(), employee.getDocumentNumber(), employee.getStatus(), employee.getId());
     }
@@ -71,7 +71,7 @@ public class EmployeeModel {
         return CrudUtil.execute(sql, id);
     }
 
-    public static boolean updateUser(Employee employee) throws SQLException {
+    public static boolean updateUser(EmployeeDTO employee) throws SQLException {
         String sql = "UPDATE employee SET username = ?, password = ?, email = ? WHERE employee_id = ?";
         return CrudUtil.execute(sql, employee.getUsername(), employee.getPassword(), employee.getEmail(), employee.getEmail());
     }

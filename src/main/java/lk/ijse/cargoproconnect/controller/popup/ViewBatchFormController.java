@@ -12,7 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Batch;
+import lk.ijse.cargoproconnect.dto.BatchDTO;
 import lk.ijse.cargoproconnect.dto.tm.ViewBatchTM;
 import lk.ijse.cargoproconnect.model.BatchModel;
 import lk.ijse.cargoproconnect.util.Colors;
@@ -75,9 +75,9 @@ public class ViewBatchFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<Batch> batches = BatchModel.getAvailableBatches();
+            List<BatchDTO> batches = BatchModel.getAvailableBatches();
 
-            for(Batch batch: batches){
+            for(BatchDTO batch: batches){
                 JFXButton button = new JFXButton("SELECT");
                 button.setStyle("-fx-background-color: "+ Colors.GREEN +";-fx-border-radius: 10px;-fx-text-fill: "+ Colors.WHITE +";-fx-font-weight: bold;-fx-font-size: 15px");
                 setSelectButtonOnAction(button, batch);
@@ -108,7 +108,7 @@ public class ViewBatchFormController implements Initializable {
         }
     }
 
-    private void setSelectButtonOnAction(JFXButton button, Batch batch) {
+    private void setSelectButtonOnAction(JFXButton button, BatchDTO batch) {
         button.setOnAction(event -> {
             batchId = batch.getId();
             Stage stage = (Stage) popupRoot.getScene().getWindow();

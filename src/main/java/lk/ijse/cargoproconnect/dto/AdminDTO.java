@@ -7,13 +7,13 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Admin {
+public class AdminDTO {
     private String id;
     private String username;
     private String password;
     private String email;
 
-    public Admin(String id, String userName, String email) {
+    public AdminDTO(String id, String userName, String email) {
         this.id = id;
         this.username = userName;
         this.email = email;

@@ -22,7 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.controller.update.UpdateTaxFormController;
-import lk.ijse.cargoproconnect.dto.Tax;
+import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.dto.tm.TaxTM;
 import lk.ijse.cargoproconnect.model.TaxModel;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -206,8 +206,8 @@ public class TaxFormController implements Initializable {
         try {
 
             list = FXCollections.observableArrayList();
-            List<Tax> taxes = TaxModel.getTaxes();
-            for (Tax tax : taxes) {
+            List<TaxDTO> taxes = TaxModel.getTaxes();
+            for (TaxDTO tax : taxes) {
 
                 JFXCheckBox checkBox = new JFXCheckBox();
                 setCheckBoxOnAction(checkBox, tax);
@@ -258,7 +258,7 @@ public class TaxFormController implements Initializable {
         return tableTax;
     }
 
-    private void setBtnDeleteOnAction(JFXButton btnDelete, Tax tax) {
+    private void setBtnDeleteOnAction(JFXButton btnDelete, TaxDTO tax) {
         btnDelete.setOnAction(event -> {
             ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
             ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -283,7 +283,7 @@ public class TaxFormController implements Initializable {
         });
     }
 
-    private void setBtnEditOnAction(JFXButton btnEdit, Tax tax) {
+    private void setBtnEditOnAction(JFXButton btnEdit, TaxDTO tax) {
         btnEdit.setOnAction(event -> {
             try {
                 rootChange.getChildren().clear();
@@ -295,7 +295,7 @@ public class TaxFormController implements Initializable {
         });
     }
 
-    private void setCheckBoxOnAction(JFXCheckBox checkBox, Tax tax) {
+    private void setCheckBoxOnAction(JFXCheckBox checkBox, TaxDTO tax) {
         checkBox.setOnAction(event -> {
             if (!checkBox.isSelected()) {
                 setSelectedCount();

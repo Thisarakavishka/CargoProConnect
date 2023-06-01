@@ -1,8 +1,6 @@
 package lk.ijse.cargoproconnect.model;
 
-import javafx.collections.ObservableList;
-import lk.ijse.cargoproconnect.dto.Customer;
-import lk.ijse.cargoproconnect.dto.tm.OrderTM;
+import lk.ijse.cargoproconnect.dto.CustomerDTO;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -12,12 +10,12 @@ import java.util.List;
 
 public class CustomerModel {
 
-    public static List<Customer> getCustomers() throws SQLException {
+    public static List<CustomerDTO> getCustomers() throws SQLException {
         String sql = "SELECT * FROM customer";
-        List<Customer> customers = new ArrayList<>();
+        List<CustomerDTO> customers = new ArrayList<>();
         ResultSet resultSet = CrudUtil.execute(sql);
         while (resultSet.next()) {
-            customers.add(new Customer(
+            customers.add(new CustomerDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -55,12 +53,12 @@ public class CustomerModel {
         return types;
     }
 
-    public static boolean addNewCustomer(Customer customer) throws SQLException {
+    public static boolean addNewCustomer(CustomerDTO customer) throws SQLException {
         String sql = "INSERT INTO customer(customer_id, last_name, first_name, contact_number_1, contact_number_2, document_type, document_number, email)VALUES(?,?,?,?,?,?,?,?)";
         return CrudUtil.execute(sql, customer.getId(), customer.getLName(), customer.getFName(), customer.getContactN1(), customer.getContactN2(), customer.getDocumentType(), customer.getDocumentNumber(), customer.getEmail());
     }
 
-    public static boolean updateCustomer(Customer customer) throws SQLException {
+    public static boolean updateCustomer(CustomerDTO customer) throws SQLException {
         String sql = "UPDATE customer SET first_name = ?, last_name = ?, email = ?, contact_number_1 = ?, contact_number_2 = ?, document_type = ?, document_number = ? WHERE customer_id = ?";
         return CrudUtil.execute(sql, customer.getFName(), customer.getLName(), customer.getEmail(), customer.getContactN1(), customer.getContactN2(), customer.getDocumentType(), customer.getDocumentNumber(), customer.getId());
     }
@@ -103,11 +101,11 @@ public class CustomerModel {
         return resultSet.getString(1);
     }
 
-    public static Customer getCustomer(String customerId) throws SQLException {
+    public static CustomerDTO getCustomer(String customerId) throws SQLException {
         String sql = "SELECT * FROM customer WHERE customer_id = ?";
         ResultSet resultSet = CrudUtil.execute(sql, customerId);
         if(resultSet.next()){
-            return new Customer(
+            return new CustomerDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),

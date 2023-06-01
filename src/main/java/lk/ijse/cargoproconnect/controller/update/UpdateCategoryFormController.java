@@ -18,8 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Category;
-import lk.ijse.cargoproconnect.dto.Tax;
+import lk.ijse.cargoproconnect.dto.CategoryDTO;
+import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
 import lk.ijse.cargoproconnect.model.CategoryTaxModel;
 import lk.ijse.cargoproconnect.model.TaxModel;
@@ -78,19 +78,19 @@ public class UpdateCategoryFormController implements Initializable {
     @FXML
     private JFXButton btnDiscard;
 
-    static Category category;
+    static CategoryDTO category;
     static ObservableList<CategoryTaxTM> list = FXCollections.observableArrayList();
-    static List<Tax> originalTaxes = new ArrayList<>();
+    static List<TaxDTO> originalTaxes = new ArrayList<>();
 
-    public static void setCategoryDetails(Category category) {
+    public static void setCategoryDetails(CategoryDTO category) {
         UpdateCategoryFormController.category = category;
     }
 
     @FXML
     void btnAddTaxOnAction(ActionEvent event) {
         try {
-            List<Tax> taxes = TaxModel.getTaxes();
-            for (Tax tax : taxes) {
+            List<TaxDTO> taxes = TaxModel.getTaxes();
+            for (TaxDTO tax : taxes) {
                 if (tax.getName().equalsIgnoreCase(cmbTaxName.getValue())) {
                     //check new add tax is already in the list
                     if (!list.isEmpty()) {
@@ -137,12 +137,12 @@ public class UpdateCategoryFormController implements Initializable {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        List<Tax> addedTaxes = new ArrayList<>();
-        List<Tax> removedTaxes = new ArrayList<>();
-        List<Tax> currentTaxes = new ArrayList<>();
+        List<TaxDTO> addedTaxes = new ArrayList<>();
+        List<TaxDTO> removedTaxes = new ArrayList<>();
+        List<TaxDTO> currentTaxes = new ArrayList<>();
 
         for (CategoryTaxTM categoryTaxTM : taxTable.getItems()) {
-            currentTaxes.add(new Tax(
+            currentTaxes.add(new TaxDTO(
                     categoryTaxTM.getId(),
                     categoryTaxTM.getName(),
                     categoryTaxTM.getPercentage(),
@@ -151,9 +151,9 @@ public class UpdateCategoryFormController implements Initializable {
         }
 
         // find added and removed taxes
-        for (Tax updatedTax : currentTaxes) {
+        for (TaxDTO updatedTax : currentTaxes) {
             boolean found = false;
-            for (Tax originalTax : originalTaxes) {
+            for (TaxDTO originalTax : originalTaxes) {
                 if (updatedTax.getId() == originalTax.getId()) {
                     found = true;
                     break;
@@ -164,9 +164,9 @@ public class UpdateCategoryFormController implements Initializable {
             }
         }
 
-        for (Tax originalTax : originalTaxes) {
+        for (TaxDTO originalTax : originalTaxes) {
             boolean found = false;
-            for (Tax updatedTax : currentTaxes) {
+            for (TaxDTO updatedTax : currentTaxes) {
                 if (updatedTax.getId() == originalTax.getId()) {
                     found = true;
                     break;
@@ -220,11 +220,11 @@ public class UpdateCategoryFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<Tax> taxes = CategoryTaxModel.getIncludedTaxes(category.getId());
+            List<TaxDTO> taxes = CategoryTaxModel.getIncludedTaxes(category.getId());
             if (taxes == null) {
 
             } else if (!taxes.isEmpty() || taxes != null) {
-                for (Tax tax : taxes) {
+                for (TaxDTO tax : taxes) {
                     JFXButton btnDelete = new JFXButton();
                     ImageView deleteIcon = new ImageView(new Image("/lk/ijse/cargoproconnect/img/delete.png"));
                     deleteIcon.setFitHeight(20);
@@ -250,7 +250,7 @@ public class UpdateCategoryFormController implements Initializable {
                 //copy list for originalTaxes
                 originalTaxes = new ArrayList<>();
                 for (CategoryTaxTM categoryTaxTM : taxTable.getItems()) {
-                    originalTaxes.add(new Tax(
+                    originalTaxes.add(new TaxDTO(
                             categoryTaxTM.getId(),
                             categoryTaxTM.getName(),
                             categoryTaxTM.getPercentage(),
@@ -263,7 +263,7 @@ public class UpdateCategoryFormController implements Initializable {
         }
     }
 
-    private void setDeleteBtnOnAction(JFXButton btnDelete, Tax tax) {
+    private void setDeleteBtnOnAction(JFXButton btnDelete, TaxDTO tax) {
         btnDelete.setOnAction(event -> {
             ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
             ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -287,9 +287,9 @@ public class UpdateCategoryFormController implements Initializable {
     void loadDocumentTypes() {
         try {
             ObservableList<String> observableList = FXCollections.observableArrayList();
-            List<Tax> taxes = TaxModel.getTaxes();
+            List<TaxDTO> taxes = TaxModel.getTaxes();
 
-            for (Tax tax : taxes) {
+            for (TaxDTO tax : taxes) {
                 observableList.add(tax.getName());
             }
 

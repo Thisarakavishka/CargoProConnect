@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Order {
+public class OrderDTO {
     private String id;
     private String customerId;
     private String paymentId;
@@ -21,7 +21,7 @@ public class Order {
     private Integer weight;
     private Double totalPrice;
 
-    public Order(String id, String customerId, String paymentId, String batchId, String orderDate ) {
+    public OrderDTO(String id, String customerId, String paymentId, String batchId, String orderDate ) {
         this.id = id;
         this.customerId = customerId;
         this.paymentId = paymentId;
@@ -29,7 +29,7 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public Order(String id, String customerId, String paymentId, String batchId, String orderDate, String deliverDate,int weight ,int totalPrice) {
+    public OrderDTO(String id, String customerId, String paymentId, String batchId, String orderDate, String deliverDate, int weight , int totalPrice) {
         this.id = id;
         this.customerId = customerId;
         this.paymentId = paymentId;

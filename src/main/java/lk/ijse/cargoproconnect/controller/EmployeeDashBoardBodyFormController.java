@@ -181,10 +181,10 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
 
     private void setDataToLabels() {
         try {
-            List<Customer> customers = CustomerModel.getCustomers();
-            List<Order> orders = OrderModel.getOrders(1);
-            List<Batch> batches = BatchModel.getAvailableBatches();
-            List<Tax> taxes = TaxModel.getTaxes();
+            List<CustomerDTO> customers = CustomerModel.getCustomers();
+            List<OrderDTO> orders = OrderModel.getOrders(1);
+            List<BatchDTO> batches = BatchModel.getAvailableBatches();
+            List<TaxDTO> taxes = TaxModel.getTaxes();
             lblTotalCustomers.setText(String.valueOf(customers.size()));
             lblTotalOrders.setText(String.valueOf(orders.size()));
             lblAvailableBatches.setText(String.valueOf(batches.size()));
@@ -227,11 +227,11 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
 
     private void setDeliverTableData() {
         try {
-            List<Delivery> deliveries = OrderDeliveryModel.getDeliveries(0);
+            List<DeliveryDTO> deliveries = OrderDeliveryModel.getDeliveries(0);
             if (deliveries == null) {
                 tableDeliver.getItems().clear();
             } else if (!deliveries.isEmpty() || deliveries != null) {
-                for (Delivery delivery : deliveries) {
+                for (DeliveryDTO delivery : deliveries) {
 
                     JFXButton confirm = new JFXButton("confirm");
                     confirm.setStyle("-fx-background-color: "+ Colors.GREEN +";-fx-border-radius: 10px;-fx-text-fill: "+ Colors.WHITE +";-fx-font-weight: bold;-fx-font-size: 15px");
@@ -263,8 +263,8 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
 
     private void setOrdersForCheckTableData() {
         try {
-            List<Order> orders = OrderModel.getOrders(0);
-            for (Order order : orders) {
+            List<OrderDTO> orders = OrderModel.getOrders(0);
+            for (OrderDTO order : orders) {
 
                 JFXButton check = new JFXButton("Check");
                 check.setStyle("-fx-background-color: "+ Colors.GREEN +";-fx-border-radius: 10px;-fx-text-fill: "+ Colors.WHITE +";-fx-font-weight: bold;-fx-font-size: 15px");
@@ -285,7 +285,7 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
         }
     }
 
-    private void setCheckBtnOnAction(Order order, JFXButton check) {
+    private void setCheckBtnOnAction(OrderDTO order, JFXButton check) {
         check.setOnAction(event -> {
             try {
                 boolean checkOrder = OrderModel.checkOrder(order.getId(), LoginModel.getEmployeeId(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
@@ -303,7 +303,7 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
         });
     }
 
-    private void setConfirmBtnOnAction(Delivery delivery, JFXButton confirm) {
+    private void setConfirmBtnOnAction(DeliveryDTO delivery, JFXButton confirm) {
         confirm.setOnAction(event -> {
             try {
                 boolean isConfirm = OrderDeliveryModel.confirmDeliver(delivery.getId(), LoginModel.getEmployeeId());
@@ -340,10 +340,10 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
         XYChart.Series series = new XYChart.Series();
         series.setName("Orders");
         try {
-            List<Order> orders = OrderModel.getOrders();
-            for (Order order : orders) {
+            List<OrderDTO> orders = OrderModel.getOrders();
+            for (OrderDTO order : orders) {
                 int count = 0;
-                for (Order order1 : orders) {
+                for (OrderDTO order1 : orders) {
                     if (order.getOrderDate().equalsIgnoreCase(order1.getOrderDate())) {
                         count += 1;
                     }

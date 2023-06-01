@@ -4,10 +4,10 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import lk.ijse.cargoproconnect.dto.Batch;
-import lk.ijse.cargoproconnect.dto.Customer;
-import lk.ijse.cargoproconnect.dto.Delivery;
-import lk.ijse.cargoproconnect.dto.Order;
+import lk.ijse.cargoproconnect.dto.BatchDTO;
+import lk.ijse.cargoproconnect.dto.CustomerDTO;
+import lk.ijse.cargoproconnect.dto.DeliveryDTO;
+import lk.ijse.cargoproconnect.dto.OrderDTO;
 import lk.ijse.cargoproconnect.dto.tm.OrderTM;
 import lk.ijse.cargoproconnect.model.BatchModel;
 import lk.ijse.cargoproconnect.model.CustomerModel;
@@ -81,11 +81,11 @@ public class ViewOrderFormController implements Initializable {
 
     private void setData() {
         try {
-            Batch batch = BatchModel.getBatch(orderTM.getBatchId());
-            Customer customer = CustomerModel.getCustomer(orderTM.getCustomerId());
-            Order order = OrderModel.getOrder(orderTM.getId());
+            BatchDTO batch = BatchModel.getBatch(orderTM.getBatchId());
+            CustomerDTO customer = CustomerModel.getCustomer(orderTM.getCustomerId());
+            OrderDTO order = OrderModel.getOrder(orderTM.getId());
             String deliverId = DeliveryModel.getDeliverId(order.getId());
-            Delivery delivery = DeliveryModel.getDelivery(deliverId);
+            DeliveryDTO delivery = DeliveryModel.getDelivery(deliverId);
 //                lblOrderId.setText(order.getId());
 //                lblIsChecked.setText(order.getIsChecked() == 0 ? "UNCHECKED" : "CHECKED");
 //                lblIsDeliver.setText(order.getIsDeliver() == 0 ? "NOT YET" : "DELIVER");

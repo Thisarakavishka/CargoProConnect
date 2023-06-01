@@ -2,8 +2,8 @@ package lk.ijse.cargoproconnect.model;
 
 import javafx.collections.ObservableList;
 import lk.ijse.cargoproconnect.db.DBConnection;
-import lk.ijse.cargoproconnect.dto.Category;
-import lk.ijse.cargoproconnect.dto.Tax;
+import lk.ijse.cargoproconnect.dto.CategoryDTO;
+import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
 
 import java.sql.Connection;
@@ -63,7 +63,7 @@ public class CategoryTaxModel {
         try {
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
-            boolean isAdded = CategoryModel.addNewCategory(new Category(id, name));
+            boolean isAdded = CategoryModel.addNewCategory(new CategoryDTO(id, name));
             if (isAdded) {
                 boolean isAddDetails = CategoryModel.addNewCategoryTaxDetails(id, observableList);
                 if (isAddDetails) {
@@ -81,8 +81,8 @@ public class CategoryTaxModel {
         }
     }
 
-    public static List<Tax> getIncludedTaxes(String id) throws SQLException {
-        List<Tax> taxes = null;
+    public static List<TaxDTO> getIncludedTaxes(String id) throws SQLException {
+        List<TaxDTO> taxes = null;
         try {
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
@@ -107,12 +107,12 @@ public class CategoryTaxModel {
         }
     }
 
-    public static boolean updateCategory(String id, String name, List<Tax> addedTaxes, List<Tax> removedTaxes) throws SQLException {
+    public static boolean updateCategory(String id, String name, List<TaxDTO> addedTaxes, List<TaxDTO> removedTaxes) throws SQLException {
         try {
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
 
-            boolean isUpdate = CategoryModel.updateCategoryName(new Category(id, name));
+            boolean isUpdate = CategoryModel.updateCategoryName(new CategoryDTO(id, name));
             boolean isAdd = CategoryModel.addTax(id, addedTaxes);
             boolean isRemove = CategoryModel.removeTax(id, removedTaxes);
 

@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.controller.popup.MailFormController;
 import lk.ijse.cargoproconnect.controller.update.UpdateEmployeeFormController;
-import lk.ijse.cargoproconnect.dto.Employee;
+import lk.ijse.cargoproconnect.dto.EmployeeDTO;
 import lk.ijse.cargoproconnect.dto.tm.EmployeeTM;
 import lk.ijse.cargoproconnect.model.EmployeeModel;
 import lk.ijse.cargoproconnect.util.Colors;
@@ -265,9 +265,9 @@ public class EmployeeFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<Employee> employees = EmployeeModel.getEmployees(1);
+            List<EmployeeDTO> employees = EmployeeModel.getEmployees(1);
 
-            for (Employee employee : employees) {
+            for (EmployeeDTO employee : employees) {
 
                 JFXCheckBox checkBox = new JFXCheckBox();
                 setCheckBoxOnAction(checkBox);
@@ -326,7 +326,7 @@ public class EmployeeFormController implements Initializable {
         return tableEmployee;
     }
 
-    private void setMailBtnOnAction(JFXButton btnMail, Employee employee) {
+    private void setMailBtnOnAction(JFXButton btnMail, EmployeeDTO employee) {
         btnMail.setOnAction(event -> {
             try {
                 MailFormController.setMail(employee.getEmail());
@@ -344,7 +344,7 @@ public class EmployeeFormController implements Initializable {
         });
     }
 
-    private void setDeleteBtnOnAction(JFXButton btnDelete, Employee employee) {
+    private void setDeleteBtnOnAction(JFXButton btnDelete, EmployeeDTO employee) {
         btnDelete.setOnAction(event -> {
             ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
             ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -367,7 +367,7 @@ public class EmployeeFormController implements Initializable {
         });
     }
 
-    private void setEditBtnOnAction(JFXButton btnEdit, Employee employee) {
+    private void setEditBtnOnAction(JFXButton btnEdit, EmployeeDTO employee) {
         btnEdit.setOnAction(event -> {
             try {
                 rootChange.getChildren().clear();

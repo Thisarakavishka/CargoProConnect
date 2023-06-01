@@ -1,8 +1,7 @@
 package lk.ijse.cargoproconnect.model;
 
-import lk.ijse.cargoproconnect.dto.Tax;
+import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.util.CrudUtil;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,17 +24,17 @@ public class TaxModel {
         return "T" + String.format("%04d", Integer.parseInt(currentMaxId.substring(1)) + 1);
     }
 
-    public static boolean addNewTax(Tax tax) throws SQLException {
+    public static boolean addNewTax(TaxDTO tax) throws SQLException {
         String sql = "INSERT INTO tax(tax_id, tax_name, tax_percentage, tax_description) VALUES(?,?,?,?)";
         return CrudUtil.execute(sql, tax.getId(), tax.getName(), tax.getPercentage(), tax.getDescription());
     }
 
-    public static List<Tax> getTaxes() throws SQLException {
+    public static List<TaxDTO> getTaxes() throws SQLException {
         String sql = "SELECT * FROM tax";
-        List<Tax> taxes = new ArrayList<>();
+        List<TaxDTO> taxes = new ArrayList<>();
         ResultSet resultSet = CrudUtil.execute(sql);
         while (resultSet.next()) {
-            taxes.add(new Tax(
+            taxes.add(new TaxDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getDouble(3),
@@ -45,7 +44,7 @@ public class TaxModel {
         return taxes;
     }
 
-    public static boolean updateTax(Tax tax) throws SQLException {
+    public static boolean updateTax(TaxDTO tax) throws SQLException {
         String sql = "UPDATE tax SET tax_name = ?, tax_percentage = ?, tax_description = ? WHERE tax_id = ?";
         return CrudUtil.execute(sql, tax.getName(), tax.getPercentage(), tax.getDescription(), tax.getId());
     }

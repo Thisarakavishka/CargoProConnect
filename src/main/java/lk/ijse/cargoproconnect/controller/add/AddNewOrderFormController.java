@@ -21,9 +21,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.controller.popup.PaymentFormController;
 import lk.ijse.cargoproconnect.controller.popup.ViewBatchFormController;
-import lk.ijse.cargoproconnect.dto.Category;
-import lk.ijse.cargoproconnect.dto.Customer;
-import lk.ijse.cargoproconnect.dto.Delivery;
+import lk.ijse.cargoproconnect.dto.CategoryDTO;
+import lk.ijse.cargoproconnect.dto.CustomerDTO;
+import lk.ijse.cargoproconnect.dto.DeliveryDTO;
 import lk.ijse.cargoproconnect.dto.tm.OrderItemTM;
 import lk.ijse.cargoproconnect.model.*;
 import lk.ijse.cargoproconnect.util.Colors;
@@ -337,7 +337,7 @@ public class AddNewOrderFormController implements Initializable {
     void btnPlaceOrderOnAction(ActionEvent event) {
         if (!tableOrder.getItems().isEmpty() && lblCustomerId != null && txtCustomerAddress.getFocusColor().equals(Color.web(Colors.GREEN)) && txtCustomerContact1.getFocusColor().equals(Color.web(Colors.GREEN)) && txtCustomerContact2.getFocusColor().equals(Color.web(Colors.GREEN))) {
             try {
-                Delivery delivery = new Delivery(lblDeliverId.getText(),txtCustomerAddress.getText(),txtCustomerContact1.getText(),txtCustomerContact2.getText());
+                DeliveryDTO delivery = new DeliveryDTO(lblDeliverId.getText(),txtCustomerAddress.getText(),txtCustomerContact1.getText(),txtCustomerContact2.getText());
 
                 int weight = Integer.parseInt(lblTotalWeight.getText().replaceAll("\\D+", ""));
                 int currentWeight = BatchModel.getCurrentWeight(lblBatchId.getText());
@@ -406,8 +406,8 @@ public class AddNewOrderFormController implements Initializable {
         List<String> ids = new ArrayList<>();
         List<String> name = new ArrayList<>();
         try {
-            List<Category> categories = CategoryModel.getCategories();
-            for (Category category : categories) {
+            List<CategoryDTO> categories = CategoryModel.getCategories();
+            for (CategoryDTO category : categories) {
                 ids.add(category.getId());
                 name.add(category.getName());
             }
@@ -416,7 +416,7 @@ public class AddNewOrderFormController implements Initializable {
                 TextFields.bindAutoCompletion(txtSearchCategory, name);
 
                 //find customer from id,fName or lName
-                for (Category category : categories) {
+                for (CategoryDTO category : categories) {
                     if (category.getId().equalsIgnoreCase(txtSearchCategory.getText()) ||
                             category.getName().equalsIgnoreCase(txtSearchCategory.getText())) {
                         txtSearchCategory.setText(category.getName());
@@ -452,8 +452,8 @@ public class AddNewOrderFormController implements Initializable {
         List<String> fName = new ArrayList<>();
         List<String> lName = new ArrayList<>();
         try {
-            List<Customer> customers = CustomerModel.getCustomers();
-            for (Customer customer : customers) {
+            List<CustomerDTO> customers = CustomerModel.getCustomers();
+            for (CustomerDTO customer : customers) {
                 ids.add(customer.getId());
                 fName.add(customer.getFName());
                 lName.add(customer.getLName());
@@ -464,7 +464,7 @@ public class AddNewOrderFormController implements Initializable {
                 TextFields.bindAutoCompletion(txtSearchCustomer, lName);
 
                 //find customer from id,fName or lName
-                for (Customer customer : customers) {
+                for (CustomerDTO customer : customers) {
                     if (customer.getId().equalsIgnoreCase(txtSearchCustomer.getText()) ||
                             customer.getFName().equalsIgnoreCase(txtSearchCustomer.getText()) ||
                             customer.getLName().equalsIgnoreCase(txtSearchCustomer.getText())) {
@@ -491,8 +491,8 @@ public class AddNewOrderFormController implements Initializable {
         List<String> contact1 = new ArrayList<>();
         List<String> contact2 = new ArrayList<>();
         try {
-            List<Delivery> deliveries = DeliveryModel.getDeliveries();
-            for (Delivery delivery : deliveries) {
+            List<DeliveryDTO> deliveries = DeliveryModel.getDeliveries();
+            for (DeliveryDTO delivery : deliveries) {
                 address.add(delivery.getAddress());
                 contact2.add(delivery.getContact2());
             }
@@ -502,7 +502,7 @@ public class AddNewOrderFormController implements Initializable {
                 TextFields.bindAutoCompletion(txtSearchAddress, contact2);
 
                 //find customer delivery details from address,contact1 or contact2
-                for (Delivery delivery : deliveries) {
+                for (DeliveryDTO delivery : deliveries) {
                     if (delivery.getAddress().equalsIgnoreCase(txtSearchAddress.getText()) ||
                             delivery.getContact1().equalsIgnoreCase(txtSearchAddress.getText()) ||
                             delivery.getContact2().equalsIgnoreCase(txtSearchAddress.getText())) {

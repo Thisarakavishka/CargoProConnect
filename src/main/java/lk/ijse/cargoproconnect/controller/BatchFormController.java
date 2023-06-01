@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.controller.popup.ViewBatchDetailsFormController;
 import lk.ijse.cargoproconnect.controller.update.UpdateBatchFormController;
-import lk.ijse.cargoproconnect.dto.Batch;
+import lk.ijse.cargoproconnect.dto.BatchDTO;
 import lk.ijse.cargoproconnect.dto.tm.BatchTM;
 import lk.ijse.cargoproconnect.model.BatchModel;
 import lk.ijse.cargoproconnect.util.Colors;
@@ -111,7 +111,7 @@ public class BatchFormController implements Initializable {
     private JFXCheckBox checkBox;
     private JFXCheckBox checkBoxList;
     private static ObservableList<BatchTM> list;
-    private static List<Batch> batches;
+    private static List<BatchDTO> batches;
     static int ROWS_PER_PAGE = 10;
 
     @FXML
@@ -278,7 +278,7 @@ public class BatchFormController implements Initializable {
             list = FXCollections.observableArrayList();
             batches = BatchModel.getBatches();
 
-            for (Batch batch : batches) {
+            for (BatchDTO batch : batches) {
 
                 checkBoxList = new JFXCheckBox();
                 setCheckBoxOnAction(checkBoxList);
@@ -342,7 +342,7 @@ public class BatchFormController implements Initializable {
         return tableBatch;
     }
 
-    private void setViewBtnOnAction(JFXButton btnView, Batch batch) {
+    private void setViewBtnOnAction(JFXButton btnView, BatchDTO batch) {
         btnView.setOnAction(event -> {
             try {
                 ViewBatchDetailsFormController.setBatchDetail(batch);
@@ -363,7 +363,7 @@ public class BatchFormController implements Initializable {
         });
     }
 
-    private void setDeleteBtnOnAction(JFXButton btnDelete, Batch batch) {
+    private void setDeleteBtnOnAction(JFXButton btnDelete, BatchDTO batch) {
         if (LocalDate.parse(batch.getSDate()).isBefore(LocalDate.now()) || batch.getCurrentWeight() > 0) {
             btnDelete.setVisible(false);
             checkBoxList.setVisible(false);
@@ -391,7 +391,7 @@ public class BatchFormController implements Initializable {
         }
     }
 
-    private void setEditBtnOnAction(JFXButton btnEdit, Batch batch) {
+    private void setEditBtnOnAction(JFXButton btnEdit, BatchDTO batch) {
         if (LocalDate.parse(batch.getSDate()).isBefore(LocalDate.now()) || batch.getCurrentWeight() == batch.getTotalWeight()) {
             btnEdit.setVisible(false);
         } else {

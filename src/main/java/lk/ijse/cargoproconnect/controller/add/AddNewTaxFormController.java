@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Tax;
+import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.model.LoginModel;
 import lk.ijse.cargoproconnect.model.TaxModel;
 import lk.ijse.cargoproconnect.util.Colors;
@@ -52,7 +52,7 @@ public class AddNewTaxFormController implements Initializable {
     void btnAddOnAction(ActionEvent event) {
         if (txtName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtPercentage.getFocusColor().equals(Color.web(Colors.GREEN)) && txtDescription.getFocusColor().equals(Color.web(Colors.GREEN))) {
             try {
-                boolean isAdded = TaxModel.addNewTax(new Tax(taxId.getText(), txtName.getText(), Double.parseDouble(txtPercentage.getText()), txtDescription.getText()));
+                boolean isAdded = TaxModel.addNewTax(new TaxDTO(taxId.getText(), txtName.getText(), Double.parseDouble(txtPercentage.getText()), txtDescription.getText()));
                 if (isAdded) {
                     NotificationUtil.showNotification("Success", "Successfully " + txtName.getText() + " Tax added ", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();

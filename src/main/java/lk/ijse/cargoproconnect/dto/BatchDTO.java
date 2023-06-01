@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 @Getter
 @Setter
 @ToString
-public class Batch {
+public class BatchDTO {
     private String id;
     private String sDate;
     private String dDate;
@@ -21,7 +21,7 @@ public class Batch {
     private Integer noOfOrders;
     private String shipmentType;
 
-    public Batch(String id, LocalDate shipmentDate, LocalDate deliverDate, String totalWeight, String deliverAddress, String shipmentType) {
+    public BatchDTO(String id, LocalDate shipmentDate, LocalDate deliverDate, String totalWeight, String deliverAddress, String shipmentType) {
         this.id = id;
         this.sDate = shipmentDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         this.dDate = deliverDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));

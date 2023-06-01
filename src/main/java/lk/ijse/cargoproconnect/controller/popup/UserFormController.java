@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Employee;
+import lk.ijse.cargoproconnect.dto.EmployeeDTO;
 import lk.ijse.cargoproconnect.model.EmployeeModel;
 import lk.ijse.cargoproconnect.model.LoginModel;
 import lk.ijse.cargoproconnect.util.*;
@@ -77,7 +77,7 @@ public class UserFormController implements Initializable {
     void btnSaveOnAction(ActionEvent event) {
         if (txtVerificationCode.getText().equalsIgnoreCase(otp)) {
             try {
-                boolean isUpdate = EmployeeModel.updateUser(new Employee(LoginModel.getEmployeeId(), SecurityUtil.encoder(txtNewUserName.getText()), SecurityUtil.encoder(txtNewPassword.getText()), txtNewEmail.getText()));
+                boolean isUpdate = EmployeeModel.updateUser(new EmployeeDTO(LoginModel.getEmployeeId(), SecurityUtil.encoder(txtNewUserName.getText()), SecurityUtil.encoder(txtNewPassword.getText()), txtNewEmail.getText()));
                 if (isUpdate) {
                     Stage stage = (Stage) root.getScene().getWindow();
                     stage.close();

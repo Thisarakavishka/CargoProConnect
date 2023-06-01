@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Tax {
+public class TaxDTO {
     private String id;
     private String name;
     private Double percentage;

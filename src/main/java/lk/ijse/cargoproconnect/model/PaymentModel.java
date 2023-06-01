@@ -1,6 +1,6 @@
 package lk.ijse.cargoproconnect.model;
 
-import lk.ijse.cargoproconnect.dto.Payment;
+import lk.ijse.cargoproconnect.dto.PaymentDTO;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -21,7 +21,7 @@ public class PaymentModel {
             return "P" + String.format("%04d", Integer.parseInt(currentMaxId.substring(1)) + 1);
         }
 
-    public static boolean addPaymentDetails(Payment payment) throws SQLException {
+    public static boolean addPaymentDetails(PaymentDTO payment) throws SQLException {
         String sql = "INSERT INTO payment(payment_id, payment_type, total, total_tax) VALUES (?, ?, ?, ?)";
         return CrudUtil.execute(sql, payment.getId(), payment.getPaymentType(), payment.getTotal(),payment.getTotalTax());
     }

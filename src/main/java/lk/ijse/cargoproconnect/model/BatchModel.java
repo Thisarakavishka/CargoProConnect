@@ -1,6 +1,6 @@
 package lk.ijse.cargoproconnect.model;
 
-import lk.ijse.cargoproconnect.dto.Batch;
+import lk.ijse.cargoproconnect.dto.BatchDTO;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -25,12 +25,12 @@ public class BatchModel {
         return "B" + String.format("%04d", Integer.parseInt(currentMaxId.substring(1)) + 1);
     }
 
-    public static List<Batch> getBatches() throws SQLException {
+    public static List<BatchDTO> getBatches() throws SQLException {
         String sql = "SELECT * FROM batch";
-        List<Batch> batches = new ArrayList<>();
+        List<BatchDTO> batches = new ArrayList<>();
         ResultSet resultSet = CrudUtil.execute(sql);
         while (resultSet.next()) {
-            batches.add(new Batch(
+            batches.add(new BatchDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -45,7 +45,7 @@ public class BatchModel {
         return batches;
     }
 
-    public static boolean addNewBatch(Batch batch) throws SQLException {
+    public static boolean addNewBatch(BatchDTO batch) throws SQLException {
         String sql = "INSERT INTO batch (batch_id, shipment_date, delivery_date, total_weight, delivery_address, shipment_type) VALUES (?, ?, ?,? , ?, ?)";
         return CrudUtil.execute(sql, batch.getId(), batch.getDDate(), batch.getDDate(), batch.getTotalWeight(), batch.getDeliveryAddress(), batch.getShipmentType());
     }
@@ -55,7 +55,7 @@ public class BatchModel {
         return CrudUtil.execute(sql, id);
     }
 
-    public static boolean updateBatch(Batch batch) throws SQLException {
+    public static boolean updateBatch(BatchDTO batch) throws SQLException {
         String sql = "UPDATE batch SET shipment_date = ?, delivery_date = ?, total_weight = ?, delivery_address = ?, shipment_type = ? WHERE batch_id =?";
         return CrudUtil.execute(sql, batch.getSDate(), batch.getDDate(), batch.getTotalWeight(), batch.getDeliveryAddress(), batch.getShipmentType(), batch.getId());
     }
@@ -69,12 +69,12 @@ public class BatchModel {
         return CrudUtil.execute(sql);
     }
 
-    public static List<Batch> getAvailableBatches() throws SQLException {
+    public static List<BatchDTO> getAvailableBatches() throws SQLException {
         String sql = "SELECT * FROM batch WHERE available_status = 1";
-        List<Batch> batches = new ArrayList<>();
+        List<BatchDTO> batches = new ArrayList<>();
         ResultSet resultSet = CrudUtil.execute(sql);
         while (resultSet.next()) {
-            batches.add(new Batch(
+            batches.add(new BatchDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -153,11 +153,11 @@ public class BatchModel {
         return CrudUtil.execute(sql, i, batchId);
     }
 
-    public static Batch getBatch(String batchId) throws SQLException {
+    public static BatchDTO getBatch(String batchId) throws SQLException {
         String sql = "SELECT * FROM batch WHERE batch_id = ?";
         ResultSet resultSet = CrudUtil.execute(sql, batchId);
         if (resultSet.next()) {
-            return new Batch(resultSet.getString(1),
+            return new BatchDTO(resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getInt(4),

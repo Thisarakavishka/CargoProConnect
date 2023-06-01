@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Employee {
+public class EmployeeDTO {
     private String id;
     private String username;
     private String password;
@@ -16,13 +16,13 @@ public class Employee {
     private String documentNumber;
     private Integer status;
 
-    public Employee(String id, String username, String email) {
+    public EmployeeDTO(String id, String username, String email) {
         this.id = id;
         this.username = username;
         this.email = email;
     }
 
-    public Employee(String id, String username, String password, String email) {
+    public EmployeeDTO(String id, String username, String password, String email) {
         this.id = id;
         this.username = username;
         this.password = password;

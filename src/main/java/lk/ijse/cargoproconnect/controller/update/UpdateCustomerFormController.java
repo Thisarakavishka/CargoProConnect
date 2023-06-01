@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Customer;
+import lk.ijse.cargoproconnect.dto.CustomerDTO;
 import lk.ijse.cargoproconnect.model.CustomerModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -62,11 +62,11 @@ public class UpdateCustomerFormController implements Initializable {
     @FXML
     private JFXButton btnDiscard;
 
-    static Customer customer;
+    static CustomerDTO customer;
 
     private static ObservableList<String> cmbList = FXCollections.observableArrayList("PASSPORT", "DRIVING LICENCE", "NATIONAL IDENTITY CARD");
 
-    public static void setCustomerDetails(Customer customer) {
+    public static void setCustomerDetails(CustomerDTO customer) {
         UpdateCustomerFormController.customer = customer;
     }
 
@@ -84,7 +84,7 @@ public class UpdateCustomerFormController implements Initializable {
     void btnUpdateOnAction(ActionEvent event) {
         if (txtFirstName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtLastName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtContactNumber1.getFocusColor().equals(Color.web(Colors.GREEN)) && txtContactNumber2.getFocusColor().equals(Color.web(Colors.GREEN)) && txtEmail.getFocusColor().equals(Color.web(Colors.GREEN)) && cmbDocumentType.getValue() != null && txtDocumentNumber.getFocusColor().equals(Color.web(Colors.GREEN)) && txtEmail.getFocusColor().equals(Color.web(Colors.GREEN))) {
             try {
-                boolean isUpdated = CustomerModel.updateCustomer(new Customer(lblCustomerId.getText(), txtFirstName.getText(), txtLastName.getText(), txtContactNumber1.getText(), txtContactNumber2.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), txtEmail.getText()));
+                boolean isUpdated = CustomerModel.updateCustomer(new CustomerDTO(lblCustomerId.getText(), txtFirstName.getText(), txtLastName.getText(), txtContactNumber1.getText(), txtContactNumber2.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), txtEmail.getText()));
                 if (isUpdated) {
                     NotificationUtil.showNotification("Success", "Successfully " + lblCustomerId.getText() + " Customer updated ", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();

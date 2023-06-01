@@ -26,10 +26,9 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.controller.popup.MailFormController;
 import lk.ijse.cargoproconnect.controller.popup.ViewOrderFormController;
-import lk.ijse.cargoproconnect.dto.Order;
+import lk.ijse.cargoproconnect.dto.OrderDTO;
 import lk.ijse.cargoproconnect.dto.tm.OrderTM;
 import lk.ijse.cargoproconnect.model.CustomerModel;
-import lk.ijse.cargoproconnect.model.OrderDeliveryModel;
 import lk.ijse.cargoproconnect.model.OrderModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -44,7 +43,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static lk.ijse.cargoproconnect.controller.BatchFormController.ROWS_PER_PAGE;
@@ -272,9 +270,9 @@ public class OrderFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<Order> orders = OrderModel.getOrders();
+            List<OrderDTO> orders = OrderModel.getOrders();
 
-            for (Order order : orders) {
+            for (OrderDTO order : orders) {
                 JFXCheckBox checkBox = new JFXCheckBox();
                 setCheckBoxOnAction(checkBox);
 
@@ -333,7 +331,7 @@ public class OrderFormController implements Initializable {
         return tableOrder;
     }
 
-    private void setMailBtnOnAction(JFXButton btnMail, Order order) {
+    private void setMailBtnOnAction(JFXButton btnMail, OrderDTO order) {
         btnMail.setOnAction(event -> {
             try {
                 String email = CustomerModel.getEmail(order.getCustomerId());
@@ -352,7 +350,7 @@ public class OrderFormController implements Initializable {
         });
     }
 
-    private void setViewBtnOnAction(JFXButton btnView, Order order) {
+    private void setViewBtnOnAction(JFXButton btnView, OrderDTO order) {
         btnView.setOnAction(event -> {
             Stage stage = new Stage();
             try {

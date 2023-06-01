@@ -22,7 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.controller.update.UpdateCategoryFormController;
-import lk.ijse.cargoproconnect.dto.Category;
+import lk.ijse.cargoproconnect.dto.CategoryDTO;
 import lk.ijse.cargoproconnect.dto.tm.CategoryTM;
 import lk.ijse.cargoproconnect.model.CategoryModel;
 import lk.ijse.cargoproconnect.model.CategoryTaxModel;
@@ -217,9 +217,9 @@ public class CategoryFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<Category> categories = CategoryModel.getCategories();
+            List<CategoryDTO> categories = CategoryModel.getCategories();
 
-            for (Category category : categories) {
+            for (CategoryDTO category : categories) {
 
                 JFXCheckBox checkBox = new JFXCheckBox();
                 setCheckBoxOnAction(checkBox);
@@ -273,7 +273,7 @@ public class CategoryFormController implements Initializable {
         return tableCategory;
     }
 
-    private void setDeleteBtnOnAction(JFXButton btnDelete, Category category) {
+    private void setDeleteBtnOnAction(JFXButton btnDelete, CategoryDTO category) {
         btnDelete.setOnAction(event -> {
             ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
             ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -296,7 +296,7 @@ public class CategoryFormController implements Initializable {
         });
     }
 
-    private void setEditBtnOnAction(JFXButton btnEdit, Category category) {
+    private void setEditBtnOnAction(JFXButton btnEdit, CategoryDTO category) {
         btnEdit.setOnAction(event -> {
             try {
                 rootChange.getChildren().clear();

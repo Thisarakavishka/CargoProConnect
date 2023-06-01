@@ -1,7 +1,7 @@
 package lk.ijse.cargoproconnect.model;
 
-import lk.ijse.cargoproconnect.dto.Admin;
-import lk.ijse.cargoproconnect.dto.Employee;
+import lk.ijse.cargoproconnect.dto.AdminDTO;
+import lk.ijse.cargoproconnect.dto.EmployeeDTO;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 import lk.ijse.cargoproconnect.util.SecurityUtil;
 
@@ -10,15 +10,15 @@ import java.sql.SQLException;
 
 public class LoginModel {
 
-    private static Employee employee;
-    private static Admin admin;
+    private static EmployeeDTO employee;
+    private static AdminDTO admin;
 
     public static boolean searchAdmin(String userName, String password) throws SQLException {
         String sql = "SELECT * FROM admin WHERE username = ? AND password = ?";
         ResultSet resultSet = CrudUtil.execute(sql, userName, password);
         if (resultSet.next()) {
             if (resultSet.getString(3).equalsIgnoreCase(password) && resultSet.getString(2).equalsIgnoreCase(userName)) {
-                admin = new Admin(resultSet.getString(1),resultSet.getString(2),resultSet.getString(4));
+                admin = new AdminDTO(resultSet.getString(1),resultSet.getString(2),resultSet.getString(4));
                 return true;
             }
         }
@@ -31,7 +31,7 @@ public class LoginModel {
         if (resultSet.next()) {
             if (resultSet.getString(2).equalsIgnoreCase(userName) && resultSet.getString(3).equalsIgnoreCase(password)) {
               // set id , decoded username and email
-                employee = new Employee(resultSet.getString(1), SecurityUtil.decoder(resultSet.getString(2)), resultSet.getString(4));
+                employee = new EmployeeDTO(resultSet.getString(1), SecurityUtil.decoder(resultSet.getString(2)), resultSet.getString(4));
                 return true;
             }
         }

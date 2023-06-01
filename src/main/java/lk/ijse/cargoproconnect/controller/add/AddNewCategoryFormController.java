@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Tax;
+import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
 import lk.ijse.cargoproconnect.model.*;
 import lk.ijse.cargoproconnect.util.Colors;
@@ -102,8 +102,8 @@ public class AddNewCategoryFormController implements Initializable {
     void btnAddTaxOnAction(ActionEvent event) {
         if (txtCategoryName.getFocusColor().equals(Color.web(Colors.GREEN)) && cmbTaxName.getValue() != null) {
             try {
-                List<Tax> taxes = TaxModel.getTaxes();
-                for (Tax tax : taxes) {
+                List<TaxDTO> taxes = TaxModel.getTaxes();
+                for (TaxDTO tax : taxes) {
                     if (tax.getName().equalsIgnoreCase(cmbTaxName.getValue())) {
 
                         if (!observableList.isEmpty()) {
@@ -140,7 +140,7 @@ public class AddNewCategoryFormController implements Initializable {
         }
     }
 
-    private void setDeleteBtnOnAction(JFXButton btnDelete, Tax tax) {
+    private void setDeleteBtnOnAction(JFXButton btnDelete, TaxDTO tax) {
         btnDelete.setOnAction(event -> {
             ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
             ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -194,9 +194,9 @@ public class AddNewCategoryFormController implements Initializable {
     void loadDocumentTypes() {
         try {
             ObservableList<String> observableList = FXCollections.observableArrayList();
-            List<Tax> taxes = TaxModel.getTaxes();
+            List<TaxDTO> taxes = TaxModel.getTaxes();
 
-            for (Tax tax : taxes) {
+            for (TaxDTO tax : taxes) {
                 observableList.add(tax.getName());
             }
 

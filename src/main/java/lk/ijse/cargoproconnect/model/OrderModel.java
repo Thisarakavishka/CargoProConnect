@@ -1,7 +1,7 @@
 package lk.ijse.cargoproconnect.model;
 
 import javafx.collections.ObservableList;
-import lk.ijse.cargoproconnect.dto.Order;
+import lk.ijse.cargoproconnect.dto.OrderDTO;
 import lk.ijse.cargoproconnect.dto.tm.OrderItemTM;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 
@@ -12,12 +12,12 @@ import java.util.List;
 
 public class OrderModel {
 
-    public static List<Order> getOrders() throws SQLException {
+    public static List<OrderDTO> getOrders() throws SQLException {
         String sql = "SELECT * FROM orders ";
-        List<Order> orders = new ArrayList<>();
+        List<OrderDTO> orders = new ArrayList<>();
         ResultSet resultSet = CrudUtil.execute(sql);
         while (resultSet.next()) {
-            orders.add(new Order(
+            orders.add(new OrderDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -35,12 +35,12 @@ public class OrderModel {
         return orders;
     }
 
-    public static List<Order> getOrders(int i) throws SQLException {
+    public static List<OrderDTO> getOrders(int i) throws SQLException {
         String sql = "SELECT * FROM orders WHERE is_checked = ?";
-        List<Order> orders = new ArrayList<>();
+        List<OrderDTO> orders = new ArrayList<>();
         ResultSet resultSet = CrudUtil.execute(sql, i);
         while (resultSet.next()) {
-            orders.add(new Order(
+            orders.add(new OrderDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -72,7 +72,7 @@ public class OrderModel {
         return "O" + String.format("%04d", Integer.parseInt(currentMaxId.substring(1)) + 1);
     }
 
-    public static boolean placeNewOrder(Order order) throws SQLException {
+    public static boolean placeNewOrder(OrderDTO order) throws SQLException {
         String sql = "INSERT INTO orders(order_id, customer_id, batch_id, order_date, deliver_date, payment_id, weight, total_price) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         return CrudUtil.execute(sql, order.getId(), order.getCustomerId(), order.getBatchId(), order.getOrderDate(), order.getDeliverDate(), order.getPaymentId(), order.getWeight(), order.getTotalPrice());
     }
@@ -111,11 +111,11 @@ public class OrderModel {
         return CrudUtil.execute(sql, id);
     }
 
-    public static Order getOrder(String id) throws SQLException {
+    public static OrderDTO getOrder(String id) throws SQLException {
         String sql = "SELECT * FROM orders WHERE order_id = ?";
         ResultSet resultSet = CrudUtil.execute(sql, id);
         if(resultSet.next()){
-            return new Order(
+            return new OrderDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),

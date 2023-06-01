@@ -14,7 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Employee;
+import lk.ijse.cargoproconnect.dto.EmployeeDTO;
 import lk.ijse.cargoproconnect.model.EmployeeModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -24,7 +24,6 @@ import lk.ijse.cargoproconnect.util.TextFieldValidator;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class UpdateEmployeeFormController implements Initializable {
@@ -62,10 +61,10 @@ public class UpdateEmployeeFormController implements Initializable {
     @FXML
     private JFXButton btnDiscard;
 
-    static Employee employee;
+    static EmployeeDTO employee;
     private static ObservableList<String> cmbList = FXCollections.observableArrayList("PASSPORT", "DRIVING LICENCE", "NATIONAL IDENTITY CARD");
 
-    public static void setEmployeeDetails(Employee employee) {
+    public static void setEmployeeDetails(EmployeeDTO employee) {
         UpdateEmployeeFormController.employee = employee;
     }
 
@@ -87,7 +86,7 @@ public class UpdateEmployeeFormController implements Initializable {
                 if (checkBoxBlock.isSelected()) {
                     status = 0;
                 }
-                boolean isUpdated = EmployeeModel.updateEmployee(new Employee(lblEmployeeId.getText(), SecurityUtil.encoder(txtUserName.getText()), SecurityUtil.encoder(txtPassword.getText()), txtEmail.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), status));
+                boolean isUpdated = EmployeeModel.updateEmployee(new EmployeeDTO(lblEmployeeId.getText(), SecurityUtil.encoder(txtUserName.getText()), SecurityUtil.encoder(txtPassword.getText()), txtEmail.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), status));
                 if (isUpdated) {
                     NotificationUtil.showNotification("Success", "Employee " + txtUserName.getText() + " Update successfully", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();

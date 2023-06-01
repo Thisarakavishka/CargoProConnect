@@ -185,10 +185,10 @@ public class AdminDashBoardBodyFormController implements Initializable {
 
     private void setDataToLabels() {
         try {
-            List<Customer> customers = CustomerModel.getCustomers();
-            List<Employee> employees = EmployeeModel.getEmployees(1);
-            List<Batch> batches = BatchModel.getAvailableBatches();
-            List<Tax> taxes = TaxModel.getTaxes();
+            List<CustomerDTO> customers = CustomerModel.getCustomers();
+            List<EmployeeDTO> employees = EmployeeModel.getEmployees(1);
+            List<BatchDTO> batches = BatchModel.getAvailableBatches();
+            List<TaxDTO> taxes = TaxModel.getTaxes();
             lblTotalCustomers.setText(String.valueOf(customers.size()));
             lblTotalEmployees.setText(String.valueOf(employees.size()));
             lblAvailableBatches.setText(String.valueOf(batches.size()));
@@ -239,8 +239,8 @@ public class AdminDashBoardBodyFormController implements Initializable {
 
     private void setDeliverTableData() {
         try {
-            List<Delivery> deliveries = DeliveryModel.getDeliveries();
-            for (Delivery delivery : deliveries) {
+            List<DeliveryDTO> deliveries = DeliveryModel.getDeliveries();
+            for (DeliveryDTO delivery : deliveries) {
 
                 Label label = new Label(delivery.getIsDelivered() == 1 ? "Delivered" : "Not Yet");
                 label.setStyle(label.getText().equalsIgnoreCase("Delivered") ? "-fx-font-weight: bold;-fx-text-fill: "+ Colors.GREEN +";-fx-font-size: 15;" : "-fx-font-weight: bold;-fx-text-fill: "+ Colors.RED +";-fx-font-size: 15;");
@@ -271,8 +271,8 @@ public class AdminDashBoardBodyFormController implements Initializable {
 
     private void setEmployeeTableData() {
         try {
-            List<Employee> employees = EmployeeModel.getEmployees(0);
-            for (Employee employee : employees) {
+            List<EmployeeDTO> employees = EmployeeModel.getEmployees(0);
+            for (EmployeeDTO employee : employees) {
 
                 JFXButton approve = new JFXButton("Approve");
                 approve.setStyle("-fx-background-color: "+ Colors.GREEN +";-fx-border-radius: 10px;-fx-text-fill: "+ Colors.WHITE +";-fx-font-weight: bold;-fx-font-size: 15px");
@@ -295,7 +295,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
         }
     }
 
-    private void setApproveBtnOnAction(Employee employee, JFXButton approve) {
+    private void setApproveBtnOnAction(EmployeeDTO employee, JFXButton approve) {
         approve.setOnAction(event -> {
             try {
                 boolean isApprove = EmployeeModel.approveEmployee(employee.getId());
@@ -335,10 +335,10 @@ public class AdminDashBoardBodyFormController implements Initializable {
         XYChart.Series orderDate = new XYChart.Series();
         orderDate.setName("Order Date");
         try {
-            List<Order> orders = OrderModel.getOrders();
-            for (Order order : orders) {
+            List<OrderDTO> orders = OrderModel.getOrders();
+            for (OrderDTO order : orders) {
                 int orderD = 0;
-                for (Order order1 : orders) {
+                for (OrderDTO order1 : orders) {
                     if (order.getOrderDate().equalsIgnoreCase(order1.getOrderDate())) {
                         orderD += 1;
                     }

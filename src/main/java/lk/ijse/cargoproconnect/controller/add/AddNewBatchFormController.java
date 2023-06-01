@@ -14,7 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Batch;
+import lk.ijse.cargoproconnect.dto.BatchDTO;
 import lk.ijse.cargoproconnect.model.BatchModel;
 import lk.ijse.cargoproconnect.model.LoginModel;
 import lk.ijse.cargoproconnect.util.Colors;
@@ -24,8 +24,6 @@ import lk.ijse.cargoproconnect.util.TextFieldValidator;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddNewBatchFormController implements Initializable {
@@ -66,7 +64,7 @@ public class AddNewBatchFormController implements Initializable {
     void btnAddOnAction(ActionEvent event) {
         if(cmbShipmentType.getValue() != null && txtTotalWeight.getFocusColor().equals(Color.web(Colors.GREEN)) && txtDeliverDate.getValue() != null && txtShipmentDate.getValue() != null && txtDeliverAddress.getFocusColor().equals(Color.web(Colors.GREEN))){
             try {
-                boolean isAdded = BatchModel.addNewBatch(new Batch(lblBatchId.getText(), txtShipmentDate.getValue(), txtDeliverDate.getValue(), txtTotalWeight.getText(), txtDeliverAddress.getText(), cmbShipmentType.getValue()));
+                boolean isAdded = BatchModel.addNewBatch(new BatchDTO(lblBatchId.getText(), txtShipmentDate.getValue(), txtDeliverDate.getValue(), txtTotalWeight.getText(), txtDeliverAddress.getText(), cmbShipmentType.getValue()));
                 if (isAdded) {
                     NotificationUtil.showNotification("Success", "Successfully " + lblBatchId.getText() + " Batch added " + LoginModel.getEmployeeUserName(), NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();

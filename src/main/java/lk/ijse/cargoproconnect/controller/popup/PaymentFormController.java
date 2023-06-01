@@ -13,8 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Delivery;
-import lk.ijse.cargoproconnect.dto.Order;
+import lk.ijse.cargoproconnect.dto.DeliveryDTO;
+import lk.ijse.cargoproconnect.dto.OrderDTO;
 import lk.ijse.cargoproconnect.dto.tm.OrderItemTM;
 import lk.ijse.cargoproconnect.model.PaymentModel;
 import lk.ijse.cargoproconnect.model.PlaceOrderModel;
@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class PaymentFormController implements Initializable {
@@ -62,7 +61,7 @@ public class PaymentFormController implements Initializable {
     private static AnchorPane parentRoot;
     public static int price = 10;
     private static int weight;
-    private static Delivery delivery;
+    private static DeliveryDTO delivery;
     private static ObservableList<OrderItemTM> observableList;
     private static String orderId;
     private static String customerId;
@@ -74,7 +73,7 @@ public class PaymentFormController implements Initializable {
     private static final DecimalFormat decimalFormatter = new DecimalFormat("0.00");
 
 
-    public static void setPlaceOrderDetails(int weight, Delivery delivery, ObservableList<OrderItemTM> observableList, String orderId, String customerId, String batchId, String orderDate, double totalTax) {
+    public static void setPlaceOrderDetails(int weight, DeliveryDTO delivery, ObservableList<OrderItemTM> observableList, String orderId, String customerId, String batchId, String orderDate, double totalTax) {
         PaymentFormController.weight = weight;
         PaymentFormController.delivery = delivery;
         PaymentFormController.observableList = observableList;
@@ -106,7 +105,7 @@ public class PaymentFormController implements Initializable {
                 DecimalFormat df = new DecimalFormat("#.##");
                 String totalPrice = df.format(price * weight);
                 int total = price * weight;
-                boolean isAdded = PlaceOrderModel.placeNewOrder(total, weight, delivery, observableList, new Order(orderId, customerId, lblPaymentId.getText(), batchId, orderDate), totalTax, Double.parseDouble(totalPrice), cmbPaymentMethod.getValue());
+                boolean isAdded = PlaceOrderModel.placeNewOrder(total, weight, delivery, observableList, new OrderDTO(orderId, customerId, lblPaymentId.getText(), batchId, orderDate), totalTax, Double.parseDouble(totalPrice), cmbPaymentMethod.getValue());
                 if (isAdded) {
                     Stage stage = (Stage) root.getScene().getWindow();
                     stage.close();

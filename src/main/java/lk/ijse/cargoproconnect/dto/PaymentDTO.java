@@ -7,7 +7,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Payment {
+public class PaymentDTO {
     private String id;
     private String paymentType;
     private double total;

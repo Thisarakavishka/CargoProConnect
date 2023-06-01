@@ -1,6 +1,6 @@
 package lk.ijse.cargoproconnect.model;
 
-import lk.ijse.cargoproconnect.dto.Delivery;
+import lk.ijse.cargoproconnect.dto.DeliveryDTO;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 
 import java.sql.ResultSet;
@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeliveryModel {
-    public static List<Delivery> getDeliveries() throws SQLException {
+    public static List<DeliveryDTO> getDeliveries() throws SQLException {
         String sql = "SELECT * FROM deliver_details";
-        List<Delivery> deliveries = new ArrayList<>();
+        List<DeliveryDTO> deliveries = new ArrayList<>();
         ResultSet resultSet = CrudUtil.execute(sql);
         while (resultSet.next()) {
-            deliveries.add(new Delivery(
+            deliveries.add(new DeliveryDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -26,12 +26,12 @@ public class DeliveryModel {
         return deliveries;
     }
 
-    public static List<Delivery> getDeliveries(int i) throws SQLException {
+    public static List<DeliveryDTO> getDeliveries(int i) throws SQLException {
         String sql = "SELECT * FROM deliver_details WHERE is_delivered = ?";
-        List<Delivery> deliveries = new ArrayList<>();
+        List<DeliveryDTO> deliveries = new ArrayList<>();
         ResultSet resultSet = CrudUtil.execute(sql, i);
         while (resultSet.next()) {
-            deliveries.add(new Delivery(
+            deliveries.add(new DeliveryDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
@@ -43,7 +43,7 @@ public class DeliveryModel {
         return deliveries;
     }
 
-    public static boolean addDeliveryDetails(Delivery delivery) throws SQLException {
+    public static boolean addDeliveryDetails(DeliveryDTO delivery) throws SQLException {
         String sql = "INSERT INTO deliver_details(deliver_id, address, contact_1, contact_2) VALUES (?, ?, ?, ?)";
         return CrudUtil.execute(sql, delivery.getId(), delivery.getAddress(), delivery.getContact1(), delivery.getContact2());
     }
@@ -90,11 +90,11 @@ public class DeliveryModel {
         return "";
     }
 
-    public static Delivery getDelivery(String deliverId) throws SQLException {
+    public static DeliveryDTO getDelivery(String deliverId) throws SQLException {
         String sql = "SELECT * FROM  deliver_details WHERE deliver_id = ?";
         ResultSet resultSet = CrudUtil.execute(sql, deliverId);
         if(resultSet.next()){
-            return new Delivery(
+            return new DeliveryDTO(
                     resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),

@@ -13,7 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Customer;
+import lk.ijse.cargoproconnect.dto.CustomerDTO;
 import lk.ijse.cargoproconnect.model.CustomerModel;
 import lk.ijse.cargoproconnect.model.LoginModel;
 import lk.ijse.cargoproconnect.util.Colors;
@@ -65,7 +65,7 @@ public class NewCustomerFormController implements Initializable {
     void btnAddOnAction(ActionEvent event) {
         if(txtFirstName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtLastName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtContactNumber1.getFocusColor().equals(Color.web(Colors.GREEN)) && txtContactNumber2.getFocusColor().equals(Color.web(Colors.GREEN)) && txtEmail.getFocusColor().equals(Color.web(Colors.GREEN)) && cmbDocumentType.getValue() != null && txtDocumentNumber.getFocusColor().equals(Color.web(Colors.GREEN)) && txtEmail.getFocusColor().equals(Color.web(Colors.GREEN))){
             try {
-                boolean isAdded = CustomerModel.addNewCustomer(new Customer(lblCustomerId.getText(), txtFirstName.getText(), txtLastName.getText(), txtContactNumber1.getText(), txtContactNumber2.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), txtEmail.getText()));
+                boolean isAdded = CustomerModel.addNewCustomer(new CustomerDTO(lblCustomerId.getText(), txtFirstName.getText(), txtLastName.getText(), txtContactNumber1.getText(), txtContactNumber2.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), txtEmail.getText()));
                 if (isAdded) {
                     NotificationUtil.showNotification("Success", "Successfully " + lblCustomerId.getText() + " customer added" + LoginModel.getEmployeeUserName(), NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     Stage stage = (Stage)  root.getScene().getWindow();

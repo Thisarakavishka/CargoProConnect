@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import lk.ijse.cargoproconnect.dto.Employee;
+import lk.ijse.cargoproconnect.dto.EmployeeDTO;
 import lk.ijse.cargoproconnect.model.EmployeeModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -23,7 +23,6 @@ import lk.ijse.cargoproconnect.util.TextFieldValidator;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddNewEmployeeFormController implements Initializable {
@@ -64,7 +63,7 @@ public class AddNewEmployeeFormController implements Initializable {
     void btnAddOnAction(ActionEvent event) {
         if(txtUserName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtPassword.getFocusColor().equals(Color.web(Colors.GREEN)) && txtEmail.getFocusColor().equals(Color.web(Colors.GREEN)) && cmbDocumentType.getValue() != null && txtDocumentNumber.getFocusColor().equals(Color.web(Colors.GREEN))){
             try {
-                boolean isAdded = EmployeeModel.addNewEmployee(new Employee(lblEmployeeId.getText(), SecurityUtil.encoder(txtUserName.getText()), SecurityUtil.encoder(txtPassword.getText()), txtEmail.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), 1));
+                boolean isAdded = EmployeeModel.addNewEmployee(new EmployeeDTO(lblEmployeeId.getText(), SecurityUtil.encoder(txtUserName.getText()), SecurityUtil.encoder(txtPassword.getText()), txtEmail.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), 1));
                 if (isAdded) {
                     NotificationUtil.showNotification("Success", "New Employee " + txtUserName.getText() + " added successfully", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();
