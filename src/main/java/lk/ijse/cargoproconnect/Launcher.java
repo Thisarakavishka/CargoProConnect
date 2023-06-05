@@ -13,7 +13,6 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-//        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/lk/ijse/cargoproconnect/view/AdminDashBoardForm.fxml"))));
         stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/lk/ijse/cargoproconnect/view/LoginForm.fxml"))));
         stage.setResizable(false);
         stage.centerOnScreen();

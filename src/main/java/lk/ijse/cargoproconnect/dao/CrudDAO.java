@@ -9,13 +9,13 @@ public interface CrudDAO<T> {
 
     public boolean add(T dto) throws SQLException, ClassNotFoundException;
 
-    public boolean update(T dto) throws SQLException, ClassNotFoundException;
+    public T search(String id) throws SQLException, ClassNotFoundException;
 
-    public boolean exist(String id) throws SQLException, ClassNotFoundException;
+    public boolean update(T dto) throws SQLException, ClassNotFoundException;
 
     public boolean delete(String id) throws SQLException, ClassNotFoundException;
 
-    public T search(String id) throws SQLException, ClassNotFoundException;
+    public boolean exist(String id) throws SQLException, ClassNotFoundException;
 
     public String generateNewId() throws SQLException, ClassNotFoundException;
 }

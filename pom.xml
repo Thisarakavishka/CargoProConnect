@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ijse.lk</groupId>
-    <artifactId>demoCargoProConnect</artifactId>
+    <artifactId>CargoProConnect</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>demoCargoProConnect</name>
+    <name>CargoProConnect</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -124,7 +124,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>ijse.lk.democargoproconnect/ijse.lk.democargoproconnect.HelloApplication
+                            <mainClass>lk.ijse.cargoproconnect.Launcher
                             </mainClass>
                         </configuration>
                     </execution>
