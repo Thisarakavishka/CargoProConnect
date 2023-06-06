@@ -14,8 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.bos.BatchBO;
+import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
 import lk.ijse.cargoproconnect.dto.BatchDTO;
-import lk.ijse.cargoproconnect.model.BatchModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
 import lk.ijse.cargoproconnect.util.TextFieldValidator;
@@ -65,6 +66,9 @@ public class UpdateBatchFormController implements Initializable {
         UpdateBatchFormController.batch = batch;
     }
 
+    //Dependency Injection (Property Injection)
+    BatchBO batchBO = new BatchBOImpl();
+
     @FXML
     void btnDiscardOnAction(ActionEvent event) {
         try {
@@ -79,13 +83,13 @@ public class UpdateBatchFormController implements Initializable {
     void btnUpdateOnAction(ActionEvent event) {
         if (cmbShipmentType.getValue() != null && txtTotalWeight.getFocusColor().equals(Color.web(Colors.GREEN)) && txtDeliverDate.getValue() != null && txtShipmentDate.getValue() != null && txtDeliverAddress.getFocusColor().equals(Color.web(Colors.GREEN))) {
             try {
-                boolean isUpdated = BatchModel.updateBatch(new BatchDTO(lblBatchId.getText(), txtShipmentDate.getValue(), txtDeliverDate.getValue(), txtTotalWeight.getText(), txtDeliverAddress.getText(), cmbShipmentType.getValue()));
+                boolean isUpdated = batchBO.updateBatch(new BatchDTO(lblBatchId.getText(), txtShipmentDate.getValue(), txtDeliverDate.getValue(), txtTotalWeight.getText(), txtDeliverAddress.getText(), cmbShipmentType.getValue()));
                 if (isUpdated) {
                     NotificationUtil.showNotification("Success", "Successfully " + lblBatchId.getText() + " Batch updated ", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();
                     rootChange.getChildren().add(FXMLLoader.load(getClass().getResource("/lk/ijse/cargoproconnect/view/BatchForm.fxml")));
                 }
-            } catch (SQLException | IOException e) {
+            } catch (SQLException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
                 NotificationUtil.showNotification("Error", "OOPS! Something happen ", NotificationUtil.NotificationType.ERROR, Duration.seconds(5));
             }

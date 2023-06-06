@@ -14,8 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.bos.BatchBO;
+import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
 import lk.ijse.cargoproconnect.dto.BatchDTO;
-import lk.ijse.cargoproconnect.model.BatchModel;
 import lk.ijse.cargoproconnect.model.LoginModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -60,17 +61,20 @@ public class AddNewBatchFormController implements Initializable {
 
     private static ObservableList<String> cmbList = FXCollections.observableArrayList("SHIP", "FLIGHT");
 
+    //Dependency Injection (Property Injection)
+    BatchBO batchBO = new BatchBOImpl();
+
     @FXML
     void btnAddOnAction(ActionEvent event) {
         if(cmbShipmentType.getValue() != null && txtTotalWeight.getFocusColor().equals(Color.web(Colors.GREEN)) && txtDeliverDate.getValue() != null && txtShipmentDate.getValue() != null && txtDeliverAddress.getFocusColor().equals(Color.web(Colors.GREEN))){
             try {
-                boolean isAdded = BatchModel.addNewBatch(new BatchDTO(lblBatchId.getText(), txtShipmentDate.getValue(), txtDeliverDate.getValue(), txtTotalWeight.getText(), txtDeliverAddress.getText(), cmbShipmentType.getValue()));
+                boolean isAdded = batchBO.addBatch(new BatchDTO(lblBatchId.getText(), txtShipmentDate.getValue(), txtDeliverDate.getValue(), txtTotalWeight.getText(), txtDeliverAddress.getText(), cmbShipmentType.getValue()));
                 if (isAdded) {
                     NotificationUtil.showNotification("Success", "Successfully " + lblBatchId.getText() + " Batch added " + LoginModel.getEmployeeUserName(), NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();
                     rootChange.getChildren().add(FXMLLoader.load(getClass().getResource("/lk/ijse/cargoproconnect/view/BatchForm.fxml")));
                 }
-            } catch (SQLException | IOException e) {
+            } catch (SQLException | IOException | ClassNotFoundException e) {
                 NotificationUtil.showNotification("Error", "OOPS!  Something happen" + LoginModel.getEmployeeUserName(), NotificationUtil.NotificationType.ERROR, Duration.seconds(5));
                 e.printStackTrace();
             }
@@ -103,8 +107,8 @@ public class AddNewBatchFormController implements Initializable {
 
     void generateNextBatchId() {
         try {
-            lblBatchId.setText(BatchModel.getNextTaxId());
-        } catch (SQLException e) {
+            lblBatchId.setText(batchBO.generateNewBatchId());
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

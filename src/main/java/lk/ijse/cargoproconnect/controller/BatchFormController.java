@@ -23,11 +23,12 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.bos.BatchBO;
+import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
 import lk.ijse.cargoproconnect.controller.popup.ViewBatchDetailsFormController;
 import lk.ijse.cargoproconnect.controller.update.UpdateBatchFormController;
 import lk.ijse.cargoproconnect.dto.BatchDTO;
 import lk.ijse.cargoproconnect.dto.tm.BatchTM;
-import lk.ijse.cargoproconnect.model.BatchModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
 import org.apache.poi.ss.usermodel.Cell;
@@ -114,6 +115,9 @@ public class BatchFormController implements Initializable {
     private static List<BatchDTO> batches;
     static int ROWS_PER_PAGE = 10;
 
+    //Dependency Injection (Property Injection)
+    BatchBO batchBO = new BatchBOImpl();
+
     @FXML
     void btnAddBatchOnAction(ActionEvent event) {
         try {
@@ -126,7 +130,7 @@ public class BatchFormController implements Initializable {
 
     @FXML
     void btnDeleteSelectedOnAction(ActionEvent event) {
-        List<String> ids = new ArrayList<>();
+        ArrayList<String> ids = new ArrayList<>();
         for (BatchTM batchTM : list) {
             if (batchTM.getCheckBox().isSelected() && batchTM.getCheckBox().isVisible()) {
                 ids.add(batchTM.getId());
@@ -138,7 +142,7 @@ public class BatchFormController implements Initializable {
 
         if (result.orElse(no) == yes) {
             try {
-                boolean isDeleted = BatchModel.deleteSelectedBatches(ids);
+                boolean isDeleted = batchBO.deleteSelectedBatches(ids);
                 tableBatch.refresh();
                 if (isDeleted) {
                     setTableData();
@@ -276,7 +280,7 @@ public class BatchFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            batches = BatchModel.getBatches();
+            batches = batchBO.getAllBatches();
 
             for (BatchDTO batch : batches) {
 
@@ -329,7 +333,7 @@ public class BatchFormController implements Initializable {
             }
             pagination.setPageCount((int) Math.ceil(list.size() / 10.0));
             pagination.setPageFactory(this::createPage);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -375,7 +379,7 @@ public class BatchFormController implements Initializable {
 
                 if (result.orElse(no) == yes) {
                     try {
-                        boolean isDeleted = BatchModel.deleteBatch(batch.getId());
+                        boolean isDeleted = batchBO.deleteBatch(batch.getId());
                         if (isDeleted) {
                             setTableData();
                             tableBatch.refresh();
@@ -383,7 +387,7 @@ public class BatchFormController implements Initializable {
                         } else {
                             NotificationUtil.showNotification("Error", "OOPS! Something happen", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                         }
-                    } catch (SQLException e) {
+                    } catch (SQLException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }

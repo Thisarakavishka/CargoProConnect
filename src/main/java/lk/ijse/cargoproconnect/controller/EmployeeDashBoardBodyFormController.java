@@ -19,6 +19,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.bos.BatchBO;
+import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
 import lk.ijse.cargoproconnect.dto.*;
 import lk.ijse.cargoproconnect.dto.tm.ActionDeliverTM;
 import lk.ijse.cargoproconnect.dto.tm.AvailableOrderTM;
@@ -119,6 +121,9 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
     private ObservableList<AvailableOrderTM> listAvailableOrder = FXCollections.observableArrayList();
     private static int ROWS_PER_PAGE = 10;
 
+    //Dependency Injection (Property Injection)
+    BatchBO batchBO = new BatchBOImpl();
+
     @FXML
     void btnBatchOnAction(ActionEvent event) {
         try {
@@ -183,7 +188,7 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
         try {
             List<CustomerDTO> customers = CustomerModel.getCustomers();
             List<OrderDTO> orders = OrderModel.getOrders(1);
-            List<BatchDTO> batches = BatchModel.getAvailableBatches();
+            List<BatchDTO> batches = batchBO.getAvailableBatches();
             List<TaxDTO> taxes = TaxModel.getTaxes();
             lblTotalCustomers.setText(String.valueOf(customers.size()));
             lblTotalOrders.setText(String.valueOf(orders.size()));

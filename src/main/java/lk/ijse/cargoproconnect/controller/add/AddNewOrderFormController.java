@@ -19,8 +19,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.bos.BatchBO;
+import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
 import lk.ijse.cargoproconnect.controller.popup.PaymentFormController;
 import lk.ijse.cargoproconnect.controller.popup.ViewBatchFormController;
+import lk.ijse.cargoproconnect.dto.BatchDTO;
 import lk.ijse.cargoproconnect.dto.CategoryDTO;
 import lk.ijse.cargoproconnect.dto.CustomerDTO;
 import lk.ijse.cargoproconnect.dto.DeliveryDTO;
@@ -172,12 +175,15 @@ public class AddNewOrderFormController implements Initializable {
     private int totalWeight;
     private double netTax;
 
+    //Dependency Injection (Property Injection)
+    BatchBO batchBO = new BatchBOImpl();
+
     @FXML
     void btnAddBatchOnAction(ActionEvent event) { //check batch
         if (datePicker.getValue() != null && datePicker2.getValue() != null) {
             if (datePicker.getValue().isBefore(datePicker2.getValue()) && datePicker.getValue().isEqual(LocalDate.now()) || datePicker.getValue().isAfter(LocalDate.now())) {
                 try {
-                    BatchModel.setStatus();
+                    batchBO.setBatchStatus();
                     ViewBatchFormController.setSelectedDates(datePicker.getValue(), datePicker2.getValue());
                     Stage stage = new Stage();
                     stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/lk/ijse/cargoproconnect/view/popups/ViewBatchForm.fxml"))));
@@ -340,8 +346,9 @@ public class AddNewOrderFormController implements Initializable {
                 DeliveryDTO delivery = new DeliveryDTO(lblDeliverId.getText(),txtCustomerAddress.getText(),txtCustomerContact1.getText(),txtCustomerContact2.getText());
 
                 int weight = Integer.parseInt(lblTotalWeight.getText().replaceAll("\\D+", ""));
-                int currentWeight = BatchModel.getCurrentWeight(lblBatchId.getText());
-                int totalWeight = BatchModel.getTotalWeight(lblBatchId.getText());
+                BatchDTO batch = batchBO.searchBatch(lblBatchId.getText());
+                int currentWeight = batch.getCurrentWeight();
+                int totalWeight = batch.getTotalWeight();
 
                 if (weight + currentWeight == totalWeight || weight + currentWeight < totalWeight) {
                     try {
@@ -360,7 +367,7 @@ public class AddNewOrderFormController implements Initializable {
                 } else {
                     NotificationUtil.showNotification("OOPS!", lblBatchId.getText() + "Batch is completed try another batch", NotificationUtil.NotificationType.NOTIFICATION, Duration.seconds(5));
                 }
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 NotificationUtil.showNotification("Error", "OOPS! Something happen", NotificationUtil.NotificationType.ERROR, Duration.seconds(5));
             }
         } else {

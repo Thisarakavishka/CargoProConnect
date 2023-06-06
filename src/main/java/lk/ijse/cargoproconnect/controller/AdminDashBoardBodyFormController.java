@@ -16,6 +16,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.bos.BatchBO;
+import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
 import lk.ijse.cargoproconnect.dto.*;
 import lk.ijse.cargoproconnect.dto.tm.CustomerDeliverTM;
 import lk.ijse.cargoproconnect.dto.tm.EmployeeRequestTM;
@@ -122,6 +124,9 @@ public class AdminDashBoardBodyFormController implements Initializable {
     private ObservableList<EmployeeRequestTM> listEmployeeRequest = FXCollections.observableArrayList();
     private ObservableList<CustomerDeliverTM> listCustomerDeliver = FXCollections.observableArrayList();
 
+    //Dependency Injection (Property Injection)
+    BatchBO batchBO = new BatchBOImpl();
+
     @FXML
     void btnBatchOnAction(ActionEvent event) {
         try {
@@ -187,7 +192,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
         try {
             List<CustomerDTO> customers = CustomerModel.getCustomers();
             List<EmployeeDTO> employees = EmployeeModel.getEmployees(1);
-            List<BatchDTO> batches = BatchModel.getAvailableBatches();
+            List<BatchDTO> batches = batchBO.getAvailableBatches();
             List<TaxDTO> taxes = TaxModel.getTaxes();
             lblTotalCustomers.setText(String.valueOf(customers.size()));
             lblTotalEmployees.setText(String.valueOf(employees.size()));

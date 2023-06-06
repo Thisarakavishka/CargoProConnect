@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import lk.ijse.cargoproconnect.bo.bos.BatchBO;
+import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
 import lk.ijse.cargoproconnect.dto.BatchDTO;
 import lk.ijse.cargoproconnect.dto.CustomerDTO;
 import lk.ijse.cargoproconnect.dto.DeliveryDTO;
@@ -74,6 +76,9 @@ public class ViewOrderFormController implements Initializable {
         ViewOrderFormController.orderTM = orderTM;
     }
 
+    //Dependency Injection (Property Injection)
+    BatchBO batchBO = new BatchBOImpl();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setData();
@@ -81,7 +86,7 @@ public class ViewOrderFormController implements Initializable {
 
     private void setData() {
         try {
-            BatchDTO batch = BatchModel.getBatch(orderTM.getBatchId());
+            BatchDTO batch = batchBO.searchBatch(orderTM.getBatchId());
             CustomerDTO customer = CustomerModel.getCustomer(orderTM.getCustomerId());
             OrderDTO order = OrderModel.getOrder(orderTM.getId());
             String deliverId = DeliveryModel.getDeliverId(order.getId());
@@ -102,7 +107,7 @@ public class ViewOrderFormController implements Initializable {
 //                txtCheckBy.setText(orderTM.getCheckBy());
 //                txtCheckTime.setText(orderTM.getCheckTime());
 //                txtOrderDate.setText(order.getOrderDate());
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

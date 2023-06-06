@@ -12,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.bos.BatchBO;
+import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
 import lk.ijse.cargoproconnect.dto.BatchDTO;
 import lk.ijse.cargoproconnect.dto.tm.ViewBatchTM;
 import lk.ijse.cargoproconnect.model.BatchModel;
@@ -61,6 +63,9 @@ public class ViewBatchFormController implements Initializable {
     private static LocalDate value1;
     static String batchId;
 
+    //Dependency Injection (Property Injection)
+    BatchBO batchBO = new BatchBOImpl();
+
     public static void setSelectedDates(LocalDate value, LocalDate value1) {
         ViewBatchFormController.value = value;
         ViewBatchFormController.value1 = value1;
@@ -75,7 +80,7 @@ public class ViewBatchFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<BatchDTO> batches = BatchModel.getAvailableBatches();
+            List<BatchDTO> batches = batchBO.getAvailableBatches();
 
             for(BatchDTO batch: batches){
                 JFXButton button = new JFXButton("SELECT");
