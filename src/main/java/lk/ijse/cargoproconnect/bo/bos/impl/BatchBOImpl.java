@@ -25,33 +25,63 @@ public class BatchBOImpl implements BatchBO {
     }
 
     @Override
-    public boolean addBatch(BatchDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean add(BatchDTO dto) throws SQLException, ClassNotFoundException {
         return batchDAO.add(new Batch(dto.getId(), dto.getSDate(), dto.getDDate(), dto.getAvailableStatus(), dto.getTotalWeight(), dto.getCurrentWeight(), dto.getDeliveryAddress(), dto.getNoOfOrders(), dto.getShipmentType()));
     }
 
     @Override
-    public BatchDTO searchBatch(String id) throws SQLException, ClassNotFoundException {
+    public BatchDTO search(String id) throws SQLException, ClassNotFoundException {
         Batch batch = batchDAO.search(id);
         return new BatchDTO(batch.getId(), batch.getSDate(), batch.getDDate(), batch.getAvailableStatus(), batch.getTotalWeight(), batch.getCurrentWeight(), batch.getDeliveryAddress(), batch.getNoOfOrders(), batch.getShipmentType());
     }
 
     @Override
-    public boolean updateBatch(BatchDTO dto) throws SQLException, ClassNotFoundException {
+    public boolean update(BatchDTO dto) throws SQLException, ClassNotFoundException {
         return batchDAO.update(new Batch(dto.getId(), dto.getSDate(), dto.getDDate(), dto.getAvailableStatus(), dto.getTotalWeight(), dto.getCurrentWeight(), dto.getDeliveryAddress(), dto.getNoOfOrders(), dto.getShipmentType()));
     }
 
     @Override
-    public boolean deleteBatch(String id) throws SQLException, ClassNotFoundException {
+    public boolean delete(String id) throws SQLException, ClassNotFoundException {
         return batchDAO.delete(id);
     }
 
     @Override
-    public boolean existBatch(String id) throws SQLException, ClassNotFoundException {
-        return false;
+    public String generateNewId() throws SQLException, ClassNotFoundException {
+        return batchDAO.generateNewId();
     }
 
     @Override
-    public String generateNewBatchId() throws SQLException, ClassNotFoundException {
-        return batchDAO.generateNewId();
+    public boolean deleteSelectedBatches(ArrayList<String> ids) throws SQLException {
+        return batchDAO.deleteSelectedBatches(ids);
+    }
+
+    @Override
+    public ArrayList<BatchDTO> getAvailableBatches() throws SQLException {
+        ArrayList<Batch> batches = batchDAO.getAvailableBatches();
+        ArrayList<BatchDTO> batchDTOS = new ArrayList<>();
+        for (Batch batch : batches) {
+            batchDTOS.add(new BatchDTO(batch.getId(), batch.getSDate(), batch.getDDate(), batch.getAvailableStatus(), batch.getTotalWeight(), batch.getCurrentWeight(), batch.getDeliveryAddress(), batch.getNoOfOrders(), batch.getShipmentType()));
+        }
+        return batchDTOS;
+    }
+
+    @Override
+    public boolean updateBatchWeight(String batchId, int weight) throws SQLException {
+        return batchDAO.updateBatchWeight(batchId, weight);
+    }
+
+    @Override
+    public void setStatus() throws SQLException {
+        batchDAO.setStatus();
+    }
+
+    @Override
+    public void setAvailableStatus(int i, String batchId) throws SQLException {
+        batchDAO.setAvailableStatus(i, batchId);
+    }
+
+    @Override
+    public boolean setCurrentOrders(String batchId, int i) throws SQLException {
+        return batchDAO.setCurrentOrders(batchId, i);
     }
 }
