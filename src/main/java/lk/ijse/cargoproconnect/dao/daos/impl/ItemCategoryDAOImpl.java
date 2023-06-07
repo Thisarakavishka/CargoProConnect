@@ -28,7 +28,9 @@ public class ItemCategoryDAOImpl implements ItemCategoryDAO {
 
     @Override
     public ItemCategory search(String id) throws SQLException, ClassNotFoundException {
-        return null;     // not implement this method yet !
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM item_category WHERE Item_category_id=?", id);
+        resultSet.next();
+        return new ItemCategory(resultSet.getString(1),resultSet.getString(2));
     }
 
     @Override

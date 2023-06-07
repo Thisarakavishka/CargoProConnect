@@ -27,7 +27,7 @@ public class TaxDAOImpl implements TaxDAO {
 
     @Override
     public Tax search(String id) throws SQLException, ClassNotFoundException {
-        ResultSet resultSet = CrudUtil.execute("SELECT * FROM tax WHERE id=?", id);
+        ResultSet resultSet = CrudUtil.execute("SELECT * FROM tax WHERE tax_id=?", id);
         resultSet.next();
         return new Tax(resultSet.getString(1),resultSet.getString(2),resultSet.getDouble(3),resultSet.getString(4) );
     }
