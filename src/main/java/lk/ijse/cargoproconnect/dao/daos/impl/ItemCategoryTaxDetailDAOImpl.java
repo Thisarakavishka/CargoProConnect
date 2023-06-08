@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ItemCategoryTaxDetailDAOImpl implements ItemCategoryTaxDetailDAO {
+
     @Override
     public ArrayList<ItemCategoryTaxDetails> getAll() {
         throw new UnsupportedOperationException("This feature is not implemented yet ");
