@@ -1,6 +1,7 @@
 package lk.ijse.cargoproconnect.dao.daos.impl;
 
 import lk.ijse.cargoproconnect.dao.daos.TaxDAO;
+import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.entity.Tax;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 
@@ -29,7 +30,7 @@ public class TaxDAOImpl implements TaxDAO {
     public Tax search(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM tax WHERE tax_id=?", id);
         resultSet.next();
-        return new Tax(resultSet.getString(1),resultSet.getString(2),resultSet.getDouble(3),resultSet.getString(4) );
+        return new Tax(resultSet.getString(1), resultSet.getString(2), resultSet.getDouble(3), resultSet.getString(4));
     }
 
     @Override
@@ -54,6 +55,18 @@ public class TaxDAOImpl implements TaxDAO {
             return "T0001";
         }
         return "T" + String.format("%04d", Integer.parseInt(currentMaxId.substring(1)) + 1);
+    }
+
+    @Override
+    public ArrayList<TaxDTO> getAll(ArrayList<String> ids) throws SQLException {
+        ArrayList<TaxDTO> taxes = new ArrayList<>();
+        for (String id : ids) {
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM tax WHERE  tax_id = ?", id);
+            while (resultSet.next()) {
+                taxes.add(new TaxDTO(resultSet.getString(1), resultSet.getString(2), resultSet.getDouble(3), resultSet.getString(4)));
+            }
+        }
+        return taxes;
     }
 
     @Override

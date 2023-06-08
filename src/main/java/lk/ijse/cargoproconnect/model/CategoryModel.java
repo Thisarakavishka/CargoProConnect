@@ -93,15 +93,6 @@ public class CategoryModel {
         return CrudUtil.execute(sql, id, taxId);
     }
 
-    public static List<String> getTaxIds(String id) throws SQLException {
-        String sql = "SELECT * FROM item_category_tax_details WHERE item_category_id = ?";
-        List<String> ids = new ArrayList<>();
-        ResultSet resultSet = CrudUtil.execute(sql, id);
-        while (resultSet.next()) {
-            ids.add(resultSet.getString(2));
-        }
-        return ids;
-    }
 
     public static List<TaxDTO> getTaxes(List<String> ids) throws SQLException {
         String sql = "SELECT * FROM tax WHERE  tax_id = ?";

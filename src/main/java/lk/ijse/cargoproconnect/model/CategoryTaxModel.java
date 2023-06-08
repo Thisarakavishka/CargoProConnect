@@ -87,7 +87,7 @@ public class CategoryTaxModel {
             connection = DBConnection.getInstance().getConnection();
             connection.setAutoCommit(false);
             List<String> ids = new ArrayList<>();
-            ids = CategoryModel.getTaxIds(id);
+            ids = TaxModel.getTaxIds(id);
             if (!ids.isEmpty()) {
                 taxes = CategoryModel.getTaxes(ids);
                 if (!taxes.isEmpty()) {
