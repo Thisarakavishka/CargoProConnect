@@ -1,7 +1,6 @@
 package lk.ijse.cargoproconnect.dao.daos.impl;
 
 import lk.ijse.cargoproconnect.dao.daos.TaxDAO;
-import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.entity.Tax;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 
@@ -58,12 +57,12 @@ public class TaxDAOImpl implements TaxDAO {
     }
 
     @Override
-    public ArrayList<TaxDTO> getAll(ArrayList<String> ids) throws SQLException {
-        ArrayList<TaxDTO> taxes = new ArrayList<>();
+    public ArrayList<Tax> getAll(ArrayList<String> ids) throws SQLException {
+        ArrayList<Tax> taxes = new ArrayList<>();
         for (String id : ids) {
             ResultSet resultSet = CrudUtil.execute("SELECT * FROM tax WHERE  tax_id = ?", id);
             while (resultSet.next()) {
-                taxes.add(new TaxDTO(resultSet.getString(1), resultSet.getString(2), resultSet.getDouble(3), resultSet.getString(4)));
+                taxes.add(new Tax(resultSet.getString(1), resultSet.getString(2), resultSet.getDouble(3), resultSet.getString(4)));
             }
         }
         return taxes;
