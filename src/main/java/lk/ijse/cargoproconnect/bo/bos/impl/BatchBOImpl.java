@@ -1,8 +1,8 @@
 package lk.ijse.cargoproconnect.bo.bos.impl;
 
 import lk.ijse.cargoproconnect.bo.bos.BatchBO;
+import lk.ijse.cargoproconnect.dao.DAOFactory;
 import lk.ijse.cargoproconnect.dao.daos.BatchDAO;
-import lk.ijse.cargoproconnect.dao.daos.impl.BatchDAOImpl;
 import lk.ijse.cargoproconnect.dto.BatchDTO;
 import lk.ijse.cargoproconnect.entity.Batch;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class BatchBOImpl implements BatchBO {
 
     //Dependency Injection (Property Injection)
-    BatchDAO batchDAO = new BatchDAOImpl();
+    BatchDAO batchDAO = (BatchDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.BATCH);
 
     @Override
     public ArrayList<BatchDTO> getAllBatches() throws SQLException, ClassNotFoundException {
