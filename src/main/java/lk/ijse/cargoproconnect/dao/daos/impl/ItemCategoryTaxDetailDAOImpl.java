@@ -1,7 +1,9 @@
 package lk.ijse.cargoproconnect.dao.daos.impl;
 
+import javafx.collections.ObservableList;
 import lk.ijse.cargoproconnect.dao.daos.ItemCategoryTaxDetailDAO;
 import lk.ijse.cargoproconnect.dto.TaxDTO;
+import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
 import lk.ijse.cargoproconnect.entity.ItemCategoryTaxDetails;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 
@@ -34,9 +36,9 @@ public class ItemCategoryTaxDetailDAOImpl implements ItemCategoryTaxDetailDAO {
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM item_category_tax_details WHERE item_category_id = ?", id);
-        if(resultSet.next()){
+        if (resultSet.next()) {
             return CrudUtil.execute("DELETE FROM item_category_tax_details WHERE item_category_id = ?", id);
-        }else {
+        } else {
             return true;
         }
     }
@@ -58,12 +60,12 @@ public class ItemCategoryTaxDetailDAOImpl implements ItemCategoryTaxDetailDAO {
 
     @Override
     public boolean removeTax(String id, ArrayList<TaxDTO> removedTaxes) throws SQLException {
-        if (removedTaxes ==null || id == null || id.isEmpty()) {
+        if (removedTaxes == null || id == null || id.isEmpty()) {
             return true;
         }
         for (TaxDTO tax : removedTaxes) {
             boolean isRemoved = CrudUtil.execute("DELETE FROM item_category_tax_details WHERE item_category_id = ? AND tax_id = ?", id, tax.getId());
-            if(!isRemoved){
+            if (!isRemoved) {
                 return false;
             }
         }
@@ -90,32 +92,27 @@ public class ItemCategoryTaxDetailDAOImpl implements ItemCategoryTaxDetailDAO {
         return taxIds;
     }
 
-     //**********************************************************************************************************************************
-    // i need to implement these methods in business layer
+    @Override
+    public boolean addNewCategoryTaxDetails(String id, ObservableList<CategoryTaxTM> observableList) throws SQLException, ClassNotFoundException {
+        for (CategoryTaxTM categoryTaxTM : observableList) {
+            if (!add(new ItemCategoryTaxDetails(id, categoryTaxTM.getId()))) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-    //    public static boolean addNewCategoryTaxDetails(String id, ObservableList<CategoryTaxTM> observableList) throws SQLException {
-    //        for (CategoryTaxTM categoryTaxTM : observableList) {
-    //            if (!isSave(id, categoryTaxTM.getId())) {
-    //                return false;
-    //            }
-    //        }
-    //        return true;
-    //    }
-
-    //    public static boolean addTax(String id, List<TaxDTO> addedTaxes) throws SQLException {
-    //        if (addedTaxes.isEmpty()) {
-    //            return true;
-    //        }
-    //        for (TaxDTO tax : addedTaxes) {
-    //            boolean isSave = isSave(id , tax.getId());
-    //            if(!isSave){
-    //                return false;
-    //            }
-    //        }
-    //        return true;
-    //    }
-
-    //use addItemCategoryTaxDetail() for isSave() method in business layer
-
-    //**********************************************************************************************************************************
+    @Override
+    public boolean addTax(String id, ArrayList<TaxDTO> addedTaxes) throws SQLException, ClassNotFoundException {
+        if (addedTaxes.isEmpty()) {
+            return true;
+        }
+        for (TaxDTO tax : addedTaxes) {
+            boolean isSave = add(new ItemCategoryTaxDetails(id, tax.getId()));
+            if (!isSave) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

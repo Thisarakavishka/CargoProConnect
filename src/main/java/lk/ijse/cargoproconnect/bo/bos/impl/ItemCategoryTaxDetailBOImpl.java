@@ -1,12 +1,10 @@
 package lk.ijse.cargoproconnect.bo.bos.impl;
 
-import javafx.collections.ObservableList;
 import lk.ijse.cargoproconnect.bo.bos.ItemCategoryTaxDetailBO;
 import lk.ijse.cargoproconnect.dao.DAOFactory;
 import lk.ijse.cargoproconnect.dao.daos.ItemCategoryTaxDetailDAO;
 import lk.ijse.cargoproconnect.dto.ItemCategoryTaxDetailsDTO;
 import lk.ijse.cargoproconnect.dto.TaxDTO;
-import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
 import lk.ijse.cargoproconnect.entity.ItemCategoryTaxDetails;
 
 import java.sql.SQLException;
@@ -45,29 +43,5 @@ public class ItemCategoryTaxDetailBOImpl implements ItemCategoryTaxDetailBO {
     @Override
     public ArrayList<String> getTaxIds(String categoryId) throws SQLException {
         return itemCategoryTaxDetailDAO.getTaxIds(categoryId);
-    }
-
-    @Override
-    public boolean addNewCategoryTaxDetails(String id, ObservableList<CategoryTaxTM> observableList) throws SQLException, ClassNotFoundException {
-        for (CategoryTaxTM categoryTaxTM : observableList) {
-            if (!itemCategoryTaxDetailDAO.add(new ItemCategoryTaxDetails(id, categoryTaxTM.getId()))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
-    public boolean addTax(String id, ArrayList<TaxDTO> addedTaxes) throws SQLException, ClassNotFoundException {
-        if (addedTaxes.isEmpty()) {
-            return true;
-        }
-        for (TaxDTO tax : addedTaxes) {
-            boolean isSave = itemCategoryTaxDetailDAO.add(new ItemCategoryTaxDetails(id, tax.getId()));
-            if (!isSave) {
-                return false;
-            }
-        }
-        return true;
     }
 }

@@ -1,7 +1,9 @@
 package lk.ijse.cargoproconnect.dao.daos;
 
+import javafx.collections.ObservableList;
 import lk.ijse.cargoproconnect.dao.CrudDAO;
 import lk.ijse.cargoproconnect.dto.TaxDTO;
+import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
 import lk.ijse.cargoproconnect.entity.ItemCategoryTaxDetails;
 
 import java.sql.SQLException;
@@ -16,5 +18,9 @@ public interface ItemCategoryTaxDetailDAO extends CrudDAO<ItemCategoryTaxDetails
     int getTaxCount(String categoryId) throws SQLException;
 
     ArrayList<String> getTaxIds(String categoryId) throws SQLException;
+
+    boolean addNewCategoryTaxDetails(String id, ObservableList<CategoryTaxTM> observableList) throws SQLException, ClassNotFoundException;
+
+    boolean addTax(String id, ArrayList<TaxDTO> addedTaxes) throws SQLException, ClassNotFoundException;
 
 }
