@@ -1,11 +1,12 @@
 package lk.ijse.cargoproconnect.bo.bos;
 
+import lk.ijse.cargoproconnect.bo.SuperBO;
 import lk.ijse.cargoproconnect.dto.BatchDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface BatchBO {
+public interface BatchBO extends SuperBO {
 
     ArrayList<BatchDTO> getAllBatches() throws SQLException, ClassNotFoundException;
 

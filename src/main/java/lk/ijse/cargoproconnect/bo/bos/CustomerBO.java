@@ -1,11 +1,12 @@
 package lk.ijse.cargoproconnect.bo.bos;
 
+import lk.ijse.cargoproconnect.bo.SuperBO;
 import lk.ijse.cargoproconnect.dto.CustomerDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface CustomerBO {
+public interface CustomerBO extends SuperBO {
 
     ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException;
 

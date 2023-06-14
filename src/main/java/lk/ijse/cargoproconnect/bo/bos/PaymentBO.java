@@ -1,11 +1,12 @@
 package lk.ijse.cargoproconnect.bo.bos;
 
+import lk.ijse.cargoproconnect.bo.SuperBO;
 import lk.ijse.cargoproconnect.dto.PaymentDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface PaymentBO {
+public interface PaymentBO extends SuperBO {
 
     ArrayList<PaymentDTO> getAllPayments() throws SQLException, ClassNotFoundException;
 

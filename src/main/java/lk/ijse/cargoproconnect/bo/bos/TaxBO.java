@@ -1,11 +1,12 @@
 package lk.ijse.cargoproconnect.bo.bos;
 
+import lk.ijse.cargoproconnect.bo.SuperBO;
 import lk.ijse.cargoproconnect.dto.TaxDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface TaxBO {
+public interface TaxBO extends SuperBO {
 
     ArrayList<TaxDTO> getAllTaxes() throws SQLException, ClassNotFoundException;
 

@@ -1,6 +1,7 @@
 package lk.ijse.cargoproconnect.bo.bos;
 
 import javafx.collections.ObservableList;
+import lk.ijse.cargoproconnect.bo.SuperBO;
 import lk.ijse.cargoproconnect.dto.ItemCategoryTaxDetailsDTO;
 import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
@@ -8,7 +9,7 @@ import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public interface ItemCategoryTaxDetailBO {
+public interface ItemCategoryTaxDetailBO extends SuperBO {
 
     boolean addItemCategoryTaxDetail(ItemCategoryTaxDetailsDTO dto) throws SQLException, ClassNotFoundException;
 
