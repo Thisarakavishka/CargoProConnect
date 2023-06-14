@@ -17,7 +17,7 @@ public class OrderDeliverDetailDAOImpl implements OrderDeliverDetailDAO {
 
     @Override
     public boolean add(OrderDeliverDetails dto) throws SQLException, ClassNotFoundException {
-        throw new UnsupportedOperationException("This feature is not implemented yet ");
+        return CrudUtil.execute("INSERT INTO order_deliver_details(order_id, deliver_id) VALUES (?, ?)", dto.getOrderId(), dto.getDeliverId());
     }
 
     @Override
@@ -44,9 +44,5 @@ public class OrderDeliverDetailDAOImpl implements OrderDeliverDetailDAO {
         throw new UnsupportedOperationException("This feature is not implemented yet ");
     }
 
-    @Override
-    public boolean addOrderDeliveryDetails(String orderId, String deliverId) throws SQLException {
-        return CrudUtil.execute("INSERT INTO order_deliver_details(order_id, deliver_id) VALUES (?, ?)", orderId, deliverId);
-    }
     //use search() method for getOrderId(id) and getDeliverId(id)
 }
