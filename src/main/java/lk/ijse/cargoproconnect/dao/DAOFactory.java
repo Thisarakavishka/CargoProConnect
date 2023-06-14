@@ -18,7 +18,7 @@ public class DAOFactory {
     public SuperDAO getDAO(DAOTypes daoTypes) {
         switch (daoTypes) {
             case ADMIN:
-                return null; // not implement yet
+                return new AdminDAOImpl();
             case BATCH:
                 return new BatchDAOImpl();
             case CUSTOMER:
