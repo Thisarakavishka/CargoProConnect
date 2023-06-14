@@ -23,4 +23,6 @@ public interface TaxBO extends SuperBO {
     ArrayList<TaxDTO> getAllTaxes(ArrayList<String> ids) throws SQLException;
 
     boolean deleteSelectedTaxes(ArrayList<String> ids) throws SQLException;
+
+    double getTotalTax(String categoryId, String price, String qty) throws SQLException;
 }
