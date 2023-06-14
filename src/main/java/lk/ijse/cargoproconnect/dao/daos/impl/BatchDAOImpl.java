@@ -74,17 +74,7 @@ public class BatchDAOImpl implements BatchDAO {
         ResultSet resultSet = CrudUtil.execute("SELECT * FROM batch WHERE available_status = 1");
         ArrayList<Batch> batches = new ArrayList<>();
         while (resultSet.next()) {
-            batches.add(new Batch(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getInt(4),
-                    resultSet.getInt(5),
-                    resultSet.getInt(6),
-                    resultSet.getString(7),
-                    resultSet.getInt(8),
-                    resultSet.getString(9)
-            ));
+            batches.add(new Batch(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getInt(4), resultSet.getInt(5), resultSet.getInt(6), resultSet.getString(7), resultSet.getInt(8), resultSet.getString(9)));
         }
         return batches;
     }
