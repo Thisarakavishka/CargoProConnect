@@ -13,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.OrderBO;
 import lk.ijse.cargoproconnect.dto.DeliveryDTO;
 import lk.ijse.cargoproconnect.dto.OrderDTO;
 import lk.ijse.cargoproconnect.dto.tm.OrderItemTM;
@@ -69,9 +71,10 @@ public class PaymentFormController implements Initializable {
     private static String orderDate;
     private static String email;
     private static double totalTax;
-    private static ObservableList<String> cmbList = FXCollections.observableArrayList("CASH", "CARD");
+    private static final ObservableList<String> cmbList = FXCollections.observableArrayList("CASH", "CARD");
     private static final DecimalFormat decimalFormatter = new DecimalFormat("0.00");
 
+    OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
 
     public static void setPlaceOrderDetails(int weight, DeliveryDTO delivery, ObservableList<OrderItemTM> observableList, String orderId, String customerId, String batchId, String orderDate, double totalTax) {
         PaymentFormController.weight = weight;
@@ -105,7 +108,8 @@ public class PaymentFormController implements Initializable {
                 DecimalFormat df = new DecimalFormat("#.##");
                 String totalPrice = df.format(price * weight);
                 int total = price * weight;
-                boolean isAdded = PlaceOrderModel.placeNewOrder(total, weight, delivery, observableList, new OrderDTO(orderId, customerId, lblPaymentId.getText(), batchId, orderDate), totalTax, Double.parseDouble(totalPrice), cmbPaymentMethod.getValue());
+//                boolean isAdded = PlaceOrderModel.placeNewOrder(total, weight, delivery, observableList, new OrderDTO(orderId, customerId, lblPaymentId.getText(), batchId, orderDate), totalTax, Double.parseDouble(totalPrice), cmbPaymentMethod.getValue());
+                boolean isAdded = orderBO.placeNewOrder(total, weight, delivery, observableList, new OrderDTO(orderId, customerId, lblPaymentId.getText(), batchId, orderDate), totalTax, Double.parseDouble(totalPrice), cmbPaymentMethod.getValue());
                 if (isAdded) {
                     Stage stage = (Stage) root.getScene().getWindow();
                     stage.close();
