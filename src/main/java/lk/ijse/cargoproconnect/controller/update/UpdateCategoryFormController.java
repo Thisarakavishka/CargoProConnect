@@ -18,10 +18,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.ItemCategoryBO;
 import lk.ijse.cargoproconnect.dto.CategoryDTO;
 import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
-import lk.ijse.cargoproconnect.model.CategoryTaxModel;
 import lk.ijse.cargoproconnect.model.TaxModel;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
 import lk.ijse.cargoproconnect.util.TextFieldValidator;
@@ -82,6 +83,9 @@ public class UpdateCategoryFormController implements Initializable {
     static ObservableList<CategoryTaxTM> list = FXCollections.observableArrayList();
     static List<TaxDTO> originalTaxes = new ArrayList<>();
 
+    //Dependency Injection (Property Injection)
+    ItemCategoryBO itemCategoryBO = (ItemCategoryBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM_CATEGORY);
+
     public static void setCategoryDetails(CategoryDTO category) {
         UpdateCategoryFormController.category = category;
     }
@@ -137,8 +141,8 @@ public class UpdateCategoryFormController implements Initializable {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        List<TaxDTO> addedTaxes = new ArrayList<>();
-        List<TaxDTO> removedTaxes = new ArrayList<>();
+        ArrayList<TaxDTO> addedTaxes = new ArrayList<>();
+        ArrayList<TaxDTO> removedTaxes = new ArrayList<>();
         List<TaxDTO> currentTaxes = new ArrayList<>();
 
         for (CategoryTaxTM categoryTaxTM : taxTable.getItems()) {
@@ -178,7 +182,8 @@ public class UpdateCategoryFormController implements Initializable {
         }
 
         try {
-            boolean isUpdated = CategoryTaxModel.updateCategory(category.getId(), category.getName(), addedTaxes, removedTaxes);
+//            boolean isUpdated = CategoryTaxModel.updateCategory(category.getId(), category.getName(), addedTaxes, removedTaxes);
+            boolean isUpdated = itemCategoryBO.updateCategory(category.getId(), category.getName(), addedTaxes, removedTaxes);
             if (isUpdated) {
                 NotificationUtil.showNotification("Success", "Successfully " + category.getName() + " Category Updated ", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                 rootChange.getChildren().clear();
@@ -220,7 +225,8 @@ public class UpdateCategoryFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<TaxDTO> taxes = CategoryTaxModel.getIncludedTaxes(category.getId());
+//            List<TaxDTO> taxes = CategoryTaxModel.getIncludedTaxes(category.getId());
+            List<TaxDTO> taxes = itemCategoryBO.getIncludedTaxes(category.getId());
             if (taxes == null) {
 
             } else if (!taxes.isEmpty() || taxes != null) {

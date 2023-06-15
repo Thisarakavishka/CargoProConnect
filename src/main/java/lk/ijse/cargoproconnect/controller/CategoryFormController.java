@@ -26,7 +26,6 @@ import lk.ijse.cargoproconnect.bo.bos.ItemCategoryBO;
 import lk.ijse.cargoproconnect.controller.update.UpdateCategoryFormController;
 import lk.ijse.cargoproconnect.dto.CategoryDTO;
 import lk.ijse.cargoproconnect.dto.tm.CategoryTM;
-import lk.ijse.cargoproconnect.model.CategoryTaxModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
 import org.apache.poi.ss.usermodel.Row;
@@ -108,7 +107,7 @@ public class CategoryFormController implements Initializable {
 
     @FXML
     void btnDeleteSelectedOnAction(ActionEvent event) {
-        List<String> ids = new ArrayList<>();
+        ArrayList<String> ids = new ArrayList<>();
         for (CategoryTM categoryTM : list) {
             if (categoryTM.getCheckBox().isSelected()) {
                 ids.add(categoryTM.getId());
@@ -120,7 +119,8 @@ public class CategoryFormController implements Initializable {
 
         if (result.orElse(no) == yes) {
             try {
-                boolean isDeleted = CategoryTaxModel.deleteSelectedCategories(ids);
+//                boolean isDeleted = CategoryTaxModel.deleteSelectedCategories(ids);
+                boolean isDeleted = itemCategoryBO.deleteSelectedCategories(ids);
                 tableCategory.refresh();
                 if (isDeleted) {
                     setTableData();
@@ -250,7 +250,8 @@ public class CategoryFormController implements Initializable {
                 hBox.setSpacing(15);
                 int taxes = 0;
                 try {
-                    taxes = CategoryTaxModel.taxCount(category.getName());
+//                    taxes = CategoryTaxModel.taxCount(category.getName());
+                    taxes = itemCategoryBO.taxCount(category.getName());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -286,7 +287,8 @@ public class CategoryFormController implements Initializable {
 
             if (result.orElse(no) == yes) {
                 try {
-                    boolean isDeleted = CategoryTaxModel.deleteCategory(category.getId());
+//                    boolean isDeleted = CategoryTaxModel.deleteCategory(category.getId());
+                    boolean isDeleted = itemCategoryBO.deleteCategory(category.getId());
                     if (isDeleted) {
                         setTableData();
                         tableCategory.refresh();
@@ -294,7 +296,7 @@ public class CategoryFormController implements Initializable {
                     } else {
                         NotificationUtil.showNotification("Error", "OOPS! Something happen", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     }
-                } catch (SQLException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }

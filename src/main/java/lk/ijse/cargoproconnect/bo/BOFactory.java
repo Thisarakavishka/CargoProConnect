@@ -10,7 +10,7 @@ public class BOFactory {
     }
 
     public static BOFactory getBoFactory() {
-        return (boFactory == null) ? new BOFactory() : boFactory;
+        return (boFactory == null) ? boFactory = new BOFactory() : boFactory;
     }
 
     public enum BOTypes {ADMIN, BATCH, CUSTOMER, DELIVER_DETAIL, EMPLOYEE, ITEM_CATEGORY, ITEM_CATEGORY_TAX_DETAIL, ORDER, ORDER_DELIVER_DETAIL, ORDER_ITEM_CATEGORY, PAYMENT, TAX}

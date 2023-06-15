@@ -88,7 +88,8 @@ public class AddNewCategoryFormController implements Initializable {
     void btnAddOnAction(ActionEvent event) {
         if(txtCategoryName.getFocusColor().equals(Color.web(Colors.GREEN))){
             try {
-                boolean isAdded = CategoryTaxModel.addNewCategory(lblCategoryId.getText(), txtCategoryName.getText(), observableList);
+//                boolean isAdded = CategoryTaxModel.addNewCategory(lblCategoryId.getText(), txtCategoryName.getText(), observableList);
+                boolean isAdded = itemCategoryBO.addNewCategory(lblCategoryId.getText(), txtCategoryName.getText(), observableList);
                 if (isAdded) {
                     NotificationUtil.showNotification("Success", "Successfully " + txtCategoryName.getText() + " Category added" + LoginModel.getEmployeeUserName(), NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();

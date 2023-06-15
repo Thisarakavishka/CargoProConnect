@@ -245,7 +245,8 @@ public class AddNewOrderFormController implements Initializable {
             double totalTax = 0;
 
             try {
-                taxes = CategoryTaxModel.taxCount(txtSearchCategory.getText());
+//                taxes = CategoryTaxModel.taxCount(txtSearchCategory.getText());
+                taxes = itemCategoryBO.taxCount(txtSearchCategory.getText());
                 totalTax = OrderItemTaxModel.getTotalTax(lblCategoryId.getText(), txtPrice.getText(), txtQty.getText());
                 if (!txtPrice.getText().isEmpty() || txtPrice != null) {
                     totalTax = OrderItemTaxModel.getTotalTax(lblCategoryId.getText(), txtPrice.getText(), txtQty.getText());
@@ -443,7 +444,8 @@ public class AddNewOrderFormController implements Initializable {
         txtSearchCategory.setOnKeyTyped(keyEvent -> {
             int taxes = 0;
             try {
-                taxes = CategoryTaxModel.taxCount(txtSearchCategory.getText());
+//                taxes = CategoryTaxModel.taxCount(txtSearchCategory.getText());
+                taxes = itemCategoryBO.taxCount(txtSearchCategory.getText());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
