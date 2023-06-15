@@ -28,7 +28,6 @@ import lk.ijse.cargoproconnect.dto.CategoryDTO;
 import lk.ijse.cargoproconnect.dto.CustomerDTO;
 import lk.ijse.cargoproconnect.dto.DeliveryDTO;
 import lk.ijse.cargoproconnect.dto.tm.OrderItemTM;
-import lk.ijse.cargoproconnect.model.*;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
 import lk.ijse.cargoproconnect.util.TextFieldValidator;

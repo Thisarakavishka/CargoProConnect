@@ -9,7 +9,6 @@ import lk.ijse.cargoproconnect.bo.bos.*;
 import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
 import lk.ijse.cargoproconnect.dto.*;
 import lk.ijse.cargoproconnect.dto.tm.OrderTM;
-import lk.ijse.cargoproconnect.model.OrderModel;
 
 import java.net.URL;
 import java.sql.SQLException;

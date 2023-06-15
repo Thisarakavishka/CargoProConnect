@@ -15,11 +15,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.OrderBO;
+import lk.ijse.cargoproconnect.bo.bos.PaymentBO;
 import lk.ijse.cargoproconnect.dto.DeliveryDTO;
 import lk.ijse.cargoproconnect.dto.OrderDTO;
 import lk.ijse.cargoproconnect.dto.tm.OrderItemTM;
-import lk.ijse.cargoproconnect.model.PaymentModel;
-import lk.ijse.cargoproconnect.model.PlaceOrderModel;
 import lk.ijse.cargoproconnect.util.MailUtil;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
 import lk.ijse.cargoproconnect.util.ReceiptGeneratorUtil;
@@ -76,6 +75,7 @@ public class PaymentFormController implements Initializable {
 
     //Dependency Injection (Property Injection)
     OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
+    PaymentBO paymentBO = (PaymentBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.PAYMENT);
 
     public static void setPlaceOrderDetails(int weight, DeliveryDTO delivery, ObservableList<OrderItemTM> observableList, String orderId, String customerId, String batchId, String orderDate, double totalTax) {
         PaymentFormController.weight = weight;
@@ -147,8 +147,9 @@ public class PaymentFormController implements Initializable {
 
     void generateNextPaymentId() {
         try {
-            lblPaymentId.setText(PaymentModel.getNextPaymentId());
-        } catch (SQLException e) {
+//            lblPaymentId.setText(PaymentModel.getNextPaymentId());
+            lblPaymentId.setText(paymentBO.generateNewPaymentId());
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
