@@ -9,7 +9,6 @@ import lk.ijse.cargoproconnect.dto.DeliveryDTO;
 import lk.ijse.cargoproconnect.dto.OrderDTO;
 import lk.ijse.cargoproconnect.dto.tm.OrderItemTM;
 import lk.ijse.cargoproconnect.entity.*;
-import lk.ijse.cargoproconnect.model.BatchModel;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -109,7 +108,7 @@ public class OrderBOImpl implements OrderBO {
                                     int currentOrders = searchBatch2.getNoOfOrders();
                                     boolean isAddOrders = batchDAO.setCurrentOrders(order.getBatchId(), currentOrders + 1);
                                     if (isAddOrders) {
-                                        BatchModel.setStatus();
+                                        batchDAO.setStatus();
                                         connection.commit();
                                     }
                                     return true;

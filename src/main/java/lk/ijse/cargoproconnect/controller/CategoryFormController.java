@@ -21,10 +21,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.ItemCategoryBO;
 import lk.ijse.cargoproconnect.controller.update.UpdateCategoryFormController;
 import lk.ijse.cargoproconnect.dto.CategoryDTO;
 import lk.ijse.cargoproconnect.dto.tm.CategoryTM;
-import lk.ijse.cargoproconnect.model.CategoryModel;
 import lk.ijse.cargoproconnect.model.CategoryTaxModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -91,6 +92,9 @@ public class CategoryFormController implements Initializable {
 
     private JFXCheckBox checkBox;
     private ObservableList<CategoryTM> list;
+
+    //Dependency Injection (Property Injection)
+    ItemCategoryBO itemCategoryBO = (ItemCategoryBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM_CATEGORY);
 
     @FXML
     void btnAddCategoryOnAction(ActionEvent event) {
@@ -217,7 +221,8 @@ public class CategoryFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<CategoryDTO> categories = CategoryModel.getCategories();
+//            List<CategoryDTO> categories = CategoryModel.getCategories();
+            ArrayList<CategoryDTO> categories = itemCategoryBO.getAllCategories();
 
             for (CategoryDTO category : categories) {
 
@@ -260,7 +265,7 @@ public class CategoryFormController implements Initializable {
             }
             pagination.setPageCount((int) Math.ceil(list.size() / 10.0));
             pagination.setPageFactory(this::createPage);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

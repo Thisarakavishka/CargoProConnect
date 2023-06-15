@@ -1,10 +1,11 @@
 package lk.ijse.cargoproconnect.dao.daos.impl;
 
 import javafx.collections.ObservableList;
+import lk.ijse.cargoproconnect.dao.DAOFactory;
+import lk.ijse.cargoproconnect.dao.daos.ItemCategoryDAO;
 import lk.ijse.cargoproconnect.dao.daos.OrderItemCategoryDAO;
 import lk.ijse.cargoproconnect.dto.tm.OrderItemTM;
 import lk.ijse.cargoproconnect.entity.OrderItemCategory;
-import lk.ijse.cargoproconnect.model.CategoryModel;
 import lk.ijse.cargoproconnect.util.CrudUtil;
 
 import java.sql.SQLException;
@@ -44,8 +45,9 @@ public class OrderItemCategoryDAOImpl implements OrderItemCategoryDAO {
 
     @Override
     public boolean addOrderItemCategories(String orderId, ObservableList<OrderItemTM> observableList) throws SQLException {
+        ItemCategoryDAO itemCategoryDAO = (ItemCategoryDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ITEM_CATEGORY);
         for (OrderItemTM orderItemTM : observableList) {
-            CrudUtil.execute("INSERT INTO order_item_category(order_id, item_category_id, item_name, note , weight, qty, total_tax) VALUES (?, ?, ?, ?, ?, ?, ?)", orderId, CategoryModel.getCategoryId(orderItemTM.getCategory()), orderItemTM.getItem(), orderItemTM.getNote(), orderItemTM.getUnitWeight(), orderItemTM.getQty(), orderItemTM.getTotalTax());
+            CrudUtil.execute("INSERT INTO order_item_category(order_id, item_category_id, item_name, note , weight, qty, total_tax) VALUES (?, ?, ?, ?, ?, ?, ?)", orderId, itemCategoryDAO.getCategoryId(orderItemTM.getCategory()), orderItemTM.getItem(), orderItemTM.getNote(), orderItemTM.getUnitWeight(), orderItemTM.getQty(), orderItemTM.getTotalTax());
         }
         return true;
     }

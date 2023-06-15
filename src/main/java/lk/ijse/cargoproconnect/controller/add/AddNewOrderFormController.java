@@ -19,8 +19,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.BatchBO;
-import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
+import lk.ijse.cargoproconnect.bo.bos.ItemCategoryBO;
 import lk.ijse.cargoproconnect.controller.popup.PaymentFormController;
 import lk.ijse.cargoproconnect.controller.popup.ViewBatchFormController;
 import lk.ijse.cargoproconnect.dto.BatchDTO;
@@ -176,7 +177,8 @@ public class AddNewOrderFormController implements Initializable {
     private double netTax;
 
     //Dependency Injection (Property Injection)
-    BatchBO batchBO = new BatchBOImpl();
+    BatchBO batchBO = (BatchBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.BATCH);
+    ItemCategoryBO itemCategoryBO = (ItemCategoryBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM_CATEGORY);
 
     @FXML
     void btnAddBatchOnAction(ActionEvent event) { //check batch
@@ -413,7 +415,8 @@ public class AddNewOrderFormController implements Initializable {
         List<String> ids = new ArrayList<>();
         List<String> name = new ArrayList<>();
         try {
-            List<CategoryDTO> categories = CategoryModel.getCategories();
+//            List<CategoryDTO> categories = CategoryModel.getCategories();
+            List<CategoryDTO> categories =itemCategoryBO.getAllCategories();
             for (CategoryDTO category : categories) {
                 ids.add(category.getId());
                 name.add(category.getName());
@@ -434,7 +437,7 @@ public class AddNewOrderFormController implements Initializable {
                     }
                 }
             });
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         txtSearchCategory.setOnKeyTyped(keyEvent -> {

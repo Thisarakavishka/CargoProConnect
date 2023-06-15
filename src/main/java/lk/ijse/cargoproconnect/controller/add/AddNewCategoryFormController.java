@@ -19,6 +19,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.ItemCategoryBO;
 import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
 import lk.ijse.cargoproconnect.model.*;
@@ -78,6 +80,9 @@ public class AddNewCategoryFormController implements Initializable {
     private JFXButton btnDiscard;
 
     private ObservableList<CategoryTaxTM> observableList = FXCollections.observableArrayList();
+
+    //Dependency Injection (Property Injection)
+    ItemCategoryBO itemCategoryBO = (ItemCategoryBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM_CATEGORY);
 
     @FXML
     void btnAddOnAction(ActionEvent event) {
@@ -208,8 +213,9 @@ public class AddNewCategoryFormController implements Initializable {
 
     private void generateNextCustomerId() {
         try {
-            lblCategoryId.setText(CategoryModel.getNextCategoryId());
-        } catch (SQLException e) {
+//            lblCategoryId.setText(CategoryModel.getNextCategoryId());
+            lblCategoryId.setText(itemCategoryBO.generateNewCategoryId());
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

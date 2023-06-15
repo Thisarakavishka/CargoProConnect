@@ -74,6 +74,7 @@ public class PaymentFormController implements Initializable {
     private static final ObservableList<String> cmbList = FXCollections.observableArrayList("CASH", "CARD");
     private static final DecimalFormat decimalFormatter = new DecimalFormat("0.00");
 
+    //Dependency Injection (Property Injection)
     OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
 
     public static void setPlaceOrderDetails(int weight, DeliveryDTO delivery, ObservableList<OrderItemTM> observableList, String orderId, String customerId, String batchId, String orderDate, double totalTax) {
