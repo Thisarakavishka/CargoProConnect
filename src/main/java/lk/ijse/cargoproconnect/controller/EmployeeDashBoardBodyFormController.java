@@ -22,7 +22,7 @@ import javafx.util.Duration;
 import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.BatchBO;
 import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
-import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
+import lk.ijse.cargoproconnect.bo.bos.OrderDeliverDetailBO;
 import lk.ijse.cargoproconnect.dto.*;
 import lk.ijse.cargoproconnect.dto.tm.ActionDeliverTM;
 import lk.ijse.cargoproconnect.dto.tm.AvailableOrderTM;
@@ -126,6 +126,7 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
     //Dependency Injection (Property Injection)
     BatchBO batchBO = (BatchBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.BATCH);
     CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+    OrderDeliverDetailBO orderDeliverDetailBO = (OrderDeliverDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER_DELIVER_DETAIL);
 
     @FXML
     void btnBatchOnAction(ActionEvent event) {
@@ -236,7 +237,8 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
 
     private void setDeliverTableData() {
         try {
-            List<DeliveryDTO> deliveries = OrderDeliveryModel.getDeliveries(0);
+//            List<DeliveryDTO> deliveries = OrderDeliveryModel.getDeliveries(0);
+            List<DeliveryDTO> deliveries = orderDeliverDetailBO.getDeliveries(0);
             if (deliveries == null) {
                 tableDeliver.getItems().clear();
             } else if (!deliveries.isEmpty() || deliveries != null) {
@@ -315,7 +317,7 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
     private void setConfirmBtnOnAction(DeliveryDTO delivery, JFXButton confirm) {
         confirm.setOnAction(event -> {
             try {
-                boolean isConfirm = OrderDeliveryModel.confirmDeliver(delivery.getId(), LoginModel.getEmployeeId());
+                boolean isConfirm = orderDeliverDetailBO.confirmDeliver(delivery.getId(), LoginModel.getEmployeeId());
                 if (isConfirm) {
                     NotificationUtil.showNotification("Confirmed", "Deliver " + delivery.getId() + " Confirmed SuccessFully", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     listActionDeliver = FXCollections.observableArrayList();
