@@ -20,10 +20,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.bo.BOFactory;
-import lk.ijse.cargoproconnect.bo.bos.BatchBO;
-import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
-import lk.ijse.cargoproconnect.bo.bos.DeliverDetailBO;
-import lk.ijse.cargoproconnect.bo.bos.ItemCategoryBO;
+import lk.ijse.cargoproconnect.bo.bos.*;
 import lk.ijse.cargoproconnect.controller.popup.PaymentFormController;
 import lk.ijse.cargoproconnect.controller.popup.ViewBatchFormController;
 import lk.ijse.cargoproconnect.dto.BatchDTO;
@@ -183,6 +180,7 @@ public class AddNewOrderFormController implements Initializable {
     ItemCategoryBO itemCategoryBO = (ItemCategoryBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM_CATEGORY);
     CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
     DeliverDetailBO detailBO = (DeliverDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DELIVER_DETAIL);
+    TaxBO taxBO = (TaxBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.TAX);
 
     @FXML
     void btnAddBatchOnAction(ActionEvent event) { //check batch
@@ -251,11 +249,14 @@ public class AddNewOrderFormController implements Initializable {
             try {
 //                taxes = CategoryTaxModel.taxCount(txtSearchCategory.getText());
                 taxes = itemCategoryBO.taxCount(txtSearchCategory.getText());
-                totalTax = OrderItemTaxModel.getTotalTax(lblCategoryId.getText(), txtPrice.getText(), txtQty.getText());
+//                totalTax = OrderItemTaxModel.getTotalTax(lblCategoryId.getText(), txtPrice.getText(), txtQty.getText());
+                totalTax = taxBO.getTotalTax(lblCategoryId.getText(), txtPrice.getText(), txtQty.getText());
                 if (!txtPrice.getText().isEmpty() || txtPrice != null) {
-                    totalTax = OrderItemTaxModel.getTotalTax(lblCategoryId.getText(), txtPrice.getText(), txtQty.getText());
+//                    totalTax = OrderItemTaxModel.getTotalTax(lblCategoryId.getText(), txtPrice.getText(), txtQty.getText());
+                    totalTax = taxBO.getTotalTax(lblCategoryId.getText(), txtPrice.getText(), txtQty.getText());
                 } else {
-                    totalTax = OrderItemTaxModel.getTotalTax(lblCategoryId.getText(), "0", txtQty.getText());
+//                    totalTax = OrderItemTaxModel.getTotalTax(lblCategoryId.getText(), "0", txtQty.getText());
+                    totalTax = taxBO.getTotalTax(lblCategoryId.getText(), "0", txtQty.getText());
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

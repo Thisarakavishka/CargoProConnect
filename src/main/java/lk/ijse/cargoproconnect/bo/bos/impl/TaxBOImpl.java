@@ -69,6 +69,7 @@ public class TaxBOImpl implements TaxBO {
         return taxDAO.deleteSelectedTaxes(ids);
     }
 
+    //Transaction
     @Override
     public double getTotalTax(String categoryId, String price, String qty) throws SQLException {
         Connection connection = null;
