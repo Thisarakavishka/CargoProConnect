@@ -7,13 +7,11 @@ import javafx.scene.control.Label;
 import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.BatchBO;
 import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
+import lk.ijse.cargoproconnect.bo.bos.DeliverDetailBO;
+import lk.ijse.cargoproconnect.bo.bos.OrderDeliverDetailBO;
 import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
-import lk.ijse.cargoproconnect.dto.BatchDTO;
-import lk.ijse.cargoproconnect.dto.CustomerDTO;
-import lk.ijse.cargoproconnect.dto.DeliveryDTO;
-import lk.ijse.cargoproconnect.dto.OrderDTO;
+import lk.ijse.cargoproconnect.dto.*;
 import lk.ijse.cargoproconnect.dto.tm.OrderTM;
-import lk.ijse.cargoproconnect.model.DeliveryModel;
 import lk.ijse.cargoproconnect.model.OrderModel;
 
 import java.net.URL;
@@ -79,6 +77,8 @@ public class ViewOrderFormController implements Initializable {
     //Dependency Injection (Property Injection)
     BatchBO batchBO = new BatchBOImpl();
     CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+    DeliverDetailBO detailBO = (DeliverDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DELIVER_DETAIL);
+    OrderDeliverDetailBO orderDeliverDetailBO = (OrderDeliverDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER_DELIVER_DETAIL);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,8 +90,9 @@ public class ViewOrderFormController implements Initializable {
             BatchDTO batch = batchBO.searchBatch(orderTM.getBatchId());
             CustomerDTO customer = customerBO.searchCustomer(orderTM.getCustomerId());
             OrderDTO order = OrderModel.getOrder(orderTM.getId());
-            String deliverId = DeliveryModel.getDeliverId(order.getId());
-            DeliveryDTO delivery = DeliveryModel.getDelivery(deliverId);
+            OrderDeliverDetailsDTO searchDto = orderDeliverDetailBO.search(order.getId());
+            String deliverId = searchDto.getDeliverId();
+            DeliveryDTO delivery = detailBO.searchDeliverDetail(deliverId);
 //                lblOrderId.setText(order.getId());
 //                lblIsChecked.setText(order.getIsChecked() == 0 ? "UNCHECKED" : "CHECKED");
 //                lblIsDeliver.setText(order.getIsDeliver() == 0 ? "NOT YET" : "DELIVER");

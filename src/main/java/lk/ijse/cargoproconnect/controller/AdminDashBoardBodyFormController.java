@@ -19,6 +19,7 @@ import javafx.util.Duration;
 import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.BatchBO;
 import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
+import lk.ijse.cargoproconnect.bo.bos.DeliverDetailBO;
 import lk.ijse.cargoproconnect.dto.*;
 import lk.ijse.cargoproconnect.dto.tm.CustomerDeliverTM;
 import lk.ijse.cargoproconnect.dto.tm.EmployeeRequestTM;
@@ -128,6 +129,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
     //Dependency Injection (Property Injection)
     BatchBO batchBO = (BatchBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.BATCH);
     CustomerBO customerBO= (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+    DeliverDetailBO detailBO = (DeliverDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DELIVER_DETAIL);
 
     @FXML
     void btnBatchOnAction(ActionEvent event) {
@@ -247,7 +249,8 @@ public class AdminDashBoardBodyFormController implements Initializable {
 
     private void setDeliverTableData() {
         try {
-            List<DeliveryDTO> deliveries = DeliveryModel.getDeliveries();
+//            List<DeliveryDTO> deliveries = DeliveryModel.getDeliveries();
+            List<DeliveryDTO> deliveries = detailBO.getAllDeliverDetails();
             for (DeliveryDTO delivery : deliveries) {
 
                 Label label = new Label(delivery.getIsDelivered() == 1 ? "Delivered" : "Not Yet");
@@ -264,7 +267,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
                 pagination.setPageCount((int) Math.ceil(listCustomerDeliver.size() / 8.0));
                 pagination.setPageFactory(this::createPage);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

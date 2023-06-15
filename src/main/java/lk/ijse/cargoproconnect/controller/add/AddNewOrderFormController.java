@@ -22,6 +22,7 @@ import javafx.util.Duration;
 import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.BatchBO;
 import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
+import lk.ijse.cargoproconnect.bo.bos.DeliverDetailBO;
 import lk.ijse.cargoproconnect.bo.bos.ItemCategoryBO;
 import lk.ijse.cargoproconnect.controller.popup.PaymentFormController;
 import lk.ijse.cargoproconnect.controller.popup.ViewBatchFormController;
@@ -181,6 +182,7 @@ public class AddNewOrderFormController implements Initializable {
     BatchBO batchBO = (BatchBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.BATCH);
     ItemCategoryBO itemCategoryBO = (ItemCategoryBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM_CATEGORY);
     CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+    DeliverDetailBO detailBO = (DeliverDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DELIVER_DETAIL);
 
     @FXML
     void btnAddBatchOnAction(ActionEvent event) { //check batch
@@ -506,7 +508,8 @@ public class AddNewOrderFormController implements Initializable {
         List<String> contact1 = new ArrayList<>();
         List<String> contact2 = new ArrayList<>();
         try {
-            List<DeliveryDTO> deliveries = DeliveryModel.getDeliveries();
+//            List<DeliveryDTO> deliveries = DeliveryModel.getDeliveries();
+            List<DeliveryDTO> deliveries = detailBO.getAllDeliverDetails();
             for (DeliveryDTO delivery : deliveries) {
                 address.add(delivery.getAddress());
                 contact2.add(delivery.getContact2());
@@ -534,7 +537,7 @@ public class AddNewOrderFormController implements Initializable {
                     }
                 }
             });
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -549,8 +552,9 @@ public class AddNewOrderFormController implements Initializable {
 
     private void generateNextDeliverId() {
         try {
-            lblDeliverId.setText(DeliveryModel.getNextDeliverId());
-        } catch (SQLException e) {
+//            lblDeliverId.setText(DeliveryModel.getNextDeliverId());
+            lblDeliverId.setText(detailBO.generateNewDeliverDetailId());
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
