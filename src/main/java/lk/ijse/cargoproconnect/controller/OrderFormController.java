@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
+import lk.ijse.cargoproconnect.bo.bos.OrderBO;
 import lk.ijse.cargoproconnect.controller.popup.MailFormController;
 import lk.ijse.cargoproconnect.controller.popup.ViewOrderFormController;
 import lk.ijse.cargoproconnect.dto.CustomerDTO;
@@ -122,6 +123,7 @@ public class OrderFormController implements Initializable {
 
     //Dependency Injection (Property Injection)
     CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+    OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
 
     @FXML
     void btnAddOrderOnAction(ActionEvent event) {
@@ -276,7 +278,8 @@ public class OrderFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<OrderDTO> orders = OrderModel.getOrders();
+//            List<OrderDTO> orders = OrderModel.getOrders();
+            List<OrderDTO> orders = orderBO.getAllOrders();
 
             for (OrderDTO order : orders) {
                 JFXCheckBox checkBox = new JFXCheckBox();
@@ -324,7 +327,7 @@ public class OrderFormController implements Initializable {
             }
             pagination.setPageCount((int) Math.ceil(list.size() / 10.0));
             pagination.setPageFactory(this::createPage);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

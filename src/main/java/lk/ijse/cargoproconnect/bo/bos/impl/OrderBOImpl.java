@@ -127,4 +127,9 @@ public class OrderBOImpl implements OrderBO {
             connection.setAutoCommit(true);
         }
     }
+
+    @Override
+    public boolean checkOrder(String orderId, String employeeId, String time) throws SQLException {
+        return orderDAO.checkOrder(orderId, employeeId, time);
+    }
 }

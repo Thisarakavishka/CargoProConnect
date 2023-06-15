@@ -86,5 +86,9 @@ public class OrderDAOImpl implements OrderDAO {
         return CrudUtil.execute("UPDATE orders set is_deliver = 1 WHERE order_id = ?", orderId);
     }
 
-    //Use update() method for checkOrder() method and pass Order Object as a argument
+    @Override
+    public boolean checkOrder(String orderId, String employeeId, String time) throws SQLException {
+        return CrudUtil.execute("UPDATE orders set is_checked = 1, check_by = ? ,check_time = ? WHERE order_id = ?", employeeId, time, orderId);
+    }
+
 }

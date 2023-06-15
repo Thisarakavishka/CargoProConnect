@@ -22,6 +22,7 @@ import javafx.util.Duration;
 import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.BatchBO;
 import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
+import lk.ijse.cargoproconnect.bo.bos.OrderBO;
 import lk.ijse.cargoproconnect.bo.bos.OrderDeliverDetailBO;
 import lk.ijse.cargoproconnect.dto.*;
 import lk.ijse.cargoproconnect.dto.tm.ActionDeliverTM;
@@ -127,6 +128,7 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
     BatchBO batchBO = (BatchBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.BATCH);
     CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
     OrderDeliverDetailBO orderDeliverDetailBO = (OrderDeliverDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER_DELIVER_DETAIL);
+    OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
 
     @FXML
     void btnBatchOnAction(ActionEvent event) {
@@ -192,7 +194,8 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
         try {
 //            List<CustomerDTO> customers = CustomerModel.getCustomers();
             List<CustomerDTO> customers = customerBO.getAllCustomers();
-            List<OrderDTO> orders = OrderModel.getOrders(1);
+//            List<OrderDTO> orders = OrderModel.getOrders(1);
+            List<OrderDTO> orders = orderBO.getOrders(1);
             List<BatchDTO> batches = batchBO.getAvailableBatches();
             List<TaxDTO> taxes = TaxModel.getTaxes();
             lblTotalCustomers.setText(String.valueOf(customers.size()));
@@ -274,7 +277,8 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
 
     private void setOrdersForCheckTableData() {
         try {
-            List<OrderDTO> orders = OrderModel.getOrders(0);
+//            List<OrderDTO> orders = OrderModel.getOrders(0);
+            List<OrderDTO> orders = orderBO.getOrders(0);
             for (OrderDTO order : orders) {
 
                 JFXButton check = new JFXButton("Check");
@@ -299,7 +303,8 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
     private void setCheckBtnOnAction(OrderDTO order, JFXButton check) {
         check.setOnAction(event -> {
             try {
-                boolean checkOrder = OrderModel.checkOrder(order.getId(), LoginModel.getEmployeeId(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+//                boolean checkOrder = OrderModel.checkOrder(order.getId(), LoginModel.getEmployeeId(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
+                boolean checkOrder = orderBO.checkOrder(order.getId(), LoginModel.getEmployeeId(), new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime()));
                 if (checkOrder) {
                     NotificationUtil.showNotification("Checked", "Order " + order.getId() + " Checked SuccessFully", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     listAvailableOrder = FXCollections.observableArrayList();
@@ -351,7 +356,8 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
         XYChart.Series series = new XYChart.Series();
         series.setName("Orders");
         try {
-            List<OrderDTO> orders = OrderModel.getOrders();
+//            List<OrderDTO> orders = OrderModel.getOrders();
+            List<OrderDTO> orders = orderBO.getAllOrders();
             for (OrderDTO order : orders) {
                 int count = 0;
                 for (OrderDTO order1 : orders) {
@@ -361,7 +367,7 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
                 }
                 series.getData().add(new XYChart.Data<>(order.getOrderDate(), count));
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         lineChart.getData().addAll(series);

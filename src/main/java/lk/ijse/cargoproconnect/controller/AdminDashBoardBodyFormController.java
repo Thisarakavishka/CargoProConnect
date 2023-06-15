@@ -20,6 +20,7 @@ import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.BatchBO;
 import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
 import lk.ijse.cargoproconnect.bo.bos.DeliverDetailBO;
+import lk.ijse.cargoproconnect.bo.bos.OrderBO;
 import lk.ijse.cargoproconnect.dto.*;
 import lk.ijse.cargoproconnect.dto.tm.CustomerDeliverTM;
 import lk.ijse.cargoproconnect.dto.tm.EmployeeRequestTM;
@@ -130,6 +131,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
     BatchBO batchBO = (BatchBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.BATCH);
     CustomerBO customerBO= (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
     DeliverDetailBO detailBO = (DeliverDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DELIVER_DETAIL);
+    OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
 
     @FXML
     void btnBatchOnAction(ActionEvent event) {
@@ -346,7 +348,8 @@ public class AdminDashBoardBodyFormController implements Initializable {
         XYChart.Series orderDate = new XYChart.Series();
         orderDate.setName("Order Date");
         try {
-            List<OrderDTO> orders = OrderModel.getOrders();
+//            List<OrderDTO> orders = OrderModel.getOrders();
+            List<OrderDTO> orders = orderBO.getAllOrders();
             for (OrderDTO order : orders) {
                 int orderD = 0;
                 for (OrderDTO order1 : orders) {
@@ -356,7 +359,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
                 }
                 orderDate.getData().add(new XYChart.Data<>(order.getOrderDate(), orderD));
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         lineChart.getData().addAll(orderDate);

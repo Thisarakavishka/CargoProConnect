@@ -30,4 +30,6 @@ public interface OrderBO extends SuperBO {
     boolean updateIsDeliver(String orderId) throws SQLException;
 
     boolean placeNewOrder(int totalPrice, int weight, DeliveryDTO delivery, ObservableList<OrderItemTM> observableList, OrderDTO order, double totalTax, double total, String paymentType) throws SQLException;
+
+    boolean checkOrder(String orderId, String employeeId, String time) throws SQLException ;
 }

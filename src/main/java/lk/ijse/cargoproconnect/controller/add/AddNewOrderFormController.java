@@ -181,6 +181,7 @@ public class AddNewOrderFormController implements Initializable {
     CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
     DeliverDetailBO detailBO = (DeliverDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DELIVER_DETAIL);
     TaxBO taxBO = (TaxBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.TAX);
+    OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
 
     @FXML
     void btnAddBatchOnAction(ActionEvent event) { //check batch
@@ -545,8 +546,9 @@ public class AddNewOrderFormController implements Initializable {
 
     private void generateNextOrderId() {
         try {
-            lblOrderId.setText(OrderModel.getNextOrderId());
-        } catch (SQLException e) {
+//            lblOrderId.setText(OrderModel.getNextOrderId());
+            lblOrderId.setText(orderBO.generateNewOrderId());
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
