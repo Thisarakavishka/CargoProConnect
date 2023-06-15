@@ -23,11 +23,12 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
 import lk.ijse.cargoproconnect.controller.popup.MailFormController;
 import lk.ijse.cargoproconnect.controller.update.UpdateCustomerFormController;
 import lk.ijse.cargoproconnect.dto.CustomerDTO;
 import lk.ijse.cargoproconnect.dto.tm.CustomerTM;
-import lk.ijse.cargoproconnect.model.CustomerModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
 import org.apache.poi.ss.usermodel.Cell;
@@ -112,6 +113,9 @@ public class CustomerFormController implements Initializable {
     private static ObservableList<CustomerTM> list;
     private static int ROWS_PER_PAGE = 10;
 
+    //Dependency Injection (Property Injection)
+    CustomerBO customerBO= (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+
     @FXML
     void btnAddCustomerOnAction(ActionEvent event) {
         try {
@@ -124,7 +128,7 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void btnDeleteSelectedOnAction(ActionEvent event) {
-        List<String> ids = new ArrayList<>();
+        ArrayList<String> ids = new ArrayList<>();
         for (CustomerTM customerTM : list) {
             if (customerTM.getCheckBox().isSelected()) {
                 ids.add(customerTM.getId());
@@ -136,7 +140,8 @@ public class CustomerFormController implements Initializable {
 
         if (result.orElse(no) == yes) {
             try {
-                boolean isDeleted = CustomerModel.deleteSelectedCustomers(ids);
+//                boolean isDeleted = CustomerModel.deleteSelectedCustomers(ids);
+                boolean isDeleted = customerBO.deleteSelectedCustomers(ids);
                 tableCustomer.refresh();
                 if (isDeleted) {
                     setTableData();
@@ -160,13 +165,14 @@ public class CustomerFormController implements Initializable {
 
     public void btnMailSelectedOnAction(ActionEvent event) {
         try {
-            List<String> ids = new ArrayList<>();
+            ArrayList<String> ids = new ArrayList<>();
             for (CustomerTM customerTM : list) {
                 if (customerTM.getCheckBox().isSelected()) {
                     ids.add(customerTM.getId());
                 }
             }
-            List<String> emails = CustomerModel.getEmails(ids);
+//            List<String> emails = CustomerModel.getEmails(ids);
+            List<String> emails = customerBO.getCustomersEmails(ids);
             MailFormController.setMails(emails);
 
             System.out.println(emails.size());
@@ -277,7 +283,8 @@ public class CustomerFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<CustomerDTO> customers = CustomerModel.getCustomers();
+//            List<CustomerDTO> customers = CustomerModel.getCustomers();
+            List<CustomerDTO> customers = customerBO.getAllCustomers();
 
             for (CustomerDTO customer : customers) {
 
@@ -326,7 +333,7 @@ public class CustomerFormController implements Initializable {
             }
             pagination.setPageCount((int) Math.ceil(list.size() / 10.0));
             pagination.setPageFactory(this::createPage);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -365,7 +372,8 @@ public class CustomerFormController implements Initializable {
 
             if (result.orElse(no) == yes) {
                 try {
-                    boolean isDeleted = CustomerModel.deleteCustomer(customer.getId());
+//                    boolean isDeleted = CustomerModel.deleteCustomer(customer.getId());
+                    boolean isDeleted = customerBO.deleteCustomer(customer.getId());
                     if (isDeleted) {
                         setTableData();
                         tableCustomer.refresh();
@@ -373,7 +381,7 @@ public class CustomerFormController implements Initializable {
                     } else {
                         NotificationUtil.showNotification("OOPS!", "Something happen", NotificationUtil.NotificationType.ERROR, Duration.seconds(5));
                     }
-                } catch (SQLException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }

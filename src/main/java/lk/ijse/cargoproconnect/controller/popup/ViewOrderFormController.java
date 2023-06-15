@@ -4,15 +4,15 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.BatchBO;
+import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
 import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
 import lk.ijse.cargoproconnect.dto.BatchDTO;
 import lk.ijse.cargoproconnect.dto.CustomerDTO;
 import lk.ijse.cargoproconnect.dto.DeliveryDTO;
 import lk.ijse.cargoproconnect.dto.OrderDTO;
 import lk.ijse.cargoproconnect.dto.tm.OrderTM;
-import lk.ijse.cargoproconnect.model.BatchModel;
-import lk.ijse.cargoproconnect.model.CustomerModel;
 import lk.ijse.cargoproconnect.model.DeliveryModel;
 import lk.ijse.cargoproconnect.model.OrderModel;
 
@@ -78,6 +78,7 @@ public class ViewOrderFormController implements Initializable {
 
     //Dependency Injection (Property Injection)
     BatchBO batchBO = new BatchBOImpl();
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -87,7 +88,7 @@ public class ViewOrderFormController implements Initializable {
     private void setData() {
         try {
             BatchDTO batch = batchBO.searchBatch(orderTM.getBatchId());
-            CustomerDTO customer = CustomerModel.getCustomer(orderTM.getCustomerId());
+            CustomerDTO customer = customerBO.searchCustomer(orderTM.getCustomerId());
             OrderDTO order = OrderModel.getOrder(orderTM.getId());
             String deliverId = DeliveryModel.getDeliverId(order.getId());
             DeliveryDTO delivery = DeliveryModel.getDelivery(deliverId);

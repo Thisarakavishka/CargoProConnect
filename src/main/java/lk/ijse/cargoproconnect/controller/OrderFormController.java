@@ -24,11 +24,13 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
 import lk.ijse.cargoproconnect.controller.popup.MailFormController;
 import lk.ijse.cargoproconnect.controller.popup.ViewOrderFormController;
+import lk.ijse.cargoproconnect.dto.CustomerDTO;
 import lk.ijse.cargoproconnect.dto.OrderDTO;
 import lk.ijse.cargoproconnect.dto.tm.OrderTM;
-import lk.ijse.cargoproconnect.model.CustomerModel;
 import lk.ijse.cargoproconnect.model.OrderModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -118,6 +120,9 @@ public class OrderFormController implements Initializable {
     private JFXCheckBox checkBox;
     private ObservableList<OrderTM> list;
 
+    //Dependency Injection (Property Injection)
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+
     @FXML
     void btnAddOrderOnAction(ActionEvent event) {
         try {
@@ -189,13 +194,14 @@ public class OrderFormController implements Initializable {
     @FXML
     void btnMailSelectedOnAction(ActionEvent event) {
         try {
-            List<String> ids = new ArrayList<>();
+            ArrayList<String> ids = new ArrayList<>();
             for (OrderTM orderTM : tableOrder.getItems()) {
                 if (orderTM.getCheckBox().isSelected()) {
                     ids.add(orderTM.getCustomerId());
                 }
             }
-            List<String> emails = CustomerModel.getEmails(ids);
+//            List<String> emails = CustomerModel.getEmails(ids);
+            List<String> emails = customerBO.getCustomersEmails(ids);
             MailFormController.setMails(emails);
 
             Stage stage = new Stage();
@@ -297,10 +303,10 @@ public class OrderFormController implements Initializable {
                 hBox.setSpacing(10);
 
                 Label labelIsChecked = new Label(order.getIsChecked() == 1 ? "CHECKED" : "UNCHECKED");
-                labelIsChecked.setStyle(labelIsChecked.getText().equalsIgnoreCase("CHECKED") ? "-fx-font-weight: bold;-fx-text-fill: "+Colors.GREEN+";-fx-font-size: 15;" : "-fx-font-weight: bold;-fx-text-fill: "+ Colors.RED +";-fx-font-size: 15;");
+                labelIsChecked.setStyle(labelIsChecked.getText().equalsIgnoreCase("CHECKED") ? "-fx-font-weight: bold;-fx-text-fill: " + Colors.GREEN + ";-fx-font-size: 15;" : "-fx-font-weight: bold;-fx-text-fill: " + Colors.RED + ";-fx-font-size: 15;");
 
                 Label labelIsDeliver = new Label(order.getIsDeliver() == 1 ? "DELIVER" : "NOT YET");
-                labelIsDeliver.setStyle(labelIsDeliver.getText().equalsIgnoreCase("DELIVER") ? "-fx-font-weight: bold;-fx-text-fill: "+Colors.GREEN+";-fx-font-size: 15;" : "-fx-font-weight: bold;-fx-text-fill:"+ Colors.RED +";-fx-font-size: 15;");
+                labelIsDeliver.setStyle(labelIsDeliver.getText().equalsIgnoreCase("DELIVER") ? "-fx-font-weight: bold;-fx-text-fill: " + Colors.GREEN + ";-fx-font-size: 15;" : "-fx-font-weight: bold;-fx-text-fill:" + Colors.RED + ";-fx-font-size: 15;");
 
                 list.add(new OrderTM(
                         order.getId(),
@@ -334,7 +340,9 @@ public class OrderFormController implements Initializable {
     private void setMailBtnOnAction(JFXButton btnMail, OrderDTO order) {
         btnMail.setOnAction(event -> {
             try {
-                String email = CustomerModel.getEmail(order.getCustomerId());
+//                String email = CustomerModel.getEmail(order.getCustomerId());
+                CustomerDTO customerDTO = customerBO.searchCustomer(order.getCustomerId());
+                String email = customerDTO.getEmail();
                 MailFormController.setMail(email);
 
                 Stage stage = new Stage();
@@ -344,7 +352,7 @@ public class OrderFormController implements Initializable {
                 stage.setY(250);
                 stage.setX(1220);
                 stage.show();
-            } catch (SQLException | IOException e) {
+            } catch (SQLException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         });
@@ -416,7 +424,7 @@ public class OrderFormController implements Initializable {
             }
         }
         lblDelete.setText(count + "  selected");
-        lblDelete.setStyle("-fx-font-weight: bold;-fx-text-fill: "+Colors.BLUE+";-fx-font-size: 15;");
+        lblDelete.setStyle("-fx-font-weight: bold;-fx-text-fill: " + Colors.BLUE + ";-fx-font-size: 15;");
     }
 
     private void setSearchFilter() {

@@ -13,8 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
 import lk.ijse.cargoproconnect.dto.CustomerDTO;
-import lk.ijse.cargoproconnect.model.CustomerModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
 import lk.ijse.cargoproconnect.util.TextFieldValidator;
@@ -70,6 +71,9 @@ public class UpdateCustomerFormController implements Initializable {
         UpdateCustomerFormController.customer = customer;
     }
 
+    //Dependency Injection (Property Injection)
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+
     @FXML
     void btnDiscardOnAction(ActionEvent event) {
         try {
@@ -84,13 +88,14 @@ public class UpdateCustomerFormController implements Initializable {
     void btnUpdateOnAction(ActionEvent event) {
         if (txtFirstName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtLastName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtContactNumber1.getFocusColor().equals(Color.web(Colors.GREEN)) && txtContactNumber2.getFocusColor().equals(Color.web(Colors.GREEN)) && txtEmail.getFocusColor().equals(Color.web(Colors.GREEN)) && cmbDocumentType.getValue() != null && txtDocumentNumber.getFocusColor().equals(Color.web(Colors.GREEN)) && txtEmail.getFocusColor().equals(Color.web(Colors.GREEN))) {
             try {
-                boolean isUpdated = CustomerModel.updateCustomer(new CustomerDTO(lblCustomerId.getText(), txtFirstName.getText(), txtLastName.getText(), txtContactNumber1.getText(), txtContactNumber2.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), txtEmail.getText()));
+//                boolean isUpdated = CustomerModel.updateCustomer(new CustomerDTO(lblCustomerId.getText(), txtFirstName.getText(), txtLastName.getText(), txtContactNumber1.getText(), txtContactNumber2.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), txtEmail.getText()));
+                boolean isUpdated = customerBO.updateCustomer(new CustomerDTO(lblCustomerId.getText(), txtFirstName.getText(), txtLastName.getText(), txtContactNumber1.getText(), txtContactNumber2.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), txtEmail.getText()));
                 if (isUpdated) {
                     NotificationUtil.showNotification("Success", "Successfully " + lblCustomerId.getText() + " Customer updated ", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();
                     rootChange.getChildren().add(FXMLLoader.load(getClass().getResource("/lk/ijse/cargoproconnect/view/CustomerForm.fxml")));
                 }
-            } catch (SQLException | IOException e) {
+            } catch (SQLException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
                 NotificationUtil.showNotification("OOPS!", "Something happen", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
             }

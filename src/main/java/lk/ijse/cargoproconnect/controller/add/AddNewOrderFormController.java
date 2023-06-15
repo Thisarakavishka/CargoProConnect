@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.BatchBO;
+import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
 import lk.ijse.cargoproconnect.bo.bos.ItemCategoryBO;
 import lk.ijse.cargoproconnect.controller.popup.PaymentFormController;
 import lk.ijse.cargoproconnect.controller.popup.ViewBatchFormController;
@@ -179,6 +180,7 @@ public class AddNewOrderFormController implements Initializable {
     //Dependency Injection (Property Injection)
     BatchBO batchBO = (BatchBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.BATCH);
     ItemCategoryBO itemCategoryBO = (ItemCategoryBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM_CATEGORY);
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
 
     @FXML
     void btnAddBatchOnAction(ActionEvent event) { //check batch
@@ -464,7 +466,8 @@ public class AddNewOrderFormController implements Initializable {
         List<String> fName = new ArrayList<>();
         List<String> lName = new ArrayList<>();
         try {
-            List<CustomerDTO> customers = CustomerModel.getCustomers();
+//            List<CustomerDTO> customers = CustomerModel.getCustomers();
+            List<CustomerDTO> customers =customerBO.getAllCustomers();
             for (CustomerDTO customer : customers) {
                 ids.add(customer.getId());
                 fName.add(customer.getFName());
@@ -493,7 +496,7 @@ public class AddNewOrderFormController implements Initializable {
                     }
                 }
             });
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

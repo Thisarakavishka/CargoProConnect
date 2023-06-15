@@ -13,8 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
 import lk.ijse.cargoproconnect.dto.CustomerDTO;
-import lk.ijse.cargoproconnect.model.CustomerModel;
 import lk.ijse.cargoproconnect.model.LoginModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -66,17 +67,21 @@ public class AddNewCustomerFormController implements Initializable {
 
     private static ObservableList<String> cmbList = FXCollections.observableArrayList("PASSPORT", "DRIVING LICENCE", "NATIONAL IDENTITY CARD");
 
+    //Dependency Injection (Property Injection)
+    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+
     @FXML
     void btnAddOnAction(ActionEvent event) {
         if(txtFirstName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtLastName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtContactNumber1.getFocusColor().equals(Color.web(Colors.GREEN)) && txtContactNumber2.getFocusColor().equals(Color.web(Colors.GREEN)) && txtEmail.getFocusColor().equals(Color.web(Colors.GREEN)) && cmbDocumentType.getValue() != null && txtDocumentNumber.getFocusColor().equals(Color.web(Colors.GREEN)) && txtEmail.getFocusColor().equals(Color.web(Colors.GREEN))){
             try {
-                boolean isAdded = CustomerModel.addNewCustomer(new CustomerDTO(lblCustomerId.getText(), txtFirstName.getText(), txtLastName.getText(), txtContactNumber1.getText(), txtContactNumber2.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(),txtEmail.getText()));
+//                boolean isAdded = CustomerModel.addNewCustomer(new CustomerDTO(lblCustomerId.getText(), txtFirstName.getText(), txtLastName.getText(), txtContactNumber1.getText(), txtContactNumber2.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(),txtEmail.getText()));
+                boolean isAdded = customerBO.addCustomer(new CustomerDTO(lblCustomerId.getText(), txtFirstName.getText(), txtLastName.getText(), txtContactNumber1.getText(), txtContactNumber2.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(),txtEmail.getText()));
                 if (isAdded) {
                     NotificationUtil.showNotification("Success", "Successfully " + lblCustomerId.getText() + " customer added" + LoginModel.getEmployeeUserName(), NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();
                     rootChange.getChildren().add(FXMLLoader.load(getClass().getResource("/lk/ijse/cargoproconnect/view/CustomerForm.fxml")));
                 }
-            } catch (SQLException | IOException e) {
+            } catch (SQLException | IOException | ClassNotFoundException e) {
                 NotificationUtil.showNotification("Error", "OOPS! Something happen " + LoginModel.getEmployeeUserName(), NotificationUtil.NotificationType.ERROR, Duration.seconds(5));
             }
         }else{
@@ -126,8 +131,9 @@ public class AddNewCustomerFormController implements Initializable {
 
     private void generateNextCustomerId() {
         try {
-            lblCustomerId.setText(CustomerModel.getNextTaxId());
-        } catch (SQLException e) {
+//            lblCustomerId.setText(CustomerModel.getNextTaxId());
+            lblCustomerId.setText(customerBO.generateNewCustomerId());
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

@@ -16,8 +16,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.BatchBO;
-import lk.ijse.cargoproconnect.bo.bos.impl.BatchBOImpl;
+import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
 import lk.ijse.cargoproconnect.dto.*;
 import lk.ijse.cargoproconnect.dto.tm.CustomerDeliverTM;
 import lk.ijse.cargoproconnect.dto.tm.EmployeeRequestTM;
@@ -125,7 +126,8 @@ public class AdminDashBoardBodyFormController implements Initializable {
     private ObservableList<CustomerDeliverTM> listCustomerDeliver = FXCollections.observableArrayList();
 
     //Dependency Injection (Property Injection)
-    BatchBO batchBO = new BatchBOImpl();
+    BatchBO batchBO = (BatchBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.BATCH);
+    CustomerBO customerBO= (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
 
     @FXML
     void btnBatchOnAction(ActionEvent event) {
@@ -190,7 +192,8 @@ public class AdminDashBoardBodyFormController implements Initializable {
 
     private void setDataToLabels() {
         try {
-            List<CustomerDTO> customers = CustomerModel.getCustomers();
+//            List<CustomerDTO> customers = CustomerModel.getCustomers();
+            List<CustomerDTO> customers = customerBO.getAllCustomers();
             List<EmployeeDTO> employees = EmployeeModel.getEmployees(1);
             List<BatchDTO> batches = batchBO.getAvailableBatches();
             List<TaxDTO> taxes = TaxModel.getTaxes();
@@ -199,7 +202,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
             lblAvailableBatches.setText(String.valueOf(batches.size()));
             lblAllTaxes.setText(String.valueOf(taxes.size()));
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
