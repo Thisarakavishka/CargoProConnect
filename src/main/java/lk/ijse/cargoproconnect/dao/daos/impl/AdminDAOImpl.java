@@ -46,11 +46,11 @@ public class AdminDAOImpl implements AdminDAO {
     }
 
     @Override
-    public boolean searchAdmin(Admin admin) throws SQLException {
+    public boolean searchAdmin(String username, String password) throws SQLException {
         String sql = "SELECT * FROM admin WHERE username = ? AND password = ?";
-        ResultSet resultSet = CrudUtil.execute(sql, admin.getUsername(), admin.getPassword());
+        ResultSet resultSet = CrudUtil.execute(sql, username, password);
         if (resultSet.next()) {
-            if (resultSet.getString(3).equalsIgnoreCase(admin.getPassword()) && resultSet.getString(2).equalsIgnoreCase(admin.getUsername())) {
+            if (resultSet.getString(3).equalsIgnoreCase(username) && resultSet.getString(2).equalsIgnoreCase(password)) {
                 return true;
             }
         }

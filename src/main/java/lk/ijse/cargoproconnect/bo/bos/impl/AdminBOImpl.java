@@ -20,7 +20,7 @@ public class AdminBOImpl implements AdminBO {
     }
 
     @Override
-    public boolean searchAdmin(AdminDTO admin) throws SQLException {
-        return adminDAO.searchAdmin(new Admin(admin.getId(), admin.getUsername(), admin.getPassword(), admin.getEmail()));
+    public boolean searchAdmin(String username, String password) throws SQLException {
+        return adminDAO.searchAdmin(username, password);
     }
 }

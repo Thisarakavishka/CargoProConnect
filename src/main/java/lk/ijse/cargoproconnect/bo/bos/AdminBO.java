@@ -9,5 +9,5 @@ public interface AdminBO extends SuperBO {
 
     AdminDTO searchAdmin(String userName) throws SQLException, ClassNotFoundException;
 
-    boolean searchAdmin(AdminDTO admin) throws SQLException;
+    boolean searchAdmin(String userName , String password) throws SQLException;
 }

@@ -7,5 +7,5 @@ import java.sql.SQLException;
 
 public interface AdminDAO extends CrudDAO<Admin> {
 
-    boolean searchAdmin(Admin admin) throws SQLException;
+    boolean searchAdmin(String username, String password) throws SQLException;
 }

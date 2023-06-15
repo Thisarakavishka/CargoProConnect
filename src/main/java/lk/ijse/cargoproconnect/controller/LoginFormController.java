@@ -16,6 +16,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.AdminBO;
+import lk.ijse.cargoproconnect.bo.bos.EmployeeBO;
 import lk.ijse.cargoproconnect.model.LoginModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
@@ -59,6 +62,10 @@ public class LoginFormController implements Initializable {
     @FXML
     private Label lblLoginPassword;
 
+    //Dependency Injection (Property Injection)
+    AdminBO adminBO = (AdminBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ADMIN);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
+
     @FXML
     void btnBackOnAction(ActionEvent event) {
         paneImage.setVisible(false);
@@ -80,7 +87,7 @@ public class LoginFormController implements Initializable {
         if (txtLoginUserName.getFocusColor().equals(Color.web(Colors.GREEN)) && !txtLoginPassword.getText().isEmpty() && !txtLoginPassword.getText().isBlank()) {
             Stage stage = (Stage) root.getScene().getWindow();
             try {
-                boolean isAdmin = LoginModel.searchAdmin(txtLoginUserName.getText(), txtLoginPassword.getText());
+                boolean isAdmin = adminBO.searchAdmin(txtLoginUserName.getText(), txtLoginPassword.getText());
                 boolean isEmployee = LoginModel.searchEmployee(SecurityUtil.encoder(txtLoginUserName.getText()), SecurityUtil.encoder(txtLoginPassword.getText()));
 
                 if (isAdmin | isEmployee) {
