@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.bo.BOFactory;
 import lk.ijse.cargoproconnect.bo.bos.ItemCategoryBO;
+import lk.ijse.cargoproconnect.bo.bos.TaxBO;
 import lk.ijse.cargoproconnect.dto.CategoryDTO;
 import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.dto.tm.CategoryTaxTM;
@@ -85,6 +86,7 @@ public class UpdateCategoryFormController implements Initializable {
 
     //Dependency Injection (Property Injection)
     ItemCategoryBO itemCategoryBO = (ItemCategoryBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM_CATEGORY);
+    TaxBO taxBO = (TaxBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.TAX);
 
     public static void setCategoryDetails(CategoryDTO category) {
         UpdateCategoryFormController.category = category;
@@ -93,7 +95,7 @@ public class UpdateCategoryFormController implements Initializable {
     @FXML
     void btnAddTaxOnAction(ActionEvent event) {
         try {
-            List<TaxDTO> taxes = TaxModel.getTaxes();
+            List<TaxDTO> taxes = taxBO.getAllTaxes();
             for (TaxDTO tax : taxes) {
                 if (tax.getName().equalsIgnoreCase(cmbTaxName.getValue())) {
                     //check new add tax is already in the list
@@ -123,7 +125,7 @@ public class UpdateCategoryFormController implements Initializable {
                     taxTable.setItems(list);
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -293,14 +295,14 @@ public class UpdateCategoryFormController implements Initializable {
     void loadDocumentTypes() {
         try {
             ObservableList<String> observableList = FXCollections.observableArrayList();
-            List<TaxDTO> taxes = TaxModel.getTaxes();
+            List<TaxDTO> taxes = taxBO.getAllTaxes();
 
             for (TaxDTO tax : taxes) {
                 observableList.add(tax.getName());
             }
 
             cmbTaxName.setItems(observableList);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

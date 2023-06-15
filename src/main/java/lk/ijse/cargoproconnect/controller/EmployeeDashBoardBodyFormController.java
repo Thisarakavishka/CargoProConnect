@@ -20,10 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import lk.ijse.cargoproconnect.bo.BOFactory;
-import lk.ijse.cargoproconnect.bo.bos.BatchBO;
-import lk.ijse.cargoproconnect.bo.bos.CustomerBO;
-import lk.ijse.cargoproconnect.bo.bos.OrderBO;
-import lk.ijse.cargoproconnect.bo.bos.OrderDeliverDetailBO;
+import lk.ijse.cargoproconnect.bo.bos.*;
 import lk.ijse.cargoproconnect.dto.*;
 import lk.ijse.cargoproconnect.dto.tm.ActionDeliverTM;
 import lk.ijse.cargoproconnect.dto.tm.AvailableOrderTM;
@@ -129,6 +126,7 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
     CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
     OrderDeliverDetailBO orderDeliverDetailBO = (OrderDeliverDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER_DELIVER_DETAIL);
     OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
+    TaxBO taxBO = (TaxBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.TAX);
 
     @FXML
     void btnBatchOnAction(ActionEvent event) {
@@ -197,7 +195,7 @@ public class EmployeeDashBoardBodyFormController implements Initializable {
 //            List<OrderDTO> orders = OrderModel.getOrders(1);
             List<OrderDTO> orders = orderBO.getOrders(1);
             List<BatchDTO> batches = batchBO.getAvailableBatches();
-            List<TaxDTO> taxes = TaxModel.getTaxes();
+            List<TaxDTO> taxes = taxBO.getAllTaxes();
             lblTotalCustomers.setText(String.valueOf(customers.size()));
             lblTotalOrders.setText(String.valueOf(orders.size()));
             lblAvailableBatches.setText(String.valueOf(batches.size()));

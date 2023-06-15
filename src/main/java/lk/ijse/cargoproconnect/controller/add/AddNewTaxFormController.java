@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.TaxBO;
 import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.model.LoginModel;
 import lk.ijse.cargoproconnect.model.TaxModel;
@@ -48,17 +50,21 @@ public class AddNewTaxFormController implements Initializable {
     @FXML
     private JFXButton btnDiscard;
 
+    //Dependency Injection (Property Injection)
+    TaxBO taxBO = (TaxBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.TAX);
+
     @FXML
     void btnAddOnAction(ActionEvent event) {
         if (txtName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtPercentage.getFocusColor().equals(Color.web(Colors.GREEN)) && txtDescription.getFocusColor().equals(Color.web(Colors.GREEN))) {
             try {
-                boolean isAdded = TaxModel.addNewTax(new TaxDTO(taxId.getText(), txtName.getText(), Double.parseDouble(txtPercentage.getText()), txtDescription.getText()));
+//                boolean isAdded = TaxModel.addNewTax(new TaxDTO(taxId.getText(), txtName.getText(), Double.parseDouble(txtPercentage.getText()), txtDescription.getText()));
+                boolean isAdded = taxBO.addTax(new TaxDTO(taxId.getText(), txtName.getText(), Double.parseDouble(txtPercentage.getText()), txtDescription.getText()));
                 if (isAdded) {
                     NotificationUtil.showNotification("Success", "Successfully " + txtName.getText() + " Tax added ", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();
                     rootChange.getChildren().add(FXMLLoader.load(getClass().getResource("/lk/ijse/cargoproconnect/view/TaxForm.fxml")));
                 }
-            } catch (SQLException | IOException e) {
+            } catch (SQLException | IOException | ClassNotFoundException e) {
                 NotificationUtil.showNotification("Error", "OOPS! Something happen" + LoginModel.getEmployeeUserName(), NotificationUtil.NotificationType.ERROR, Duration.seconds(5));
                 e.printStackTrace();
             }
@@ -91,8 +97,9 @@ public class AddNewTaxFormController implements Initializable {
 
     void generateNextTaxId() {
         try {
-            taxId.setText(TaxModel.getNextTaxId());
-        } catch (SQLException e) {
+//            taxId.setText(TaxModel.getNextTaxId());
+            taxId.setText(taxBO.generateNewTaxId());
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

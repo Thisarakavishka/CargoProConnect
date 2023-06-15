@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.TaxBO;
 import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.model.TaxModel;
 import lk.ijse.cargoproconnect.util.Colors;
@@ -49,6 +51,9 @@ public class UpdateTaxFormController implements Initializable {
 
     static TaxDTO tax;
 
+    //Dependency Injection (Property Injection)
+    TaxBO taxBO = (TaxBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.TAX);
+
     public static void setTaxDetails(TaxDTO tax) {
         UpdateTaxFormController.tax = tax;
     }
@@ -67,14 +72,14 @@ public class UpdateTaxFormController implements Initializable {
     void btnUpdateOnAction(ActionEvent event) {
         if (txtName.getFocusColor().equals(Color.web(Colors.GREEN)) && txtPercentage.getFocusColor().equals(Color.web(Colors.GREEN)) && txtDescription.getFocusColor().equals(Color.web(Colors.GREEN))) {
             try {
-                boolean isUpdated = TaxModel.updateTax(new TaxDTO(taxId.getText(), txtName.getText(), Double.parseDouble(txtPercentage.getText()), txtDescription.getText()));
+                boolean isUpdated = taxBO.updateTax(new TaxDTO(taxId.getText(), txtName.getText(), Double.parseDouble(txtPercentage.getText()), txtDescription.getText()));
                 if (isUpdated) {
                     NotificationUtil.showNotification("Success", "Successfully " + txtName.getText() + " Tax updated ", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();
                     rootChange.getChildren().add(FXMLLoader.load(getClass().getResource("/lk/ijse/cargoproconnect/view/TaxForm.fxml")));
 
                 }
-            } catch (SQLException | IOException e) {
+            } catch (SQLException | IOException | ClassNotFoundException e) {
                 NotificationUtil.showNotification("OOPS!", "Something happen ", NotificationUtil.NotificationType.ERROR, Duration.seconds(5));
             }
         } else {

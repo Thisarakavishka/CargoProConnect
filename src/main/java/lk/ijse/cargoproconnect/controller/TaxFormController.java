@@ -21,6 +21,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.TaxBO;
 import lk.ijse.cargoproconnect.controller.update.UpdateTaxFormController;
 import lk.ijse.cargoproconnect.dto.TaxDTO;
 import lk.ijse.cargoproconnect.dto.tm.TaxTM;
@@ -78,6 +80,9 @@ public class TaxFormController implements Initializable {
     private static ObservableList<TaxTM> list;
     private static int ROWS_PER_PAGE = 10;
 
+    //Dependency Injection (Property Injection)
+    TaxBO taxBO = (TaxBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.TAX);
+
     @FXML
     void btnAddTaxOnAction(ActionEvent event) {
         try {
@@ -90,7 +95,7 @@ public class TaxFormController implements Initializable {
 
     @FXML
     public void btnDeleteSelectedOnAction(ActionEvent event) {
-        List<String> ids = new ArrayList<>();
+        ArrayList<String> ids = new ArrayList<>();
         for (TaxTM taxTM : list) {
             if (taxTM.getCheckBox().isSelected()) {
                 ids.add(taxTM.getId());
@@ -102,7 +107,7 @@ public class TaxFormController implements Initializable {
 
         if (result.orElse(no) == yes) {
             try {
-                boolean isDeleted = TaxModel.deleteSelectedTaxes(ids);
+                boolean isDeleted = taxBO.deleteSelectedTaxes(ids);
                 tableTax.refresh();
                 if (isDeleted) {
                     setTableData();
@@ -206,7 +211,8 @@ public class TaxFormController implements Initializable {
         try {
 
             list = FXCollections.observableArrayList();
-            List<TaxDTO> taxes = TaxModel.getTaxes();
+//            List<TaxDTO> taxes = TaxModel.getTaxes();
+            List<TaxDTO> taxes = taxBO.getAllTaxes();
             for (TaxDTO tax : taxes) {
 
                 JFXCheckBox checkBox = new JFXCheckBox();
@@ -245,7 +251,7 @@ public class TaxFormController implements Initializable {
             pagination.setPageCount((int) Math.ceil(list.size() / 10.0));
             pagination.setPageFactory(this::createPage);
 
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -266,7 +272,7 @@ public class TaxFormController implements Initializable {
 
             if (result.orElse(no) == yes) {
                 try {
-                    boolean isDeleted = TaxModel.deleteTax(tax.getId());
+                    boolean isDeleted = taxBO.deleteTax(tax.getId());
                     tableTax.refresh();
                     if (isDeleted) {
                         setTableData();
@@ -276,7 +282,7 @@ public class TaxFormController implements Initializable {
                         new Alert(Alert.AlertType.ERROR, "something happened !").show();
                         NotificationUtil.showNotification("OOPS!", "Something happen", NotificationUtil.NotificationType.ERROR, Duration.seconds(5));
                     }
-                } catch (SQLException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
