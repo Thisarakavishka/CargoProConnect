@@ -21,7 +21,6 @@ import lk.ijse.cargoproconnect.bo.bos.*;
 import lk.ijse.cargoproconnect.dto.*;
 import lk.ijse.cargoproconnect.dto.tm.CustomerDeliverTM;
 import lk.ijse.cargoproconnect.dto.tm.EmployeeRequestTM;
-import lk.ijse.cargoproconnect.model.*;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
 
@@ -130,6 +129,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
     DeliverDetailBO detailBO = (DeliverDetailBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.DELIVER_DETAIL);
     OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
     TaxBO taxBO = (TaxBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.TAX);
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
 
     @FXML
     void btnBatchOnAction(ActionEvent event) {
@@ -195,7 +195,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
     private void setDataToLabels() {
         try {
             List<CustomerDTO> customers = customerBO.getAllCustomers();
-            List<EmployeeDTO> employees = EmployeeModel.getEmployees(1);
+            List<EmployeeDTO> employees = employeeBO.getEmployees(1);
             List<BatchDTO> batches = batchBO.getAvailableBatches();
             List<TaxDTO> taxes = taxBO.getAllTaxes();
             lblTotalCustomers.setText(String.valueOf(customers.size()));
@@ -281,7 +281,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
 
     private void setEmployeeTableData() {
         try {
-            List<EmployeeDTO> employees = EmployeeModel.getEmployees(0);
+            List<EmployeeDTO> employees = employeeBO.getEmployees(0);
             for (EmployeeDTO employee : employees) {
 
                 JFXButton approve = new JFXButton("Approve");
@@ -300,7 +300,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
             }
             tableEmployee.setItems(listEmployeeRequest);
 //            tableEmployee.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -308,7 +308,7 @@ public class AdminDashBoardBodyFormController implements Initializable {
     private void setApproveBtnOnAction(EmployeeDTO employee, JFXButton approve) {
         approve.setOnAction(event -> {
             try {
-                boolean isApprove = EmployeeModel.approveEmployee(employee.getId());
+                boolean isApprove = employeeBO.approveEmployee(employee.getId());
                 if (isApprove) {
                     NotificationUtil.showNotification("Approved", "Employee " + employee.getUsername() + " Approve SuccessFully", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     listEmployeeRequest = FXCollections.observableArrayList();

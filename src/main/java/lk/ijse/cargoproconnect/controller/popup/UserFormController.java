@@ -9,6 +9,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.EmployeeBO;
 import lk.ijse.cargoproconnect.dto.EmployeeDTO;
 import lk.ijse.cargoproconnect.model.EmployeeModel;
 import lk.ijse.cargoproconnect.model.LoginModel;
@@ -57,6 +59,9 @@ public class UserFormController implements Initializable {
     private static final String userName = LoginModel.getEmployeeUserName();
     private String otp;
 
+    //Dependency Injection (Property Injection)
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
+
     @FXML
     void btnDiscardOnAction(ActionEvent event) {
         Stage stage = (Stage) root.getScene().getWindow();
@@ -77,7 +82,7 @@ public class UserFormController implements Initializable {
     void btnSaveOnAction(ActionEvent event) {
         if (txtVerificationCode.getText().equalsIgnoreCase(otp)) {
             try {
-                boolean isUpdate = EmployeeModel.updateUser(new EmployeeDTO(LoginModel.getEmployeeId(), SecurityUtil.encoder(txtNewUserName.getText()), SecurityUtil.encoder(txtNewPassword.getText()), txtNewEmail.getText()));
+                boolean isUpdate = employeeBO.updateUser(new EmployeeDTO(LoginModel.getEmployeeId(), SecurityUtil.encoder(txtNewUserName.getText()), SecurityUtil.encoder(txtNewPassword.getText()), txtNewEmail.getText()));
                 if (isUpdate) {
                     Stage stage = (Stage) root.getScene().getWindow();
                     stage.close();

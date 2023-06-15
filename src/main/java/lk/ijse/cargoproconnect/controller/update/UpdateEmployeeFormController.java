@@ -14,8 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.EmployeeBO;
 import lk.ijse.cargoproconnect.dto.EmployeeDTO;
-import lk.ijse.cargoproconnect.model.EmployeeModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
 import lk.ijse.cargoproconnect.util.SecurityUtil;
@@ -64,6 +65,9 @@ public class UpdateEmployeeFormController implements Initializable {
     static EmployeeDTO employee;
     private static ObservableList<String> cmbList = FXCollections.observableArrayList("PASSPORT", "DRIVING LICENCE", "NATIONAL IDENTITY CARD");
 
+    //Dependency Injection (Property Injection)
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
+
     public static void setEmployeeDetails(EmployeeDTO employee) {
         UpdateEmployeeFormController.employee = employee;
     }
@@ -86,14 +90,14 @@ public class UpdateEmployeeFormController implements Initializable {
                 if (checkBoxBlock.isSelected()) {
                     status = 0;
                 }
-                boolean isUpdated = EmployeeModel.updateEmployee(new EmployeeDTO(lblEmployeeId.getText(), SecurityUtil.encoder(txtUserName.getText()), SecurityUtil.encoder(txtPassword.getText()), txtEmail.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), status));
+                boolean isUpdated = employeeBO.updateEmployee(new EmployeeDTO(lblEmployeeId.getText(), SecurityUtil.encoder(txtUserName.getText()), SecurityUtil.encoder(txtPassword.getText()), txtEmail.getText(), cmbDocumentType.getValue(), txtDocumentNumber.getText(), status));
                 if (isUpdated) {
                     NotificationUtil.showNotification("Success", "Employee " + txtUserName.getText() + " Update successfully", NotificationUtil.NotificationType.SUCCESS, Duration.seconds(5));
                     rootChange.getChildren().clear();
                     rootChange.getChildren().add(FXMLLoader.load(getClass().getResource("/lk/ijse/cargoproconnect/view/EmployeeForm.fxml")));
 
                 }
-            } catch (SQLException | IOException e) {
+            } catch (SQLException | IOException | ClassNotFoundException e) {
                 e.printStackTrace();
                 NotificationUtil.showNotification("Error", "OOPS! Something happen", NotificationUtil.NotificationType.ERROR, Duration.seconds(5));
             }

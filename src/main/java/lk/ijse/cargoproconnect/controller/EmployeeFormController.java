@@ -23,11 +23,12 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import lk.ijse.cargoproconnect.bo.BOFactory;
+import lk.ijse.cargoproconnect.bo.bos.EmployeeBO;
 import lk.ijse.cargoproconnect.controller.popup.MailFormController;
 import lk.ijse.cargoproconnect.controller.update.UpdateEmployeeFormController;
 import lk.ijse.cargoproconnect.dto.EmployeeDTO;
 import lk.ijse.cargoproconnect.dto.tm.EmployeeTM;
-import lk.ijse.cargoproconnect.model.EmployeeModel;
 import lk.ijse.cargoproconnect.util.Colors;
 import lk.ijse.cargoproconnect.util.NotificationUtil;
 import org.apache.poi.ss.usermodel.Cell;
@@ -108,6 +109,9 @@ public class EmployeeFormController implements Initializable {
     private static ObservableList<EmployeeTM> list;
     private static int ROWS_PER_PAGE = 10;
 
+    //Dependency Injection (Property Injection)
+    EmployeeBO employeeBO = (EmployeeBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.EMPLOYEE);
+
     @FXML
     void btnAddEmployeeOnAction(ActionEvent event) {
         try {
@@ -175,7 +179,7 @@ public class EmployeeFormController implements Initializable {
 
     @FXML
     void btnDeleteSelectedOnAction(ActionEvent event) {
-        List<String> ids = new ArrayList<>();
+        ArrayList<String> ids = new ArrayList<>();
         for (EmployeeTM employeeTM : list) {
             if (employeeTM.getCheckBox().isSelected()) {
                 ids.add(employeeTM.getId());
@@ -187,7 +191,7 @@ public class EmployeeFormController implements Initializable {
 
         if (result.orElse(no) == yes) {
             try {
-                boolean isDeleted = EmployeeModel.deleteSelectedEmployees(ids);
+                boolean isDeleted = employeeBO.deleteSelectedEmployees(ids);
                 tableEmployee.refresh();
                 if (isDeleted) {
                     setTableData();
@@ -265,7 +269,7 @@ public class EmployeeFormController implements Initializable {
     private void setTableData() {
         try {
             list = FXCollections.observableArrayList();
-            List<EmployeeDTO> employees = EmployeeModel.getEmployees(1);
+            List<EmployeeDTO> employees = employeeBO.getEmployees(1);
 
             for (EmployeeDTO employee : employees) {
 
@@ -313,7 +317,7 @@ public class EmployeeFormController implements Initializable {
             }
             pagination.setPageCount((int) Math.ceil(list.size() / 10.0));
             pagination.setPageFactory(this::createPage);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -352,7 +356,7 @@ public class EmployeeFormController implements Initializable {
 
             if (result.orElse(no) == yes) {
                 try {
-                    boolean isDeleted = EmployeeModel.deleteEmployee(employee.getId());
+                    boolean isDeleted = employeeBO.deleteEmployee(employee.getId());
                     if (isDeleted) {
                         setTableData();
                         tableEmployee.refresh();
@@ -360,7 +364,7 @@ public class EmployeeFormController implements Initializable {
                     } else {
                         NotificationUtil.showNotification("Error", "OOPS! Something happen ", NotificationUtil.NotificationType.ERROR, Duration.seconds(5));
                     }
-                } catch (SQLException e) {
+                } catch (SQLException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
